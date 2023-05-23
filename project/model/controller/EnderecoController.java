@@ -4,7 +4,6 @@ import java.util.List;
 
 import model.bo.EnderecoBO;
 import model.exception.CampoInvalidoException;
-import model.exception.EnderecoInvalidoException;
 import model.vo.Endereco;
 
 public class EnderecoController {
@@ -18,14 +17,17 @@ private EnderecoBO bo = new EnderecoBO();
 	}
 	
 	private void validarCamposObrigatorios(Endereco endereco) throws CampoInvalidoException {
+		
+		String[] valores = {endereco.getCep(), endereco.getRua(), endereco.getNumero(), endereco.getBairro(), endereco.getCidade(), endereco.getEstado()};
+		String[] camposInvalidos = {"CEP", "Rua", "Número", "Bairro", "Cidade", "Estado"};
+		
 		String mensagemValidacao = "";
 		
-		mensagemValidacao += validarString(endereco.getCep(), "cep");
-		mensagemValidacao += validarString(endereco.getRua(), "rua");
-		mensagemValidacao += validarString(endereco.getNumero(), "numero");
-		mensagemValidacao += validarString(endereco.getBairro(), "bairro");
-		mensagemValidacao += validarString(endereco.getCidade(), "cidade");
-		mensagemValidacao += validarString(endereco.getEstado(), "estado");
+		for (int i = 0; i < valores.length; i++) {
+			mensagemValidacao += validarString(valores[i], camposInvalidos[i]);
+			
+		}
+		
 		
 		if(!mensagemValidacao.isEmpty()) {
 			throw new CampoInvalidoException(mensagemValidacao);
