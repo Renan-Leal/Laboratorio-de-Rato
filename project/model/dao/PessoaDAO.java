@@ -62,6 +62,7 @@ public class PessoaDAO {
 			query.setString(3, pessoaEditada.getTelefone());
 			query.setString(4, pessoaEditada.getDtNascimento());
 			query.setInt(5, pessoaEditada.getEndereco().getId());
+			query.setInt(6, pessoaEditada.getId());
 			query.execute();
 			
 			int quantidadeLinhasAtualizadas = query.executeUpdate();
