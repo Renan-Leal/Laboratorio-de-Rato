@@ -9,13 +9,13 @@ import java.sql.Statement;
 
 public class Banco {
 	
-	//private static final String DRIVER = "com.mysql.cj.jdbc.Driver"; //MYSQL vers�o 8
-	private static final String DRIVER = "com.mysql.jdbc.Driver"; //MYSQL vers�o 5
-	private static final String BANCODADOS = "dbacademia";
+	private static final String DRIVER = "com.mysql.cj.jdbc.Driver"; //MYSQL vers�o 8
+	//private static final String DRIVER = "com.mysql.jdbc.Driver"; //MYSQL vers�o 5
+	private static final String BANCODADOS = "DBACADEMIA";
 	private static final String CONEXAO = "jdbc:mysql://localhost:3306/" 
 					+ BANCODADOS + "?useSSL=false&serverTimezone=UTC&useTimezone=true";
 	private static final String USER = "root";
-	private static final String PASSWORD = "root";
+	private static final String PASSWORD = "admin";
 	
 	public static Connection getConnection(){
 		try {
@@ -24,7 +24,7 @@ public class Banco {
 			conn = DriverManager.getConnection(CONEXAO, USER, PASSWORD);
 			return conn;
 		} catch (ClassNotFoundException e) {
-			System.out.println("Classe do Driver n�o foi encontrada.");
+			System.out.println("Classe do Driver não foi encontrada.");
 			System.out.println("Erro: " + e.getMessage());
 			return null;
 		} catch (SQLException e) {
