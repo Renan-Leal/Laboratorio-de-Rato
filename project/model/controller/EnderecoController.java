@@ -4,11 +4,12 @@ import java.util.List;
 
 import model.bo.EnderecoBO;
 import model.exception.CampoInvalidoException;
+import model.exception.EnderecoInvalidoException;
 import model.vo.Endereco;
 
 public class EnderecoController {
 	
-private EnderecoBO bo = new EnderecoBO();
+    private EnderecoBO bo = new EnderecoBO();
 	
 	public Endereco inserir(Endereco novoEndereco) throws CampoInvalidoException {
 		validarCamposObrigatorios(novoEndereco);
@@ -51,9 +52,9 @@ private EnderecoBO bo = new EnderecoBO();
 		return bo.atualizar(enderecoAlterado);
 	}
 	
-//	public boolean excluir(int id) throws EnderecoInvalidoException {
-//		return bo.excluir(id);
-//	}
+	public boolean excluir(int id) throws EnderecoInvalidoException {
+		return bo.excluir(id);
+	}
 	
 	public Endereco consultarPorId(int id) {
 		return bo.consultarPorId(id);

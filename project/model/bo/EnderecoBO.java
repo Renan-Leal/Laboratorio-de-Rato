@@ -18,15 +18,9 @@ public class EnderecoBO {
 		return dao.atualizar(enderecoAlterado);
 	}
 	
-//	public boolean excluir(int id) throws EnderecoInvalidoException {
-//		ClienteDAO clienteDAO = new ClienteDAO();
-//		
-//		if(clienteDAO.contarClientesQueResidemNoEndereco(id) > 0) {
-//			throw new EnderecoInvalidoException("Endereço pode ser excluido, pois possui cliente(s) associado(s)");
-//		}
-//		
-//		return dao.excluir(id);
-//	}
+	public boolean excluir(int id) throws EnderecoInvalidoException {	
+		return dao.excluir(id);
+	}
 	
 	public Endereco consultarPorId(int id) {
 		return dao.consultarPorId(id);

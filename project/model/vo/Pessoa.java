@@ -1,26 +1,24 @@
 package model.vo;
 
-import java.time.LocalDateTime;
-
 public class Pessoa {
 	private Integer id;
 	private Endereco endereco;
-	private String cpf;
 	private String nome;
+	private String cpf;
 	private String telefone;
-	private LocalDateTime dtNascimento;
+	private String dtNascimento;
 
 	public Pessoa() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pessoa(Integer id, Endereco endereco, String cpf, String nome, String telefone, LocalDateTime dtNascimento) {
+	public Pessoa(Integer id, Endereco endereco, String nome, String cpf, String telefone, String dtNascimento) {
 		super();
 		this.id = id;
 		this.endereco = endereco;
-		this.cpf = cpf;
 		this.nome = nome;
+		this.cpf = cpf;
 		this.telefone = telefone;
 		this.dtNascimento = dtNascimento;
 	}
@@ -41,20 +39,20 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getTelefone() {
@@ -65,19 +63,12 @@ public class Pessoa {
 		this.telefone = telefone;
 	}
 
-	public LocalDateTime getDtNascimento() {
+	public String getDtNascimento() {
 		return dtNascimento;
 	}
 
-	public void setDtNascimento(LocalDateTime dtNascimento) {
+	public void setDtNascimento(String dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
-	
-
-	
-	
-	
-	
-	
 
 }
