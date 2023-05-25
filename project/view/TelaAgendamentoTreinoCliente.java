@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JButton;
 
-public class TelaAgendamentoTreino {
+public class TelaAgendamentoTreinoCliente {
 
 	private JFrame frame;
 
@@ -19,7 +19,7 @@ public class TelaAgendamentoTreino {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaAgendamentoTreino window = new TelaAgendamentoTreino();
+					TelaAgendamentoTreinoCliente window = new TelaAgendamentoTreinoCliente();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +31,7 @@ public class TelaAgendamentoTreino {
 	/**
 	 * Create the application.
 	 */
-	public TelaAgendamentoTreino() {
+	public TelaAgendamentoTreinoCliente() {
 		initialize();
 	}
 
@@ -40,7 +40,7 @@ public class TelaAgendamentoTreino {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 240);
+		frame.setBounds(100, 100, 433, 240);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -64,36 +64,20 @@ public class TelaAgendamentoTreino {
 		lblInicio.setBounds(15, 94, 46, 14);
 		frame.getContentPane().add(lblInicio);
 		
-		JLabel lblDataInicio = new JLabel("Data:");
-		lblDataInicio.setBounds(82, 94, 46, 14);
+		JLabel lblDataInicio = new JLabel("Data Hora:");
+		lblDataInicio.setBounds(71, 94, 76, 14);
 		frame.getContentPane().add(lblDataInicio);
 		
-		JLabel lblHoraInicio = new JLabel("Hora:");
-		lblHoraInicio.setBounds(252, 94, 46, 14);
-		frame.getContentPane().add(lblHoraInicio);
-		
 		JComboBox cbHoraInicio = new JComboBox();
-		cbHoraInicio.setBounds(297, 90, 109, 22);
+		cbHoraInicio.setBounds(133, 90, 273, 22);
 		frame.getContentPane().add(cbHoraInicio);
 		
-		JComboBox cbDataInicio = new JComboBox();
-		cbDataInicio.setBounds(127, 90, 109, 22);
-		frame.getContentPane().add(cbDataInicio);
-		
 		JComboBox cbHoraFinal = new JComboBox();
-		cbHoraFinal.setBounds(297, 123, 109, 22);
+		cbHoraFinal.setBounds(133, 123, 273, 22);
 		frame.getContentPane().add(cbHoraFinal);
 		
-		JLabel lblHoraFinal = new JLabel("Hora:");
-		lblHoraFinal.setBounds(252, 127, 46, 14);
-		frame.getContentPane().add(lblHoraFinal);
-		
-		JComboBox cbDataFinal = new JComboBox();
-		cbDataFinal.setBounds(127, 123, 109, 22);
-		frame.getContentPane().add(cbDataFinal);
-		
-		JLabel lblDataFinal = new JLabel("Data:");
-		lblDataFinal.setBounds(82, 127, 46, 14);
+		JLabel lblDataFinal = new JLabel("Data Hora:");
+		lblDataFinal.setBounds(71, 127, 61, 14);
 		frame.getContentPane().add(lblDataFinal);
 		
 		JLabel lblFinal = new JLabel("Final -");
