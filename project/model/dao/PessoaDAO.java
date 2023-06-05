@@ -104,13 +104,14 @@ public class PessoaDAO {
 	}
 	
 	private Pessoa converterDeResultSetParaEntidade(ResultSet resultado) throws SQLException {
-		Pessoa pessoaConsultada = new Pessoa(); 
+		Pessoa pessoaConsultada = new Pessoa();
+		EnderecoDAO enderecoDAO = new EnderecoDAO();
 		pessoaConsultada.setId(resultado.getInt("id"));
 		pessoaConsultada.setNome(resultado.getString("nome"));
 		pessoaConsultada.setCpf(resultado.getString("cpf"));
 		pessoaConsultada.setTelefone(resultado.getString("telefone"));
 		pessoaConsultada.setDtNascimento(resultado.getString("DT_NASCIMENTO"));
-//		pessoaConsultada.setEndereco(null);
+		pessoaConsultada.setEndereco(enderecoDAO.consultarPorId(resultado.getInt("ID")));
 		return pessoaConsultada;
 	}
 	

@@ -85,6 +85,10 @@ public class MenuAcademia {
 		mnAgendamentos.add(mntmListarAgendamentos);
 		
 		mnAgendamentos.setEnabled(false);
+		mnEnderecos.setEnabled(false);
+		mnTreinos.setEnabled(false);
+		mnUsuarios.setEnabled(false);
+		
 		painelLogin = new PainelLogin();
 		frame.setContentPane(painelLogin);
 	}
