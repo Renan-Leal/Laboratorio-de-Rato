@@ -141,6 +141,8 @@ public class TreinoDAO {
 	}
 	
 	public List<Pessoa> consultarTodos() {
+		//to do;
+		//finalizar método
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 		Connection conexao = Banco.getConnection();
 		String sql =  " SELECT * FROM PESSOA ";
@@ -149,8 +151,8 @@ public class TreinoDAO {
 		try {
 			ResultSet resultado = query.executeQuery();
 			while(resultado.next()) {
-				Pessoa pessoaConsultada = converterDeResultSetParaEntidade(resultado);
-				pessoas.add(pessoaConsultada);
+//				Pessoa pessoaConsultada = converterDeResultSetParaEntidade(resultado);
+//				pessoas.add(pessoaConsultada);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar todas as pessoas" 
