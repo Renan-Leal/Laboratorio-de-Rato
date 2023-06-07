@@ -6,7 +6,7 @@ public class Treino {
 	private Usuario profissional;
 	private String dtCadastro;
 	private String dtTermino;
-	private  NivelTreino nivelTreino;
+	private NivelTreino nivelTreino;
 	private String treino;
 
 	public Treino() {
@@ -81,13 +81,5 @@ public class Treino {
 	public void setTreino(String treino) {
 		this.treino = treino;
 	}
-
-	
-	
-	
-	
-	
-	
-	
 
 }
