@@ -6,6 +6,8 @@ public class Agendamento {
 	private Integer id;
 	private Usuario cliente;
 	private Usuario profissional;
+	private boolean aceito;
+	private String motivo_rejeicao;
 	private LocalDateTime dataHoraInicio;
 	private LocalDateTime dataHoraFinal;
 	
@@ -13,13 +15,15 @@ public class Agendamento {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Agendamento(Integer id, Usuario cliente, Usuario profissional, LocalDateTime dataHoraInicio,
-			LocalDateTime dataHoraFinal) {
+
+	public Agendamento(Integer id, Usuario cliente, Usuario profissional, boolean aceito, String motivo_rejeicao,
+			LocalDateTime dataHoraInicio, LocalDateTime dataHoraFinal) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
 		this.profissional = profissional;
+		this.aceito = aceito;
+		this.motivo_rejeicao = motivo_rejeicao;
 		this.dataHoraInicio = dataHoraInicio;
 		this.dataHoraFinal = dataHoraFinal;
 	}
@@ -48,6 +52,22 @@ public class Agendamento {
 		this.profissional = profissional;
 	}
 
+	public boolean isAceito() {
+		return aceito;
+	}
+
+	public void setAceito(boolean aceito) {
+		this.aceito = aceito;
+	}
+
+	public String getMotivo_rejeicao() {
+		return motivo_rejeicao;
+	}
+
+	public void setMotivo_rejeicao(String motivo_rejeicao) {
+		this.motivo_rejeicao = motivo_rejeicao;
+	}
+
 	public LocalDateTime getDataHoraInicio() {
 		return dataHoraInicio;
 	}
@@ -63,7 +83,6 @@ public class Agendamento {
 	public void setDataHoraFinal(LocalDateTime dataHoraFinal) {
 		this.dataHoraFinal = dataHoraFinal;
 	}
-	
 	
 	
 	
