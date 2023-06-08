@@ -91,12 +91,5 @@ public class Usuario {
 	public void setDataExpiracao(LocalDateTime dataExpiracao) {
 		this.dataExpiracao = dataExpiracao;
 	}
-	
-	
-	
-	
-	
-	
-
 
 }
