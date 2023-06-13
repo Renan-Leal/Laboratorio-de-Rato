@@ -3,13 +3,16 @@ package model.vo;
 import java.time.LocalDateTime;
 
 public class Agendamento {
-	private Integer id;
-	private Usuario cliente;
-	private Usuario profissional;
-	private boolean aceito;
-	private String motivo_rejeicao;
-	private LocalDateTime dataHoraInicio;
-	private LocalDateTime dataHoraFinal;
+	private Integer id; //auto increment
+	private Usuario cliente; //usuario autenticado
+	private Usuario profissional; //inormado pelo cb
+	private boolean aceito; // inicia nulo
+	// trocar para Boolean(pois pode ser true, fqalse ou null), camel case tb
+	private String motivo_rejeicao; //inicia nulo
+	private LocalDateTime dataHoraInicio; // info pelo usuario
+	private LocalDateTime dataHoraFinal; // se a hr final for maior que a hr max de trabalho do profissional, lança ecessao
+	//na listagem de agendamentos do profissional informando um periodo, ter aceite e rejeição
+	//fazer listagem de usuario pelo tipo
 	
 	public Agendamento() {
 		super();
