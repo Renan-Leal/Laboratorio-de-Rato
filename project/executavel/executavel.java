@@ -1,4 +1,4 @@
-package Executavel;
+package executavel;
 
 import model.dao.EnderecoDAO;
 import model.dao.PessoaDAO;

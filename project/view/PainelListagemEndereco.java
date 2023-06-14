@@ -12,7 +12,7 @@ public class PainelListagemEndereco extends JPanel {
 		btnEditar = new JButton("Editar");
 		btnEditar.setBounds(250, 375, 200, 45);
 		btnEditar.setEnabled(false);
-		this.add(btnEditar);
+		add(btnEditar);
 
 	}
 	

@@ -16,7 +16,7 @@ import model.vo.Endereco;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CadastroEndereco extends JPanel {
+public class PainelCadastroEndereco extends JPanel {
 
 	private JButton btnVoltar;
 	private Endereco endereco;
@@ -34,7 +34,7 @@ public class CadastroEndereco extends JPanel {
 	private JLabel lblEstado;
 	private JComboBox cbEstado;
 	
-	public CadastroEndereco() {
+	public PainelCadastroEndereco() {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();

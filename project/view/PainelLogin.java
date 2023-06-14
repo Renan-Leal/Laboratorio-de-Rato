@@ -14,9 +14,6 @@ public class PainelLogin extends JPanel {
 	private JTextField txtLogin;
 	private JPasswordField txtSenha;
 
-	/**
-	 * Create the panel.
-	 */
 	public PainelLogin() {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,

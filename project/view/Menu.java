@@ -16,7 +16,7 @@ public class Menu {
 	private JFrame frame;
 	private PainelLogin painelLogin;
 	private PainelListagemEndereco painelListagemEnderecoAlterado;
-	private CadastroEndereco cadastroEndereco;
+	private PainelCadastroEndereco painelCadastroEndereco;
 	private JMenuItem mntmListarEnderecos;
 	private JMenuItem mntmCadastrarEndereco;
 	private JPanel contentPane;
@@ -88,10 +88,10 @@ public class Menu {
 		mntmCadastrarEndereco = new JMenuItem("Cadastrar");
 		mntmCadastrarEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroEndereco = new CadastroEndereco();
-				cadastroEndereco.setVisible(true);
-				registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
-				frame.setContentPane(cadastroEndereco);
+				painelCadastroEndereco = new PainelCadastroEndereco();
+				painelCadastroEndereco.setVisible(true);
+	//			registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
+				frame.setContentPane(painelCadastroEndereco);
 				frame.revalidate();
 				}
 		});
@@ -102,7 +102,7 @@ public class Menu {
 			public void actionPerformed(ActionEvent arg0) {
 				painelListagemEnderecoAlterado = new PainelListagemEndereco();
 				painelListagemEnderecoAlterado.setVisible(true);
-				registrarCliqueBotaoEditarDoPainelListagemEndereco();
+			//	registrarCliqueBotaoEditarDoPainelListagemEndereco();
 				
 				frame.setContentPane(painelListagemEnderecoAlterado);
 				//Atualiza a tela principal
@@ -111,7 +111,7 @@ public class Menu {
 		});
 		mnEnderecos.add(mntmListarEnderecos);
 		
-		//Fazer método para desbloquear o menu
+		//Fazer mï¿½todo para desbloquear o menu
 		mnAgendamentos.setEnabled(false);
 		mnTreinos.setEnabled(false);
 		mnEnderecos.setEnabled(false);
@@ -120,35 +120,35 @@ public class Menu {
 		painelLogin = new PainelLogin();
 		frame.setContentPane(painelLogin);
 
-		protected void registrarCliqueBotaoEditarDoPainelListagemEndereco() {
-			painelListagemEnderecoAlterado.getBtnEditar().addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					cadastroEndereco = new CadastroEndereco(painelListagemEnderecoAlterado);
-					cadastroEndereco.setVisible(true);
-					registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
-					//Atualiza a tela principal
-					frame.setContentPane(cadastroEndereco);
-					frame.revalidate();
-				}
-			});
-		}
+//		protected void registrarCliqueBotaoEditarDoPainelListagemEndereco() {
+//			painelListagemEnderecoAlterado.getBtnEditar().addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent e) {
+//					painelCadastroEndereco = new PainelCadastroEndereco(painelListagemEnderecoAlterado);
+//					painelCadastroEndereco.setVisible(true);
+//					registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
+//					//Atualiza a tela principal
+//					frame.setContentPane(painelCadastroEndereco);
+//					frame.revalidate();
+//				}
+//			});
+//		}
 
-		protected void registrarCliqueBotaoVoltarDoPainelCadastroEndereco() {
-			if(cadastroEndereco == null) {
-				cadastroEndereco = new CadastroEndereco(null);
-			}
-			cadastroEndereco.getBtnVoltar().addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					painelListagemEnderecoAlterado = new PainelListagemEndereco();
-					painelListagemEnderecoAlterado.setVisible(true);
-					registrarCliqueBotaoEditarDoPainelListagemEndereco();
-					frame.setContentPane(painelListagemEnderecoAlterado);
-					frame.revalidate();
-				}
-			});
+//		protected void registrarCliqueBotaoVoltarDoPainelCadastroEndereco() {
+//			if(painelCadastroEndereco == null) {
+//				painelCadastroEndereco = new PainelCadastroEndereco(null);
+//			}
+//			painelCadastroEndereco.getBtnVoltar().addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent e) {
+//					painelListagemEnderecoAlterado = new PainelListagemEndereco();
+//					painelListagemEnderecoAlterado.setVisible(true);
+//					registrarCliqueBotaoEditarDoPainelListagemEndereco();
+//					frame.setContentPane(painelListagemEnderecoAlterado);
+//					frame.revalidate();
+//				}
+//			});
 
 		
 	}
 
 }
-}
+
