@@ -6,7 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import model.exception.CampoInvalidoException;
+import model.vo.TipoUsuario;
+import model.vo.Usuario;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -15,11 +20,27 @@ public class Menu {
 
 	private JFrame frame;
 	private PainelLogin painelLogin;
-	private PainelListagemEndereco painelListagemEnderecoAlterado;
+	private PainelAgendamentoTreino painelAgendamentoTreino;
 	private PainelCadastroEndereco painelCadastroEndereco;
+	private PainelListagemEndereco painelListagemEnderecoAlterado;
+	private PainelCadastroTreino painelCadastroTreino;
+	private PainelCadastroUsuario painelCadastroUsuario;
+	private PainelListagemEndereco painelListagemEndereco;
+
 	private JMenuItem mntmListarEnderecos;
 	private JMenuItem mntmCadastrarEndereco;
 	private JPanel contentPane;
+	private JMenuBar menuBar;
+	private JMenu mnUsuarios;
+	private JMenuItem mntmCadastrarUsuario;
+	private JMenuItem mntmListarUsuario;
+	private JMenu mnTreinos;
+	private JMenuItem mntmCadastrarTreino;
+	private JMenuItem mntmListarTreinos;
+	private JMenu mnAgendamentos;
+	private JMenuItem mntmCadastrarAgendamento;
+	private JMenuItem mntmListarAgendamento;
+	private JMenu mnEnderecos;
 
 	/**
 	 * Launch the application.
@@ -51,73 +72,107 @@ public class Menu {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JMenuBar menuBar = new JMenuBar();
+
+		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		
-		JMenu mnUsuarios = new JMenu("Usuarios");
+
+		mnUsuarios = new JMenu("Usuarios");
 		menuBar.add(mnUsuarios);
-		
-		JMenuItem mntmCadastrarUsuario = new JMenuItem("Cadastrar");
+
+		mntmCadastrarUsuario = new JMenuItem("Cadastrar");
 		mnUsuarios.add(mntmCadastrarUsuario);
-		
-		JMenuItem mntmListarUsuario = new JMenuItem("Listar");
+
+		mntmListarUsuario = new JMenuItem("Listar");
 		mnUsuarios.add(mntmListarUsuario);
-		
-		JMenu mnTreinos = new JMenu("Treinos");
+
+		mnTreinos = new JMenu("Treinos");
 		menuBar.add(mnTreinos);
-		
-		JMenuItem mntmCadastrarTreino = new JMenuItem("Cadastrar");
+
+		mntmCadastrarTreino = new JMenuItem("Cadastrar");
 		mnTreinos.add(mntmCadastrarTreino);
-		
-		JMenuItem mntmListarTreinos = new JMenuItem("Listar");
+
+		mntmListarTreinos = new JMenuItem("Listar");
 		mnTreinos.add(mntmListarTreinos);
-		
-		JMenu mnAgendamentos = new JMenu("Agendamentos");
+
+		mnAgendamentos = new JMenu("Agendamentos");
 		menuBar.add(mnAgendamentos);
-		
-		JMenuItem mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
+
+		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
 		mnAgendamentos.add(mntmCadastrarAgendamento);
-		
-		JMenuItem mntmListarAgendamento = new JMenuItem("Listar");
+
+		mntmListarAgendamento = new JMenuItem("Listar");
 		mnAgendamentos.add(mntmListarAgendamento);
-		
-		JMenu mnEnderecos = new JMenu("Enderecos");
+
+		mnEnderecos = new JMenu("Enderecos");
 		menuBar.add(mnEnderecos);
-		
+
 		mntmCadastrarEndereco = new JMenuItem("Cadastrar");
 		mntmCadastrarEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroEndereco = new PainelCadastroEndereco();
 				painelCadastroEndereco.setVisible(true);
-	//			registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
+				// registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
 				frame.setContentPane(painelCadastroEndereco);
 				frame.revalidate();
-				}
+			}
 		});
 		mnEnderecos.add(mntmCadastrarEndereco);
-		
+
 		mntmListarEnderecos = new JMenuItem("Listar");
 		mntmListarEnderecos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				painelListagemEnderecoAlterado = new PainelListagemEndereco();
 				painelListagemEnderecoAlterado.setVisible(true);
-			//	registrarCliqueBotaoEditarDoPainelListagemEndereco();
-				
+				// registrarCliqueBotaoEditarDoPainelListagemEndereco();
+
 				frame.setContentPane(painelListagemEnderecoAlterado);
-				//Atualiza a tela principal
+				// Atualiza a tela principal
 				frame.revalidate();
 			}
 		});
 		mnEnderecos.add(mntmListarEnderecos);
-		
-		//Fazer m�todo para desbloquear o menu
-		mnAgendamentos.setEnabled(false);
-		mnTreinos.setEnabled(false);
-		mnEnderecos.setEnabled(false);
-		mnUsuarios.setEnabled(false);
+
+		// Fazer m�todo para desbloquear o menu
+		bloquearTodoMenu();
 
 		painelLogin = new PainelLogin();
+		painelLogin.getBtnLogar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Usuario usuarioAutenticado = painelLogin.autenticar();
+					bloquearTodoMenu();
+					if (usuarioAutenticado != null && usuarioAutenticado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+						mnAgendamentos.setEnabled(true);
+						mnTreinos.setEnabled(true);
+						mnEnderecos.setEnabled(true);
+						mnUsuarios.setEnabled(true);
+						painelCadastroUsuario = new PainelCadastroUsuario();
+						frame.setContentPane(painelCadastroUsuario);
+						frame.revalidate();
+						
+						
+					} else if (usuarioAutenticado != null && usuarioAutenticado.getTipoUsuario() == TipoUsuario.PERSONAL_TRAINER){
+						mnAgendamentos.setEnabled(true);
+						mnTreinos.setEnabled(true);
+						painelCadastroTreino = new PainelCadastroTreino();
+						frame.setContentPane(painelCadastroTreino);
+						frame.revalidate();
+					} else {
+						mnAgendamentos.setEnabled(true);
+						painelAgendamentoTreino = new PainelAgendamentoTreino();
+						frame.setContentPane(painelAgendamentoTreino);
+						frame.revalidate();
+					}
+					
+					
+				} catch (CampoInvalidoException exception) {
+					JOptionPane.showMessageDialog(null, exception.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+					
+				}
+
+			}
+		});
+
 		frame.setContentPane(painelLogin);
 
 //		protected void registrarCliqueBotaoEditarDoPainelListagemEndereco() {
@@ -147,8 +202,13 @@ public class Menu {
 //				}
 //			});
 
-		
+	}
+
+	private void bloquearTodoMenu() {
+		mnAgendamentos.setEnabled(false);
+		mnTreinos.setEnabled(false);
+		mnEnderecos.setEnabled(false);
+		mnUsuarios.setEnabled(false);
 	}
 
 }
-

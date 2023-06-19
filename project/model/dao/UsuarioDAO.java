@@ -107,6 +107,32 @@ public class UsuarioDAO {
 		return usuarioConsultado;
 	}
 	
+	public Usuario consultarPorLoginSenha(String login, String senha) {
+		Usuario usuarioConsultado = null;
+		Connection conexao = Banco.getConnection();
+		String sql =  " SELECT * FROM USUARIO "
+				    + " WHERE LOGIN = ? AND SENHA = ?";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		
+		try {
+			query.setString(1, login);
+			query.setString(2, senha);
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				usuarioConsultado = converterDeResultSetParaEntidade(resultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar usuario com login: + " + login
+								+ "\n Causa: " + e.getMessage());	
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return usuarioConsultado;
+	}
+	
 	private Usuario converterDeResultSetParaEntidade(ResultSet resultado) throws SQLException {
 		Usuario pessoaConsultada = new Usuario();
 		PessoaDAO pessoa = new PessoaDAO();
