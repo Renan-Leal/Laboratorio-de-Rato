@@ -6,29 +6,28 @@ public class Agendamento {
 	private Integer id; //auto increment
 	private Usuario cliente; //usuario autenticado
 	private Usuario profissional; //inormado pelo cb
-	private boolean aceito; // inicia nulo
-	// trocar para Boolean(pois pode ser true, fqalse ou null), camel case tb
-	private String motivo_rejeicao; //inicia nulo
+	private Boolean aceito; // inicia nulo	
+	private String motivoRejeicao; //inicia nulo
 	private LocalDateTime dataHoraInicio; // info pelo usuario
-	private LocalDateTime dataHoraFinal; // se a hr final for maior que a hr max de trabalho do profissional, lança ecessao
-	//na listagem de agendamentos do profissional informando um periodo, ter aceite e rejeição
+	private LocalDateTime dataHoraFinal; // se a hr final for maior que a hr max de trabalho do profissional, lanï¿½a ecessao
+	//na listagem de agendamentos do profissional informando um periodo, ter aceite e rejeiï¿½ï¿½o
 	//fazer listagem de usuario pelo tipo
 	
-	public Agendamento() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Agendamento(Integer id, Usuario cliente, Usuario profissional, boolean aceito, String motivo_rejeicao,
+	public Agendamento(Integer id, Usuario cliente, Usuario profissional, Boolean aceito, String motivoRejeicao,
 			LocalDateTime dataHoraInicio, LocalDateTime dataHoraFinal) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
 		this.profissional = profissional;
 		this.aceito = aceito;
-		this.motivo_rejeicao = motivo_rejeicao;
+		this.motivoRejeicao = motivoRejeicao;
 		this.dataHoraInicio = dataHoraInicio;
 		this.dataHoraFinal = dataHoraFinal;
+	}
+
+	public Agendamento() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
@@ -55,20 +54,20 @@ public class Agendamento {
 		this.profissional = profissional;
 	}
 
-	public boolean isAceito() {
+	public Boolean getAceito() {
 		return aceito;
 	}
 
-	public void setAceito(boolean aceito) {
+	public void setAceito(Boolean aceito) {
 		this.aceito = aceito;
 	}
 
-	public String getMotivo_rejeicao() {
-		return motivo_rejeicao;
+	public String getMotivoRejeicao() {
+		return motivoRejeicao;
 	}
 
-	public void setMotivo_rejeicao(String motivo_rejeicao) {
-		this.motivo_rejeicao = motivo_rejeicao;
+	public void setMotivoRejeicao(String motivoRejeicao) {
+		this.motivoRejeicao = motivoRejeicao;
 	}
 
 	public LocalDateTime getDataHoraInicio() {
@@ -87,10 +86,4 @@ public class Agendamento {
 		this.dataHoraFinal = dataHoraFinal;
 	}
 	
-	
-	
-	
-	
-	
-
 }
