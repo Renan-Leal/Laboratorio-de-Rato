@@ -29,4 +29,11 @@ public class UsuarioBO {
 	public List<Usuario> consultarTodos() {
 		return dao.consultarTodos();
 	}
+
+	public Usuario consultarPorLoginSenha(String login, String senha) {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuarioConsultado = usuarioDAO.consultarPorLoginSenha(login, senha);  
+		
+		return usuarioConsultado;
+	}
 }
