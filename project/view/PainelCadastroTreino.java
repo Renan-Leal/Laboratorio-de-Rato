@@ -16,78 +16,62 @@ import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JTextArea;
 
 public class PainelCadastroTreino extends JPanel {
-
-	private JLabel lblPrazo;
 	private JLabel lblNvl;
 	private JLabel lblTreino;
-	private JTextField txtPrazo;
 	private JComboBox cbNvl;
 	private JButton btnCadastrar;
 	private JTextArea textArea;
+	private JLabel lblCliente;
+	private JLabel lblProfissional;
+	private JComboBox comboBox;
 
 	public PainelCadastroTreino() {
 		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("8px"),
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("93px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("81px:grow"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("86px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("7px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("34px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("81px"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,},
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("60px"),
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("141px"),
+				ColumnSpec.decode("23px"),
+				ColumnSpec.decode("27px"),
+				ColumnSpec.decode("45px"),
+				ColumnSpec.decode("119px"),},
 			new RowSpec[] {
-				FormSpecs.LINE_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("30px"),
 				RowSpec.decode("23px"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		lblPrazo = new JLabel("Prazo:");
-		lblPrazo.setBounds(37, 26, 46, 14);
-		add(lblPrazo, "4, 4, left, center");
+				RowSpec.decode("22px"),
+				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
+				RowSpec.decode("14px"),
+				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				RowSpec.decode("134px"),
+				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				RowSpec.decode("23px"),}));
 		
-		txtPrazo = new JTextField();
-		txtPrazo.setBounds(77, 23, 86, 20);
-		add(txtPrazo, "6, 4, left, center");
-		txtPrazo.setColumns(10);
+		lblCliente = new JLabel("Cliente:");
+		add(lblCliente, "2, 2, right, center");
+		
+		JComboBox cbCliente = new JComboBox();
+		add(cbCliente, "4, 2, fill, top");
 		
 		lblNvl = new JLabel("Nível:");
-		lblNvl.setBounds(188, 26, 46, 14);
-		add(lblNvl, "8, 4, center, center");
+		add(lblNvl, "6, 2, left, center");
 		
 		cbNvl = new JComboBox(new String[] {"BÁSICO","INTERMEDIÁRIO","AVANÇADO"});
-		cbNvl.setBounds(224, 22, 82, 22);
-		add(cbNvl, "12, 4, 3, 1, fill, fill");
+		add(cbNvl, "8, 2, fill, fill");
+		
+		lblProfissional = new JLabel("Profissional:");
+		add(lblProfissional, "2, 4, left, center");
+		
+		comboBox = new JComboBox();
+		add(comboBox, "4, 4, fill, top");
 		
 		lblTreino = new JLabel("Treino:");
-		lblTreino.setBounds(146, 56, 46, 14);
-		add(lblTreino, "4, 8, left, center");
+		add(lblTreino, "2, 6, right, top");
 		
 		textArea = new JTextArea();
-		add(textArea, "6, 8, 8, 5, fill, fill");
+		add(textArea, "2, 8, 7, 1, fill, fill");
 		
 		btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBounds(124, 533, 89, 23);
-		add(btnCadastrar, "6, 14, 8, 1, fill, fill");
+		add(btnCadastrar, "4, 10, 5, 1, fill, top");
 	}
 }

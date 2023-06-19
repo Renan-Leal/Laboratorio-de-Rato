@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class TreinoDAO {
 	public Treino inserir(Treino novoTreino) {
 
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO TREINO (ID_CLIENTE, ID_PROFISSIONAL, DT_CADASTRO, " + " DT_TERMINO, NIVEL, TREINO) "
+		String sql = " INSERT INTO TREINO (ID_CLIENTE, ID_PROFISSIONAL, DT_CADASTRO, " + " DT_TERMINO, ID_NIVELTREINO, TREINO) "
 				+ " VALUES (?,?,?,?,?,?)";
 
 		PreparedStatement query = Banco.getPreparedStatementWithPk(conexao, sql);
@@ -23,8 +24,8 @@ public class TreinoDAO {
 		try {
 			query.setInt(1, novoTreino.getCliente().getId());
 			query.setInt(2, novoTreino.getProfissional().getId());
-			query.setString(3, novoTreino.getDtCadastro());
-			query.setString(4, novoTreino.getDtTermino());
+			query.setObject(3, novoTreino.getDtCadastro());
+			query.setObject(4, novoTreino.getDtTermino());
 			query.setInt(5, novoTreino.getNivelTreino().getValor());
 			query.setString(6, novoTreino.getTreino());
 			query.execute();
@@ -50,13 +51,13 @@ public class TreinoDAO {
 		boolean atualizou = false;
 		Connection conexao = Banco.getConnection();
 		String sql = " UPDATE TREINO " + " SET ID_CLIENTE = ?, ID_PROFISSIONAL = ?, DT_CADASTRO = ?, "
-				+ " DT_TERMINO = ?, NIVEL = ?, TREINO = ?" + " WHERE ID = ? ";
+				+ " DT_TERMINO = ?, ID_NIVELTREINO = ?, TREINO = ?" + " WHERE ID = ? ";
 		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
 		try {
 			query.setInt(1, treinoEditado.getCliente().getId());
 			query.setInt(2, treinoEditado.getProfissional().getId());
-			query.setString(3, treinoEditado.getDtCadastro());
-			query.setString(4, treinoEditado.getDtTermino());
+			query.setObject(3, treinoEditado.getDtCadastro());
+			query.setObject(4, treinoEditado.getDtTermino());
 			query.setInt(5, treinoEditado.getNivelTreino().getValor());
 			query.setString(6, treinoEditado.getTreino());
 			query.setInt(7, treinoEditado.getId());
@@ -103,9 +104,9 @@ public class TreinoDAO {
 		treinoConsultado.setId(resultado.getInt("ID"));
 		treinoConsultado.setProfissional(usuarioDao.consultarPorId(resultado.getInt("ID_PROFISSIONAL")));
 		treinoConsultado.setCliente(usuarioDao.consultarPorId(resultado.getInt("ID_CLIENTE")));
-		treinoConsultado.setDtCadastro(resultado.getString("DT_CADASTRO"));
-		treinoConsultado.setDtTermino(resultado.getString("DT_TERMINO"));
-		treinoConsultado.setNivelTreino(NivelTreino.getNivelTreinoPorValor(resultado.getInt("NIVEL")));
+		treinoConsultado.setDtCadastro(LocalDateTime.parse(resultado.getString("DT_CADASTRO")));
+		treinoConsultado.setDtTermino(LocalDateTime.parse(resultado.getString("DT_TERMINO")));
+		treinoConsultado.setNivelTreino(NivelTreino.getNivelTreinoPorValor(resultado.getInt("ID_NIVELTREINO")));
 		treinoConsultado.setTreino(resultado.getString("TREINO"));
 		return treinoConsultado;
 	}

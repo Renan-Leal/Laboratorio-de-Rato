@@ -18,10 +18,8 @@ public class TreinoController {
 	
 	private void validarCamposObrigatorios(Treino treino) throws CampoInvalidoException {
 		
-		String[] valores = {treino.getCliente().getEmail(), treino.getProfissional().getEmail(), treino.getDtCadastro(), treino.getDtTermino(),
-				treino.getTreino()};
-		String[] camposInvalidos = {"Cliente", "Proffisional", "Data Cadastro", "Data Termino", "Treino"};
-		//não consegui fazer com que ele validasse int
+		String[] valores = {treino.getCliente().getEmail(), treino.getProfissional().getEmail(), treino.getTreino()};
+		String[] camposInvalidos = {"Cliente", "Profisional", "Treino"};
 		String mensagemValidacao = "";
 		
 		for (int i = 0; i < valores.length; i++) {

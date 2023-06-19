@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.dao.EnderecoDAO;
 import model.exception.EnderecoInvalidoException;
+import model.seletor.EnderecoSeletor;
 import model.vo.Endereco;
 
 public class EnderecoBO {
@@ -28,5 +29,13 @@ public class EnderecoBO {
 	
 	public List<Endereco> consultarTodos() {
 		return dao.consultarTodos();
+	}
+
+	public int contarTotalRegistrosComFiltros(EnderecoSeletor seletor) {
+		return dao.contarTotalRegistrosComFiltros(seletor);
+	}
+
+	public List<Endereco> consultarComFiltros(EnderecoSeletor seletor) {
+		return dao.consultarComFiltros(seletor);
 	}
 }

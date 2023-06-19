@@ -1,9 +1,12 @@
 package model.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.bo.UsuarioBO;
 import model.exception.CampoInvalidoException;
+import model.gerador.GeradorPlanilha;
+import model.seletor.UsuarioSeletor;
 import model.vo.Usuario;
 
 public class UsuarioController {
@@ -72,6 +75,22 @@ public class UsuarioController {
 		}
 
 		return usuarioConsultado;
+	}
+
+	public List<Usuario> consultarComFiltros(UsuarioSeletor seletor) {
+		return bo.consultarComFiltros(seletor);
+	}
+
+	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
+		return bo.contarTotalRegistrosComFiltros(seletor);
+	}
+
+	public String gerarPlanilha(ArrayList<Usuario> usuarios, String destinoArquivo) throws CampoInvalidoException{
+		if(usuarios == null || destinoArquivo == null || destinoArquivo.trim().isEmpty()) {
+			throw new CampoInvalidoException("Preencha todos os campos");
+		}
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaUsuarios(usuarios, destinoArquivo);
 	}
 
 

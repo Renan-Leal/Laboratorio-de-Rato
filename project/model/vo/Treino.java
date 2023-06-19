@@ -1,11 +1,13 @@
 package model.vo;
 
+import java.time.LocalDateTime;
+
 public class Treino {
 	private Integer id;
 	private Usuario cliente;
 	private Usuario profissional;
-	private String dtCadastro;
-	private String dtTermino;
+	private LocalDateTime dtCadastro;
+	private LocalDateTime dtTermino;
 	private NivelTreino nivelTreino;
 	private String treino;
 
@@ -14,7 +16,7 @@ public class Treino {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Treino(Integer id, Usuario cliente, Usuario profissional, String dtCadastro, String dtTermino,
+	public Treino(Integer id, Usuario cliente, Usuario profissional, LocalDateTime dtCadastro, LocalDateTime dtTermino,
 			NivelTreino nivelTreino, String treino) {
 		super();
 		this.id = id;
@@ -50,19 +52,19 @@ public class Treino {
 		this.profissional = profissional;
 	}
 
-	public String getDtCadastro() {
+	public LocalDateTime getDtCadastro() {
 		return dtCadastro;
 	}
 
-	public void setDtCadastro(String dtCadastro) {
+	public void setDtCadastro(LocalDateTime dtCadastro) {
 		this.dtCadastro = dtCadastro;
 	}
 
-	public String getDtTermino() {
+	public LocalDateTime getDtTermino() {
 		return dtTermino;
 	}
 
-	public void setDtTermino(String dtTermino) {
+	public void setDtTermino(LocalDateTime dtTermino) {
 		this.dtTermino = dtTermino;
 	}
 
