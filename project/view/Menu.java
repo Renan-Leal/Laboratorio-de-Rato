@@ -146,22 +146,13 @@ public class Menu {
 						mnTreinos.setEnabled(true);
 						mnEnderecos.setEnabled(true);
 						mnUsuarios.setEnabled(true);
-						painelCadastroUsuario = new PainelCadastroUsuario();
-						frame.setContentPane(painelCadastroUsuario);
-						frame.revalidate();
 						
 						
 					} else if (usuarioAutenticado != null && usuarioAutenticado.getTipoUsuario() == TipoUsuario.PERSONAL_TRAINER){
 						mnAgendamentos.setEnabled(true);
 						mnTreinos.setEnabled(true);
-						painelCadastroTreino = new PainelCadastroTreino();
-						frame.setContentPane(painelCadastroTreino);
-						frame.revalidate();
 					} else {
 						mnAgendamentos.setEnabled(true);
-						painelAgendamentoTreino = new PainelAgendamentoTreino();
-						frame.setContentPane(painelAgendamentoTreino);
-						frame.revalidate();
 					}
 					
 					
