@@ -68,5 +68,7 @@ public class PainelLogin extends JPanel {
 		usuarioAutenticado = new UsuarioController().consultarPorLoginSenha(this.txtLogin.getText(), this.txtSenha.getText());
 		return usuarioAutenticado;
 	}
+	
+	
 
 }
