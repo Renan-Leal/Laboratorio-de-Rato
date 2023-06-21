@@ -15,6 +15,10 @@ import model.exception.CampoInvalidoException;
 import model.vo.Endereco;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class PainelCadastroEndereco extends JPanel {
 
@@ -33,75 +37,91 @@ public class PainelCadastroEndereco extends JPanel {
 	private JTextField txtCidade;
 	private JLabel lblEstado;
 	private JComboBox cbEstado;
+	private String[] estados = {"PR", "RS", "SC"};
+	private JLabel lblCep;
 	
 	public PainelCadastroEndereco() {
-		setLayout(null);
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("30px"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("40px"),
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("78px"),
+				ColumnSpec.decode("30px"),
+				ColumnSpec.decode("10px"),
+				ColumnSpec.decode("30px"),
+				ColumnSpec.decode("46px"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("90px"),},
+			new RowSpec[] {
+				FormSpecs.LINE_GAP_ROWSPEC,
+				RowSpec.decode("10px"),
+				RowSpec.decode("26px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("24px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("24px"),
+				RowSpec.decode("20px"),
+				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
+				RowSpec.decode("22px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("24px"),}));
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(206, 5, 10, 10);
-		add(panel);
+		add(panel, "8, 2, left, top");
 		
 		txtCep = new JTextField();
-		txtCep.setBounds(48, 41, 128, 20);
-		add(txtCep);
+		add(txtCep, "4, 4, 3, 1, fill, top");
 		txtCep.setColumns(10);
 		
 		txtNumero = new JTextField();
-		txtNumero.setBounds(302, 41, 86, 20);
-		add(txtNumero);
+		add(txtNumero, "12, 4, center, top");
 		txtNumero.setColumns(10);
 		
-		JLabel lblCep = new JLabel("CEP:");
-		lblCep.setBounds(14, 44, 46, 14);
-		add(lblCep);
+		lblCep = new JLabel("CEP:");
+		add(lblCep, "2, 4, 3, 1, center, center");
 		
 		lblNumero = new JLabel("N\u00FAmero:");
-		lblNumero.setBounds(246, 44, 46, 14);
-		add(lblNumero);
+		add(lblNumero, "10, 4, fill, center");
 		
 		lblRua = new JLabel("Rua: ");
-		lblRua.setBounds(14, 88, 26, 14);
-		add(lblRua);
+		add(lblRua, "2, 6, right, center");
 		
 		txtRua = new JTextField();
-		txtRua.setBounds(48, 85, 341, 20);
-		add(txtRua);
+		add(txtRua, "4, 6, 9, 1, fill, top");
 		txtRua.setColumns(10);
 		
 		lblComplemento = new JLabel("Complemento:");
-		lblComplemento.setBounds(10, 132, 78, 14);
-		add(lblComplemento);
+		add(lblComplemento, "2, 8, 3, 1, fill, center");
 		
 		txtComplemento = new JTextField();
-		txtComplemento.setBounds(98, 129, 291, 20);
-		add(txtComplemento);
+		add(txtComplemento, "6, 8, 7, 1, fill, top");
 		txtComplemento.setColumns(10);
 		
 		lblBairro = new JLabel("Bairro: ");
-		lblBairro.setBounds(29, 170, 46, 14);
-		add(lblBairro);
+		add(lblBairro, "2, 10, 3, 1, center, center");
 		
 		txtBairro = new JTextField();
-		txtBairro.setBounds(98, 167, 290, 20);
-		add(txtBairro);
+		add(txtBairro, "6, 10, 7, 1, fill, top");
 		txtBairro.setColumns(10);
 		
 		lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(29, 205, 46, 14);
-		add(lblCidade);
+		add(lblCidade, "2, 12, 3, 1, center, center");
 		
 		txtCidade = new JTextField();
-		txtCidade.setBounds(98, 202, 290, 20);
-		add(txtCidade);
+		add(txtCidade, "6, 12, 7, 1, fill, top");
 		txtCidade.setColumns(10);
 		
 		lblEstado = new JLabel("Estado:");
-		lblEstado.setBounds(29, 242, 46, 14);
-		add(lblEstado);
+		add(lblEstado, "2, 14, 3, 1, center, center");
 		
-		cbEstado = new JComboBox();
-		cbEstado.setBounds(98, 238, 290, 22);
-		add(cbEstado);
+		cbEstado = new JComboBox(estados);
+		this.add(cbEstado, "6, 14, 7, 1, fill, fill");
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -112,7 +132,7 @@ public class PainelCadastroEndereco extends JPanel {
 				endereco.setComplemento(txtComplemento.getText());
 				endereco.setBairro(txtBairro.getText());
 				endereco.setCidade(txtCidade.getText());
-				endereco.setEstado(cbEstado.getActionCommand());
+				endereco.setEstado((String) cbEstado.getSelectedItem());
 				
 				EnderecoController controller = new EnderecoController();
 				
@@ -120,10 +140,6 @@ public class PainelCadastroEndereco extends JPanel {
 					if(endereco.getId() == null) {
 						controller.inserir(endereco);
 						JOptionPane.showMessageDialog(null, "Endereço cadastrado com sucesso!", 
-								"Sucesso", JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						controller.atualizar(endereco);
-						JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!", 
 								"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 					}
 				} catch (CampoInvalidoException excecao) {
@@ -133,12 +149,10 @@ public class PainelCadastroEndereco extends JPanel {
 				
 			}
 		});
-		btnSalvar.setBounds(299, 266, 89, 23);
-		add(btnSalvar);
+		add(btnSalvar, "12, 16, fill, top");
 		
 		btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(10, 267, 89, 23);
-		add(btnVoltar);
+		add(btnVoltar, "2, 16, 5, 1, left, bottom");
 		
 		if(this.endereco.getId() != null) {
 			preencherCamposTela();
