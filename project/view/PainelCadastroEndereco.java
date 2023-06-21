@@ -119,11 +119,11 @@ public class PainelCadastroEndereco extends JPanel {
 				try {
 					if(endereco.getId() == null) {
 						controller.inserir(endereco);
-						JOptionPane.showMessageDialog(null, "Endereco cadastrado com sucesso!", 
+						JOptionPane.showMessageDialog(null, "Endereço cadastrado com sucesso!", 
 								"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						controller.atualizar(endereco);
-						JOptionPane.showMessageDialog(null, "Endereco atualizado com sucesso!", 
+						JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!", 
 								"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 					}
 				} catch (CampoInvalidoException excecao) {
