@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.seletor.EnderecoSeletor;
 import model.vo.Endereco;
 
 public class EnderecoDAO {
@@ -92,7 +93,7 @@ public class EnderecoDAO {
 			ResultSet resultado = query.executeQuery();
 			
 			if(resultado.next()) {
-				enderecoConsultado = converterDeResultSetParaEntidade(resultado);
+				enderecoConsultado = montarEnderecoComResultadoDoBanco(resultado);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar endereço com id: + " + id 
@@ -136,7 +137,7 @@ public class EnderecoDAO {
 		try {
 			ResultSet resultado = query.executeQuery();
 			while(resultado.next()) {
-				Endereco enderecoConsultado = converterDeResultSetParaEntidade(resultado);
+				Endereco enderecoConsultado = montarEnderecoComResultadoDoBanco(resultado);
 				enderecos.add(enderecoConsultado);
 			}
 		} catch (SQLException e) {
@@ -150,7 +151,7 @@ public class EnderecoDAO {
 		return enderecos;
 	}
 	
-	private Endereco converterDeResultSetParaEntidade(ResultSet resultado) throws SQLException {
+	private Endereco montarEnderecoComResultadoDoBanco(ResultSet resultado) throws SQLException {
 		Endereco enderecoConsultado = new Endereco(); 
 		enderecoConsultado.setId(resultado.getInt("id"));
 		enderecoConsultado.setCep(resultado.getString("cep"));
@@ -161,6 +162,91 @@ public class EnderecoDAO {
 		enderecoConsultado.setEstado(resultado.getString("estado"));
 		enderecoConsultado.setComplemento(resultado.getString("complemento"));
 		return enderecoConsultado;
+	}
+
+	public List<Endereco> consultarComFiltros(EnderecoSeletor seletor) {
+		List<Endereco> enderecos = new ArrayList<Endereco>();
+		Connection conexao = Banco.getConnection();
+		String sql = " select * from ENDERECO ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		if(seletor.temPaginacao()) {
+			sql += " LIMIT "  + seletor.getLimite()
+				 + " OFFSET " + seletor.getOffset();  
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			while(resultado.next()) {
+				Endereco enderecoBuscado = montarEnderecoComResultadoDoBanco(resultado);
+				enderecos.add(enderecoBuscado);
+			}
+			
+		}catch (Exception e) {
+			System.out.println("Erro ao buscar todos os enderecos. \n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return enderecos;
+	}
+
+	private String preencherFiltros(String sql, EnderecoSeletor seletor) {
+		boolean primeiro = true;
+		if(seletor.getBairro() != null && !seletor.getBairro().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			
+			sql += " BAIRRO LIKE '%" + seletor.getBairro() + "%'";
+			primeiro = false;
+		}
+		
+		if(seletor.getCidade() != null && !seletor.getCidade().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " CIDADE LIKE '%" + seletor.getCidade() + "%'";
+			primeiro = false;
+		}
+		return sql;
+	}
+	
+	public int contarTotalRegistrosComFiltros(EnderecoSeletor seletor) {
+		int total = 0;
+		Connection conexao = Banco.getConnection();
+		String sql = " select count(*) from ENDERECO ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				total = resultado.getInt(1);
+			}
+		}catch (Exception e) {
+			System.out.println("Erro contar o total de endereços" 
+					+ "\n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return total;
 	}
 
 }

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.seletor.EnderecoSeletor;
+import model.seletor.UsuarioSeletor;
+import model.vo.Endereco;
 import model.vo.TipoUsuario;
 import model.vo.Usuario;
 
@@ -94,7 +97,7 @@ public class UsuarioDAO {
 			ResultSet resultado = query.executeQuery();
 			
 			if(resultado.next()) {
-				usuarioConsultado = converterDeResultSetParaEntidade(resultado);
+				usuarioConsultado = montarUsuarioComResultadoDoBanco(resultado);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar usuario com id: + " + id 
@@ -120,7 +123,7 @@ public class UsuarioDAO {
 			ResultSet resultado = query.executeQuery();
 			
 			if(resultado.next()) {
-				usuarioConsultado = converterDeResultSetParaEntidade(resultado);
+				usuarioConsultado = montarUsuarioComResultadoDoBanco(resultado);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar usuario com login: + " + login
@@ -133,7 +136,7 @@ public class UsuarioDAO {
 		return usuarioConsultado;
 	}
 	
-	private Usuario converterDeResultSetParaEntidade(ResultSet resultado) throws SQLException {
+	private Usuario montarUsuarioComResultadoDoBanco(ResultSet resultado) throws SQLException {
 		Usuario pessoaConsultada = new Usuario();
 		PessoaDAO pessoa = new PessoaDAO();
 		pessoaConsultada.setId(resultado.getInt("id"));
@@ -178,7 +181,7 @@ public class UsuarioDAO {
 		try {
 			ResultSet resultado = query.executeQuery();
 			while(resultado.next()) {
-				Usuario usuarioConsultado = converterDeResultSetParaEntidade(resultado);
+				Usuario usuarioConsultado = montarUsuarioComResultadoDoBanco(resultado);
 				usuarios.add(usuarioConsultado);
 			}
 		} catch (SQLException e) {
@@ -190,6 +193,91 @@ public class UsuarioDAO {
 		}
 		
 		return usuarios;
+	}
+	
+	public List<Usuario> consultarComFiltros(UsuarioSeletor seletor) {
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		Connection conexao = Banco.getConnection();
+		String sql = " select * from USUARIO ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		if(seletor.temPaginacao()) {
+			sql += " LIMIT "  + seletor.getLimite()
+				 + " OFFSET " + seletor.getOffset();  
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			while(resultado.next()) {
+				Usuario usuarioBuscado = montarUsuarioComResultadoDoBanco(resultado);
+				usuarios.add(usuarioBuscado);
+			}
+			
+		}catch (Exception e) {
+			System.out.println("Erro ao buscar todos os usuarios. \n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return usuarios;
+	}
+
+	private String preencherFiltros(String sql, UsuarioSeletor seletor) {
+		boolean primeiro = true;
+		if(seletor.getNome() != null && !seletor.getNome().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			
+			sql += " USUARIO LIKE '%" + seletor.getNome() + "%'";
+			primeiro = false;
+		}
+		
+		if(seletor.getTipo() != null && !seletor.getTipo().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " TIPO LIKE '%" + seletor.getTipo() + "%'";
+			primeiro = false;
+		}
+		return sql;
+	}
+	
+	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
+		int total = 0;
+		Connection conexao = Banco.getConnection();
+		String sql = " select count(*) from USUARIO ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				total = resultado.getInt(1);
+			}
+		}catch (Exception e) {
+			System.out.println("Erro contar o total de usuarios" 
+					+ "\n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return total;
 	}
 
 }

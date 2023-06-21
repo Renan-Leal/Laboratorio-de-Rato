@@ -8,53 +8,66 @@ import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class PainelAgendamentoTreino extends JPanel {
 	
 	public PainelAgendamentoTreino() {
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("18px"),
+				ColumnSpec.decode("53px"),
+				ColumnSpec.decode("18px"),
+				ColumnSpec.decode("125px"),
+				ColumnSpec.decode("21px"),
+				ColumnSpec.decode("53px"),
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("125px"),},
+			new RowSpec[] {
+				RowSpec.decode("32px"),
+				RowSpec.decode("22px"),
+				RowSpec.decode("28px"),
+				RowSpec.decode("22px"),
+				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				RowSpec.decode("14px"),
+				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
+				RowSpec.decode("22px"),
+				RowSpec.decode("35px"),
+				RowSpec.decode("23px"),}));
 		JLabel lblCliente = new JLabel("Cliente:");
-		lblCliente.setBounds(15, 18, 46, 14);
-		add(lblCliente);
+		add(lblCliente, "2, 2, left, center");
 		
 		JComboBox cbCliente = new JComboBox();
-		cbCliente.setBounds(71, 14, 335, 22);
-		add(cbCliente);
+		add(cbCliente, "4, 2, 5, 1, fill, top");
 		
 		JLabel lblPersonal = new JLabel("Personal:");
-		lblPersonal.setBounds(15, 54, 46, 14);
-		add(lblPersonal);
+		add(lblPersonal, "2, 4, left, center");
 		
 		JComboBox cbPersonal = new JComboBox();
-		cbPersonal.setBounds(71, 50, 335, 22);
-		add(cbPersonal);
+		add(cbPersonal, "4, 4, 5, 1, fill, top");
 		
 		JLabel lblInicio = new JLabel("Inicio -");
-		lblInicio.setBounds(15, 94, 46, 14);
-		add(lblInicio);
+		add(lblInicio, "2, 6, left, top");
 		
 		JLabel lblDataInicio = new JLabel("Data Hora:");
-		lblDataInicio.setBounds(71, 94, 76, 14);
-		add(lblDataInicio);
+		add(lblDataInicio, "2, 8, left, center");
 		
 		JComboBox cbHoraInicio = new JComboBox();
-		cbHoraInicio.setBounds(133, 90, 273, 22);
-		add(cbHoraInicio);
+		add(cbHoraInicio, "4, 8, fill, top");
 		
 		JComboBox cbHoraFinal = new JComboBox();
-		cbHoraFinal.setBounds(133, 123, 273, 22);
-		add(cbHoraFinal);
+		add(cbHoraFinal, "8, 8, fill, top");
 		
 		JLabel lblDataFinal = new JLabel("Data Hora:");
-		lblDataFinal.setBounds(71, 127, 61, 14);
-		add(lblDataFinal);
+		add(lblDataFinal, "6, 8, left, center");
 		
 		JLabel lblFinal = new JLabel("Final -");
-		lblFinal.setBounds(15, 127, 46, 14);
-		add(lblFinal);
+		add(lblFinal, "6, 6, left, top");
 		
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(173, 166, 89, 23);
-		add(btnSalvar);
+		add(btnSalvar, "8, 10, right, top");
 	}
 
 
