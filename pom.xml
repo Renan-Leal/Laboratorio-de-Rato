@@ -22,5 +22,32 @@
 		    <artifactId>jgoodies-forms</artifactId>
 		    <version>1.6.0</version>
 		</dependency>
-  </dependencies>
+		<!-- Dependências para a geração de planilhas (Apache POI) -->
+		<!-- arquivos .xls -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>5.2.3</version>
+		</dependency>
+		<!-- arquivos .xlsx -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>5.2.3</version>
+		</dependency>
+		
+		<!--  https://mvnrepository.com/artifact/org.apache.commons/commons-email  -->
+<dependency>
+<groupId>org.apache.commons</groupId>
+<artifactId>commons-email</artifactId>
+<version>1.5</version>
+</dependency>
+<!--  https://mvnrepository.com/artifact/javax.mail/mail  -->
+<dependency>
+<groupId>javax.mail</groupId>
+<artifactId>mail</artifactId>
+<version>1.4</version>
+</dependency>
+
+ </dependencies>
 </project>

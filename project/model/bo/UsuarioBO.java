@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.dao.UsuarioDAO;
 import model.exception.CampoInvalidoException;
+import model.seletor.UsuarioSeletor;
 import model.vo.Usuario;
 
 public class UsuarioBO {
@@ -28,5 +29,20 @@ public class UsuarioBO {
 	
 	public List<Usuario> consultarTodos() {
 		return dao.consultarTodos();
+	}
+
+	public Usuario consultarPorLoginSenha(String login, String senha) {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuarioConsultado = usuarioDAO.consultarPorLoginSenha(login, senha);  
+		
+		return usuarioConsultado;
+	}
+	
+	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
+		return dao.contarTotalRegistrosComFiltros(seletor);
+	}
+
+	public List<Usuario> consultarComFiltros(UsuarioSeletor seletor) {
+		return dao.consultarComFiltros(seletor);
 	}
 }

@@ -1,10 +1,13 @@
 package model.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.bo.EnderecoBO;
 import model.exception.CampoInvalidoException;
 import model.exception.EnderecoInvalidoException;
+import model.gerador.GeradorPlanilha;
+import model.seletor.EnderecoSeletor;
 import model.vo.Endereco;
 
 public class EnderecoController {
@@ -62,6 +65,22 @@ public class EnderecoController {
 	
 	public List<Endereco> consultarTodos() {
 		return bo.consultarTodos();
+	}
+	
+	public List<Endereco> consultarComFiltros(EnderecoSeletor seletor) {
+		return bo.consultarComFiltros(seletor);
+	}
+
+	public int contarTotalRegistrosComFiltros(EnderecoSeletor seletor) {
+		return bo.contarTotalRegistrosComFiltros(seletor);
+	}
+
+	public String gerarPlanilha(ArrayList<Endereco> enderecos, String destinoArquivo) throws CampoInvalidoException{
+		if(enderecos == null || destinoArquivo == null || destinoArquivo.trim().isEmpty()) {
+			throw new CampoInvalidoException("Preencha todos os campos");
+		}
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaEnderecos(enderecos, destinoArquivo);
 	}
 
 }
