@@ -43,7 +43,6 @@ public class PainelCadastroUsuario extends JPanel {
 	private JTextField txtLogin;
 	private JTextField txtValorHora;
 	private Usuario usuario;
-	private Pessoa pessoa;
 	private MaskFormatter mascaraCpf;
 	private JLabel lblNome;
 	private JComboBox cbTipoUsuario;
@@ -59,8 +58,7 @@ public class PainelCadastroUsuario extends JPanel {
 	private JLabel lblValorHora;
 	private JLabel lblLogin;
 	private JLabel lblEndereco;
-	//TODO Alterar todas as referências de pessoa pra this.usuario.getPessoa()
-	public PainelCadastroUsuario(Usuario usuario, Pessoa pessoa) {
+	public PainelCadastroUsuario(Usuario usuario) {
 		setLayout(new FormLayout(
 				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(14dlu;default)"),
 						ColumnSpec.decode("79px"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("134px"),
@@ -183,7 +181,7 @@ public class PainelCadastroUsuario extends JPanel {
 		add(btnSalvar, "11, 14, fill, fill");
 
 		this.usuario = usuario;
-		if (this.usuario != null && this.pessoa != null) {
+		if (this.usuario != null && this.usuario.getPessoa() != null) {
 			preencherCamposTela();
 		} else {
 			this.usuario = new Usuario();
@@ -192,39 +190,38 @@ public class PainelCadastroUsuario extends JPanel {
 	}
 
 	private void preencherCamposTela() {
-		this.txtNome.setText(this.pessoa.getNome());
-		this.txtCPF.setText(this.pessoa.getCpf());
-		this.txtDtNascimento.setText(this.pessoa.getDtNascimento().toString());
+		this.txtNome.setText(this.usuario.getPessoa().getNome());
+		this.txtCPF.setText(this.usuario.getPessoa().getCpf());
+		this.txtDtNascimento.setText(this.usuario.getPessoa().getDtNascimento().toString());
 		this.txtEmail.setText(this.usuario.getEmail());
 		this.txtMatricula.setText(this.usuario.getMatricula().toString());
-		this.txtTelefone.setText(this.pessoa.getTelefone());
+		this.txtTelefone.setText(this.usuario.getPessoa().getTelefone());
 		this.txtValorHora.setText(this.usuario.getValorHora().toString());
 		this.txtLogin.setText(this.usuario.getLogin());
 		this.txtSenha.setText(this.usuario.getSenha());
-		this.cbEndereco.setSelectedItem(this.pessoa.getEndereco());
+		this.cbEndereco.setSelectedItem(this.usuario.getPessoa().getEndereco());
 		this.cbTipoUsuario.setSelectedIndex(this.usuario.getTipoUsuario().getValor());
 
 	}
 
 	public Usuario cadastrarUsuario() {
-		this.pessoa.setNome(txtNome.getText());
+		this.usuario.getPessoa().setNome(txtNome.getText());
 		try {
 			String cpfSemMascara = (String) mascaraCpf.stringToValue(txtCPF.getText());
-			pessoa.setCpf(cpfSemMascara);
+			this.usuario.getPessoa().setCpf(cpfSemMascara);
 		} catch (ParseException e1) {
 			JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		this.usuario.setMatricula(Integer.parseInt(txtMatricula.getText()));
-		this.pessoa.setTelefone(txtTelefone.getText());
-		this.pessoa.setDtNascimento(LocalDate.parse(txtDtNascimento.getText()));
+		this.usuario.getPessoa().setTelefone(txtTelefone.getText());
+		this.usuario.getPessoa().setDtNascimento(LocalDate.parse(txtDtNascimento.getText()));
 		this.usuario.setEmail(txtEmail.getText());
 		this.usuario.setLogin(txtLogin.getText());
 		this.usuario.setSenha(txtSenha.getText());
 		this.usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex()));
-		this.pessoa.setEndereco((Endereco) cbEndereco.getSelectedItem());
-
-		this.usuario.setPessoa(this.pessoa);
-
+		this.usuario.getPessoa().setEndereco((Endereco) cbEndereco.getSelectedItem());
+		
+		//TODO Finalizar o método de Cadastro de Pessoa e Usuário
 		UsuarioController controller = new UsuarioController();
 
 		try {
