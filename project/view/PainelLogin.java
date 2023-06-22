@@ -65,7 +65,7 @@ public class PainelLogin extends JPanel {
 	@SuppressWarnings("deprecation")
 	public Usuario autenticar() throws CampoInvalidoException {
 		Usuario usuarioAutenticado = null;
-		usuarioAutenticado = new UsuarioController().consultarPorLoginSenha(this.txtLogin.getText(), this.txtSenha.getText());
+		usuarioAutenticado = new UsuarioController().consultarPorLoginSenha(this.txtLogin.getText(), String.valueOf(this.txtSenha.getPassword()));
 		return usuarioAutenticado;
 	}
 	

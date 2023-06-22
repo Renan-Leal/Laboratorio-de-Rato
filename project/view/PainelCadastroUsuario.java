@@ -26,6 +26,8 @@ import model.exception.CampoInvalidoException;
 import model.vo.TipoUsuario;
 import model.vo.Usuario;
 import model.vo.Endereco;
+import model.vo.Pessoa;
+
 import java.text.ParseException;
 import java.time.LocalDate;
 
@@ -41,6 +43,7 @@ public class PainelCadastroUsuario extends JPanel {
 	private JTextField txtLogin;
 	private JTextField txtValorHora;
 	private Usuario usuario;
+	private Pessoa pessoa;
 	private MaskFormatter mascaraCpf;
 	private JLabel lblNome;
 	private JComboBox cbTipoUsuario;
@@ -56,8 +59,8 @@ public class PainelCadastroUsuario extends JPanel {
 	private JLabel lblValorHora;
 	private JLabel lblLogin;
 	private JLabel lblEndereco;
-
-	public PainelCadastroUsuario() {
+	//TODO Alterar todas as referências de pessoa pra this.usuario.getPessoa()
+	public PainelCadastroUsuario(Usuario usuario, Pessoa pessoa) {
 		setLayout(new FormLayout(
 				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(14dlu;default)"),
 						ColumnSpec.decode("79px"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("134px"),
@@ -171,44 +174,74 @@ public class PainelCadastroUsuario extends JPanel {
 		lblTipoUsuario.setBounds(20, 225, 46, 14);
 		add(lblTipoUsuario, "9, 12, right, center");
 
-		btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				usuario.setNome(txtNome.getText());
-				try {
-					String cpfSemMascara = (String) mascaraCpf.stringToValue(txtCPF.getText());
-					usuario.setCpf(cpfSemMascara);
-				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-				usuario.setMatricula(Integer.parseInt(txtMatricula.getText()));
-				usuario.setTelefone(txtTelefone.getText());
-				usuario.setDtNascimento(LocalDate.parse(txtDtNascimento.getText()));
-				usuario.setEmail(txtEmail.getText());
-				usuario.setLogin(txtLogin.getText());
-				usuario.setSenha(txtSenha.getText());
-				usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex()));
-				usuario.setEndereco((Endereco) cbEndereco.getSelectedItem());
-
-				UsuarioController controller = new UsuarioController();
-
-				try {
-					if (usuario.getId() == null) {
-						controller.inserir(usuario);
-						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-					}
-				} catch (CampoInvalidoException excecao) {
-					JOptionPane.showMessageDialog(null, excecao.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-
 		cbTipoUsuario = new JComboBox(new String[] { "Administrador", "Personal Trainer", "Cliente" });
 		cbTipoUsuario.setBounds(65, 221, 130, 22);
 		add(cbTipoUsuario, "11, 12, fill, top");
+
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(153, 254, 89, 23);
 		add(btnSalvar, "11, 14, fill, fill");
+
+		this.usuario = usuario;
+		if (this.usuario != null && this.pessoa != null) {
+			preencherCamposTela();
+		} else {
+			this.usuario = new Usuario();
+		}
+
+	}
+
+	private void preencherCamposTela() {
+		this.txtNome.setText(this.pessoa.getNome());
+		this.txtCPF.setText(this.pessoa.getCpf());
+		this.txtDtNascimento.setText(this.pessoa.getDtNascimento().toString());
+		this.txtEmail.setText(this.usuario.getEmail());
+		this.txtMatricula.setText(this.usuario.getMatricula().toString());
+		this.txtTelefone.setText(this.pessoa.getTelefone());
+		this.txtValorHora.setText(this.usuario.getValorHora().toString());
+		this.txtLogin.setText(this.usuario.getLogin());
+		this.txtSenha.setText(this.usuario.getSenha());
+		this.cbEndereco.setSelectedItem(this.pessoa.getEndereco());
+		this.cbTipoUsuario.setSelectedIndex(this.usuario.getTipoUsuario().getValor());
+
+	}
+
+	public Usuario cadastrarUsuario() {
+		this.pessoa.setNome(txtNome.getText());
+		try {
+			String cpfSemMascara = (String) mascaraCpf.stringToValue(txtCPF.getText());
+			pessoa.setCpf(cpfSemMascara);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+		this.usuario.setMatricula(Integer.parseInt(txtMatricula.getText()));
+		this.pessoa.setTelefone(txtTelefone.getText());
+		this.pessoa.setDtNascimento(LocalDate.parse(txtDtNascimento.getText()));
+		this.usuario.setEmail(txtEmail.getText());
+		this.usuario.setLogin(txtLogin.getText());
+		this.usuario.setSenha(txtSenha.getText());
+		this.usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex()));
+		this.pessoa.setEndereco((Endereco) cbEndereco.getSelectedItem());
+
+		this.usuario.setPessoa(this.pessoa);
+
+		UsuarioController controller = new UsuarioController();
+
+		try {
+			if (usuario.getId() == null) {
+				controller.inserir(usuario);
+				JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (CampoInvalidoException excecao) {
+			JOptionPane.showMessageDialog(null, excecao.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+
+		return usuario;
+	}
+
+	public JButton getBtnSalvar() {
+		return btnSalvar;
 	}
 
 }

@@ -61,6 +61,11 @@ public class UsuarioController {
 	public List<Usuario> consultarTodos() {
 		return bo.consultarTodos();
 	}
+	
+	private void lancarExcecao() throws CampoInvalidoException {
+		throw new CampoInvalidoException("Login ou senha inválidos! "
+				+ "\nDica: Talvez o usuário não esteja cadastrado.");
+	}
 
 	public Usuario consultarPorLoginSenha(String login, String senha) throws CampoInvalidoException {
 		UsuarioBO usuarioBO =  new UsuarioBO();
@@ -68,9 +73,15 @@ public class UsuarioController {
 		boolean valido = (login != null && !login.isEmpty()) && (senha != null && !senha.isEmpty() && senha.length() == 4);
 		if (valido) {
 			usuarioConsultado = usuarioBO.consultarPorLoginSenha(login, senha);
+			if(usuarioConsultado == null) {
+				lancarExcecao();
+				
+			}
 		} else {
+			lancarExcecao();
 
-			throw new CampoInvalidoException("Login ou senha inválidos!");
+			throw new CampoInvalidoException("Login ou senha inválidos! "
+					+ "\nDica: Talvez o usuário não esteja cadastrado.");
 
 		}
 

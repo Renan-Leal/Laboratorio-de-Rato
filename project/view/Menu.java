@@ -97,8 +97,12 @@ public class Menu {
 							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.PERSONAL_TRAINER) {
 						mnAgendamentos.setEnabled(true);
 						mnTreinos.setEnabled(true);
-					} else {
+
+					} else if (usuarioAutenticado != null
+							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.CLIENTE) {
 						mnAgendamentos.setEnabled(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Usuário não cadastrado!", "Erro", JOptionPane.ERROR_MESSAGE);
 					}
 
 				} catch (CampoInvalidoException exception) {
@@ -119,7 +123,8 @@ public class Menu {
 		mntmCadastrarUsuario = new JMenuItem("Cadastrar");
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroUsuario = new PainelCadastroUsuario();
+				//TODO continuar método de cadastrar usuário
+				painelCadastroUsuario = new PainelCadastroUsuario(null, null);
 				frame.setContentPane(painelCadastroUsuario);
 				frame.revalidate();
 
@@ -139,7 +144,7 @@ public class Menu {
 			}
 		});
 		mntmListarUsuario
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-usuário-feminino-30.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-usuário-feminino-30.png")));
 		mnUsuarios.add(mntmListarUsuario);
 
 		mnTreinos = new JMenu("Treinos");
@@ -166,12 +171,12 @@ public class Menu {
 			}
 		});
 		mntmListarTreinos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-30.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-30.png")));
 		mnTreinos.add(mntmListarTreinos);
 
 		mnAgendamentos = new JMenu("Agendamentos");
 		mnAgendamentos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-halteres-com-presilha-30.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-halteres-com-presilha-30.png")));
 		menuBar.add(mnAgendamentos);
 
 		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
@@ -183,7 +188,7 @@ public class Menu {
 			}
 		});
 		mntmCadastrarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-30.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-30.png")));
 		mnAgendamentos.add(mntmCadastrarAgendamento);
 
 		mntmListarAgendamento = new JMenuItem("Listar");
@@ -195,7 +200,7 @@ public class Menu {
 			}
 		});
 		mntmListarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-30 (1).png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-30 (1).png")));
 		mnAgendamentos.add(mntmListarAgendamento);
 
 		mnEnderecos = new JMenu("Endereços");
@@ -204,7 +209,7 @@ public class Menu {
 
 		mntmCadastrarEndereco = new JMenuItem("Cadastrar");
 		mntmCadastrarEndereco
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-mapa-da-apple-30 (1).png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-mapa-da-apple-30 (1).png")));
 		mntmCadastrarEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroEndereco = new PainelCadastroEndereco(null);
