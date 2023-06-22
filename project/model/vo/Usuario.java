@@ -19,9 +19,19 @@ public class Usuario extends Pessoa{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(Integer id, Endereco endereco, String nome, String cpf, String telefone, String dtNascimento) {
-		super(id, endereco, nome, cpf, telefone, dtNascimento);
-		// TODO Auto-generated constructor stub
+	public Usuario(Integer id, Pessoa pessoa, TipoUsuario tipoUsuario, Integer matricula, String email, String login,
+			String senha, Double valorHora, LocalDateTime dataCadastro, LocalDateTime dataExpiracao) {
+		super();
+		this.id = id;
+		this.pessoa = pessoa;
+		this.tipoUsuario = tipoUsuario;
+		this.matricula = matricula;
+		this.email = email;
+		this.login = login;
+		this.senha = senha;
+		this.valorHora = valorHora;
+		this.dataCadastro = dataCadastro;
+		this.dataExpiracao = dataExpiracao;
 	}
 
 	public Integer getId() {
@@ -103,6 +113,9 @@ public class Usuario extends Pessoa{
 	public void setDataExpiracao(LocalDateTime dataExpiracao) {
 		this.dataExpiracao = dataExpiracao;
 	}
+	
+	
+
 	
 	
 

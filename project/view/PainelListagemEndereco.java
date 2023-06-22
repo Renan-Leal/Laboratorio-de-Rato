@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
 public class PainelListagemEndereco extends JPanel {
 	
 	private ArrayList<Endereco> enderecos;
-	private String[] nomesColunas = { "Id", "Rua", "Numero", "CEP", "BAIRRO", "CIDADE", "ESTADO" };
+	private String[] nomesColunas = { "Rua", "Numero", "CEP", "Bairro", "Cidade", "Estado" };
 
 	private JButton btnEditar;
 	private JTable tblEnderecos;
@@ -64,14 +64,13 @@ public class PainelListagemEndereco extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) tblEnderecos.getModel();
 
 		for (Endereco e : enderecos) {
-			Object[] novaLinhaDaTabela = new Object[5];
-			novaLinhaDaTabela[0] = e.getId();
-			novaLinhaDaTabela[1] = e.getRua();
-			novaLinhaDaTabela[2] = e.getNumero();
-			novaLinhaDaTabela[3] = e.getCep();
-			novaLinhaDaTabela[4] = e.getBairro();
-			novaLinhaDaTabela[5] = e.getCidade();
-			novaLinhaDaTabela[6] = e.getEstado();
+			Object[] novaLinhaDaTabela = new Object[6];
+			novaLinhaDaTabela[0] = e.getRua();
+			novaLinhaDaTabela[1] = e.getNumero();
+			novaLinhaDaTabela[2] = e.getCep();
+			novaLinhaDaTabela[3] = e.getBairro();
+			novaLinhaDaTabela[4] = e.getCidade();
+			novaLinhaDaTabela[5] = e.getEstado();
 
 			model.addRow(novaLinhaDaTabela);
 		}
@@ -120,10 +119,6 @@ public class PainelListagemEndereco extends JPanel {
 		add(txtBairro);
 		txtBairro.setColumns(10);
 		add(btnBuscar);
-		
-		tblEnderecos = new JTable();
-		tblEnderecos.setBounds(41, 88, 603, 139);
-		add(tblEnderecos);
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
