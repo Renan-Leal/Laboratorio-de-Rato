@@ -39,8 +39,9 @@ public class PainelCadastroEndereco extends JPanel {
 	private JComboBox cbEstado;
 	private String[] estados = {"PR", "RS", "SC"};
 	private JLabel lblCep;
+	private JButton btnSalvar;
 	
-	public PainelCadastroEndereco() {
+	public PainelCadastroEndereco(Endereco endereco) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.UNRELATED_GAP_COLSPEC,
 				ColumnSpec.decode("30px"),
@@ -76,7 +77,7 @@ public class PainelCadastroEndereco extends JPanel {
 		add(panel, "8, 2, left, top");
 		
 		txtCep = new JTextField();
-		add(txtCep, "4, 4, 3, 1, fill, top");
+		add(txtCep, "5, 4, 2, 1, fill, top");
 		txtCep.setColumns(10);
 		
 		txtNumero = new JTextField();
@@ -123,47 +124,61 @@ public class PainelCadastroEndereco extends JPanel {
 		cbEstado = new JComboBox(estados);
 		this.add(cbEstado, "6, 14, 7, 1, fill, fill");
 		
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				endereco.setCep(txtCep.getText());
-				endereco.setNumero(txtNumero.getText());
-				endereco.setRua(txtRua.getText());
-				endereco.setComplemento(txtComplemento.getText());
-				endereco.setBairro(txtBairro.getText());
-				endereco.setCidade(txtCidade.getText());
-				endereco.setEstado((String) cbEstado.getSelectedItem());
-				
-				EnderecoController controller = new EnderecoController();
-				
-				try {
-					if(endereco.getId() == null) {
-						controller.inserir(endereco);
-						JOptionPane.showMessageDialog(null, "Endereço cadastrado com sucesso!", 
-								"Sucesso", JOptionPane.INFORMATION_MESSAGE);
-					}
-				} catch (CampoInvalidoException excecao) {
-					JOptionPane.showMessageDialog(null, excecao.getMessage(), 
-							"Erro", JOptionPane.ERROR_MESSAGE); 
-				}
-				
-			}
-		});
+		btnSalvar = new JButton("Salvar");
 		add(btnSalvar, "12, 16, fill, top");
+		
+		
 		
 		btnVoltar = new JButton("Voltar");
 		add(btnVoltar, "2, 16, 5, 1, left, bottom");
 		
-		if(this.endereco.getId() != null) {
+		this.endereco = endereco;
+		if(this.endereco != null) {
 			preencherCamposTela();
+		}else {
+			this.endereco = new Endereco();
 		}
-
 	}
 	
+	public JButton getBtnSalvar() {
+		return btnSalvar;
+	}
+	
+	public void cadastrarEndereco(Endereco endereco) {
+		endereco.setCep(txtCep.getText());
+		endereco.setNumero(txtNumero.getText());
+		endereco.setRua(txtRua.getText());
+		endereco.setComplemento(txtComplemento.getText());
+		endereco.setBairro(txtBairro.getText());
+		endereco.setCidade(txtCidade.getText());
+		endereco.setEstado((String) cbEstado.getSelectedItem());
+		
+		EnderecoController enderecoController = new EnderecoController();
+		
+		try {
+			if(endereco.getId() == null) {
+				enderecoController.inserir(endereco);
+				JOptionPane.showMessageDialog(null, "Endereço cadastrado com sucesso!", 
+						"Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				enderecoController.atualizar(endereco);
+				JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!", 
+						"Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (CampoInvalidoException excecao) {
+			JOptionPane.showMessageDialog(null, excecao.getMessage(), 
+					"Erro", JOptionPane.ERROR_MESSAGE); 
+		}
+	}
+
 	private void preencherCamposTela() {
 		this.txtRua.setText(this.endereco.getRua());
 		this.txtCep.setText(this.endereco.getCep());
 		this.cbEstado.setSelectedItem(this.endereco.getEstado());
+		this.txtCidade.setText(this.endereco.getCidade());
+		this.txtBairro.setText(this.endereco.getBairro());
+		this.txtComplemento.setText(this.endereco.getComplemento());
+		this.txtNumero.setText(this.endereco.getNumero());
 	}
 	
 	public JButton getBtnVoltar() {

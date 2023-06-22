@@ -64,7 +64,7 @@ public class PainelListagemEndereco extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) tblEnderecos.getModel();
 
 		for (Endereco e : enderecos) {
-			Object[] novaLinhaDaTabela = new Object[5];
+			Object[] novaLinhaDaTabela = new Object[7];
 			novaLinhaDaTabela[0] = e.getId();
 			novaLinhaDaTabela[1] = e.getRua();
 			novaLinhaDaTabela[2] = e.getNumero();
@@ -120,10 +120,6 @@ public class PainelListagemEndereco extends JPanel {
 		add(txtBairro);
 		txtBairro.setColumns(10);
 		add(btnBuscar);
-		
-		tblEnderecos = new JTable();
-		tblEnderecos.setBounds(41, 88, 603, 139);
-		add(tblEnderecos);
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
