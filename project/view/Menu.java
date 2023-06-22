@@ -17,6 +17,8 @@ import model.vo.Usuario;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.Font;
+import java.awt.Color;
 
 public class Menu {
 
@@ -74,10 +76,12 @@ public class Menu {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 498, 344);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		menuBar = new JMenuBar();
+		menuBar.setBackground(Color.BLACK);
+		menuBar.setForeground(new Color(128, 255, 128));
 		frame.setJMenuBar(menuBar);
 
 		painelLogin = new PainelLogin();
@@ -111,12 +115,18 @@ public class Menu {
 
 		frame.setContentPane(painelLogin);
 
-		mnUsuarios = new JMenu("Usuarios");
-		mnUsuarios.setIcon(new ImageIcon(
-				Menu.class.getResource("/model/icones/icons8-primeiro-plano-do-grupo-selecionado-30.png")));
+		mnUsuarios = new JMenu("Usuários");
+		mnUsuarios.setEnabled(false);
+		mnUsuarios.setForeground(Color.WHITE);
+		mnUsuarios.setBackground(Color.BLACK);
+		mnUsuarios.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
+		mnUsuarios.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-grupo-de-usuários-30.png")));
 		menuBar.add(mnUsuarios);
 
 		mntmCadastrarUsuario = new JMenuItem("Cadastrar");
+		mntmCadastrarUsuario.setBackground(new Color(186, 255, 179));
+		mntmCadastrarUsuario.setForeground(Color.BLACK);
+		mntmCadastrarUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroUsuario = new PainelCadastroUsuario();
@@ -129,7 +139,10 @@ public class Menu {
 				new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-usuário-masculino-30.png")));
 		mnUsuarios.add(mntmCadastrarUsuario);
 
-		mntmListarUsuario = new JMenuItem("Listar");
+		mntmListarUsuario = new JMenuItem("Listagem");
+		mntmListarUsuario.setForeground(Color.BLACK);
+		mntmListarUsuario.setBackground(new Color(186, 255, 179));
+		mntmListarUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		mntmListarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelListagemUsuario = new PainelListagemUsuarios();
@@ -139,14 +152,18 @@ public class Menu {
 			}
 		});
 		mntmListarUsuario
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-usuário-feminino-30.png")));
+		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-menu-de-usuário-feminino-30.png")));
 		mnUsuarios.add(mntmListarUsuario);
 
 		mnTreinos = new JMenu("Treinos");
-		mnTreinos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-barra-de-peso-30.png")));
+		mnTreinos.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
+		mnTreinos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-strength-30.png")));
 		menuBar.add(mnTreinos);
 
 		mntmCadastrarTreino = new JMenuItem("Cadastrar");
+		mntmCadastrarTreino.setForeground(Color.BLACK);
+		mntmCadastrarTreino.setBackground(new Color(186, 255, 179));
+		mntmCadastrarTreino.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		mntmCadastrarTreino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroTreino = new PainelCadastroTreino();
@@ -157,7 +174,10 @@ public class Menu {
 		mntmCadastrarTreino.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-30 (1).png")));
 		mnTreinos.add(mntmCadastrarTreino);
 
-		mntmListarTreinos = new JMenuItem("Listar");
+		mntmListarTreinos = new JMenuItem("Listagem");
+		mntmListarTreinos.setForeground(Color.BLACK);
+		mntmListarTreinos.setBackground(new Color(186, 255, 179));
+		mntmListarTreinos.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		mntmListarTreinos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelListagemTreino = new PainelListagemTreinos();
@@ -166,15 +186,19 @@ public class Menu {
 			}
 		});
 		mntmListarTreinos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-30.png")));
+		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-cardápio-30.png")));
 		mnTreinos.add(mntmListarTreinos);
 
 		mnAgendamentos = new JMenu("Agendamentos");
+		mnAgendamentos.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
 		mnAgendamentos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-halteres-com-presilha-30.png")));
+		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-atletismo-30.png")));
 		menuBar.add(mnAgendamentos);
 
 		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
+		mntmCadastrarAgendamento.setBackground(new Color(186, 255, 179));
+		mntmCadastrarAgendamento.setForeground(Color.BLACK);
+		mntmCadastrarAgendamento.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		mntmCadastrarAgendamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelAgendamentoTreino = new PainelAgendamentoTreino();
@@ -183,10 +207,13 @@ public class Menu {
 			}
 		});
 		mntmCadastrarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-30.png")));
+		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-contatos-30.png")));
 		mnAgendamentos.add(mntmCadastrarAgendamento);
 
-		mntmListarAgendamento = new JMenuItem("Listar");
+		mntmListarAgendamento = new JMenuItem("Listagem");
+		mntmListarAgendamento.setForeground(Color.BLACK);
+		mntmListarAgendamento.setBackground(new Color(186, 255, 179));
+		mntmListarAgendamento.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		mntmListarAgendamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelListagemAgendamento = new PainelListagemAgendamentos();
@@ -195,16 +222,20 @@ public class Menu {
 			}
 		});
 		mntmListarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-30 (1).png")));
+		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-lista-de-verificação-30.png")));
 		mnAgendamentos.add(mntmListarAgendamento);
 
 		mnEnderecos = new JMenu("Endereços");
-		mnEnderecos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-gym-30.png")));
+		mnEnderecos.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
+		mnEnderecos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-local-30.png")));
 		menuBar.add(mnEnderecos);
 
 		mntmCadastrarEndereco = new JMenuItem("Cadastrar");
+		mntmCadastrarEndereco.setBackground(new Color(186, 255, 179));
+		mntmCadastrarEndereco.setForeground(Color.BLACK);
+		mntmCadastrarEndereco.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		mntmCadastrarEndereco
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-mapa-da-apple-30 (1).png")));
+		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-local-30 (1).png")));
 		mntmCadastrarEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroEndereco = new PainelCadastroEndereco(null);
@@ -218,7 +249,10 @@ public class Menu {
 		mnEnderecos.add(mntmCadastrarEndereco);
 
 		mntmListarEnderecos = new JMenuItem("Listar");
-		mntmListarEnderecos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-google-maps-30.png")));
+		mntmListarEnderecos.setBackground(new Color(186, 255, 179));
+		mntmListarEnderecos.setForeground(Color.BLACK);
+		mntmListarEnderecos.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
+		mntmListarEnderecos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-formato-30.png")));
 		mntmListarEnderecos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				painelListagemEndereco = new PainelListagemEndereco();
@@ -261,7 +295,6 @@ public class Menu {
 		mnAgendamentos.setEnabled(false);
 		mnTreinos.setEnabled(false);
 		mnEnderecos.setEnabled(false);
-		mnUsuarios.setEnabled(false);
 
 	}
 }

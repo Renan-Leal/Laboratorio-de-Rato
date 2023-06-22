@@ -43,94 +43,122 @@ public class PainelCadastroEndereco extends JPanel {
 	
 	public PainelCadastroEndereco(Endereco endereco) {
 		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("30px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("40px"),
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("78px"),
-				ColumnSpec.decode("30px"),
-				ColumnSpec.decode("10px"),
-				ColumnSpec.decode("30px"),
-				ColumnSpec.decode("46px"),
+				FormSpecs.GROWING_BUTTON_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("90px"),},
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(14dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(15dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(24dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(69dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,},
 			new RowSpec[] {
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("10px"),
-				RowSpec.decode("26px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("24px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("24px"),
-				RowSpec.decode("20px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("22px"),
+				RowSpec.decode("fill:max(23dlu;pref):grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("24px"),}));
+				RowSpec.decode("fill:max(11dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:pref:grow"),}));
 		
 		JPanel panel = new JPanel();
-		add(panel, "8, 2, left, top");
-		
-		txtCep = new JTextField();
-		add(txtCep, "5, 4, 2, 1, fill, top");
-		txtCep.setColumns(10);
-		
-		txtNumero = new JTextField();
-		add(txtNumero, "12, 4, center, top");
-		txtNumero.setColumns(10);
+		add(panel, "14, 2, left, top");
 		
 		lblCep = new JLabel("CEP:");
-		add(lblCep, "2, 4, 3, 1, center, center");
+		add(lblCep, "10, 5, fill, center");
+		
+		txtCep = new JTextField();
+		add(txtCep, "12, 5, fill, top");
+		txtCep.setColumns(10);
 		
 		lblNumero = new JLabel("N\u00FAmero:");
-		add(lblNumero, "10, 4, fill, center");
+		add(lblNumero, "16, 5, fill, fill");
+		
+		txtNumero = new JTextField();
+		add(txtNumero, "18, 5, fill, fill");
+		txtNumero.setColumns(10);
 		
 		lblRua = new JLabel("Rua: ");
-		add(lblRua, "2, 6, right, center");
+		add(lblRua, "10, 7, fill, center");
 		
 		txtRua = new JTextField();
-		add(txtRua, "4, 6, 9, 1, fill, top");
+		add(txtRua, "12, 7, 7, 1, fill, fill");
 		txtRua.setColumns(10);
 		
 		lblComplemento = new JLabel("Complemento:");
-		add(lblComplemento, "2, 8, 3, 1, fill, center");
+		add(lblComplemento, "10, 9, fill, center");
 		
 		txtComplemento = new JTextField();
-		add(txtComplemento, "6, 8, 7, 1, fill, top");
+		add(txtComplemento, "12, 9, 7, 1, fill, top");
 		txtComplemento.setColumns(10);
 		
 		lblBairro = new JLabel("Bairro: ");
-		add(lblBairro, "2, 10, 3, 1, center, center");
+		add(lblBairro, "10, 11, fill, center");
 		
 		txtBairro = new JTextField();
-		add(txtBairro, "6, 10, 7, 1, fill, top");
+		add(txtBairro, "12, 11, 7, 1, fill, top");
 		txtBairro.setColumns(10);
 		
 		lblCidade = new JLabel("Cidade:");
-		add(lblCidade, "2, 12, 3, 1, center, center");
+		add(lblCidade, "10, 13, fill, center");
 		
 		txtCidade = new JTextField();
-		add(txtCidade, "6, 12, 7, 1, fill, top");
+		add(txtCidade, "12, 13, 7, 1, fill, fill");
 		txtCidade.setColumns(10);
 		
 		lblEstado = new JLabel("Estado:");
-		add(lblEstado, "2, 14, 3, 1, center, center");
+		add(lblEstado, "10, 15, fill, center");
 		
 		cbEstado = new JComboBox(estados);
-		this.add(cbEstado, "6, 14, 7, 1, fill, fill");
-		
-		btnSalvar = new JButton("Salvar");
-		add(btnSalvar, "12, 16, fill, top");
+		this.add(cbEstado, "12, 15, 7, 1, fill, fill");
 		
 		
 		
 		btnVoltar = new JButton("Voltar");
-		add(btnVoltar, "2, 16, 5, 1, left, bottom");
+		add(btnVoltar, "10, 19, fill, bottom");
+		
+		btnSalvar = new JButton("Salvar");
+		add(btnSalvar, "18, 19, fill, fill");
 		
 		this.endereco = endereco;
 		if(this.endereco != null) {
