@@ -77,7 +77,7 @@ public class EnderecoController {
 
 	public String gerarPlanilha(ArrayList<Endereco> enderecos, String destinoArquivo) throws CampoInvalidoException{
 		if(enderecos == null || destinoArquivo == null || destinoArquivo.trim().isEmpty()) {
-			throw new CampoInvalidoException("Preencha todos os campos");
+			throw new CampoInvalidoException("Preencha todos os campos!");
 		}
 		GeradorPlanilha gerador = new GeradorPlanilha();
 		return gerador.gerarPlanilhaEnderecos(enderecos, destinoArquivo);

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class PessoaDAO {
 			query.setString(1, novaPessoa.getNome());
 			query.setString(2, novaPessoa.getCpf());
 			query.setString(3, novaPessoa.getTelefone());
-			query.setString(4, novaPessoa.getDtNascimento());
+			query.setObject(4, novaPessoa.getDtNascimento());
 			query.setInt(5, novaPessoa.getEndereco().getId());
 			query.execute();
 			
@@ -60,7 +61,7 @@ public class PessoaDAO {
 			query.setString(1, pessoaEditada.getNome());
 			query.setString(2, pessoaEditada.getCpf());
 			query.setString(3, pessoaEditada.getTelefone());
-			query.setString(4, pessoaEditada.getDtNascimento());
+			query.setObject(4, pessoaEditada.getDtNascimento());
 			query.setInt(5, pessoaEditada.getEndereco().getId());
 			query.setInt(6, pessoaEditada.getId());
 			query.execute();
@@ -110,7 +111,7 @@ public class PessoaDAO {
 		pessoaConsultada.setNome(resultado.getString("nome"));
 		pessoaConsultada.setCpf(resultado.getString("cpf"));
 		pessoaConsultada.setTelefone(resultado.getString("telefone"));
-		pessoaConsultada.setDtNascimento(resultado.getString("DT_NASCIMENTO"));
+		pessoaConsultada.setDtNascimento(LocalDate.parse(resultado.getString("DT_NASCIMENTO")));
 		pessoaConsultada.setEndereco(enderecoDAO.consultarPorId(resultado.getInt("ID")));
 		return pessoaConsultada;
 	}

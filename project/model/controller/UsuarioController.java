@@ -65,7 +65,7 @@ public class UsuarioController {
 	public Usuario consultarPorLoginSenha(String login, String senha) throws CampoInvalidoException {
 		UsuarioBO usuarioBO =  new UsuarioBO();
 		Usuario usuarioConsultado = null;
-		boolean valido = (login != null && !login.isEmpty()) && (senha != null && !senha.isEmpty());
+		boolean valido = (login != null && !login.isEmpty()) && (senha != null && !senha.isEmpty() && senha.length() == 4);
 		if (valido) {
 			usuarioConsultado = usuarioBO.consultarPorLoginSenha(login, senha);
 		} else {
@@ -77,20 +77,21 @@ public class UsuarioController {
 		return usuarioConsultado;
 	}
 
+	public String gerarPlanilha(ArrayList<Usuario> usuarios, String destinoArquivo) throws CampoInvalidoException {
+		if(usuarios == null || destinoArquivo == null || destinoArquivo.trim().isEmpty()) {
+			throw new CampoInvalidoException("Preencha todos os campos");
+		}
+		
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaUsuarios(usuarios, destinoArquivo);
+	}
+
 	public List<Usuario> consultarComFiltros(UsuarioSeletor seletor) {
 		return bo.consultarComFiltros(seletor);
 	}
 
 	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
 		return bo.contarTotalRegistrosComFiltros(seletor);
-	}
-
-	public String gerarPlanilha(ArrayList<Usuario> usuarios, String destinoArquivo) throws CampoInvalidoException{
-		if(usuarios == null || destinoArquivo == null || destinoArquivo.trim().isEmpty()) {
-			throw new CampoInvalidoException("Preencha todos os campos");
-		}
-		GeradorPlanilha gerador = new GeradorPlanilha();
-		return gerador.gerarPlanilhaUsuarios(usuarios, destinoArquivo);
 	}
 
 
