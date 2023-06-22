@@ -18,7 +18,7 @@ public class PessoaController {
 	
 	private void validarCamposObrigatorios(Pessoa pessoa) throws CampoInvalidoException {
 		
-		String[] valores = {pessoa.getNome(), pessoa.getCpf(), pessoa.getTelefone(), pessoa.getDtNascimento(), pessoa.getEndereco().getRua()};
+		String[] valores = {pessoa.getNome(), pessoa.getCpf(), pessoa.getTelefone(), pessoa.getDtNascimento().toString(), pessoa.getEndereco().getRua()};
 		String[] camposInvalidos = {"Nome", "Cpf", "Telefone", "dtNascimento", "Endereco"};
 		
 		String mensagemValidacao = "";
