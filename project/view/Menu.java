@@ -45,7 +45,6 @@ public class Menu {
 	private JMenuItem mntmCadastrarAgendamento;
 	private JMenuItem mntmListarAgendamento;
 	private JMenu mnEnderecos;
-	protected Endereco endereco;
 
 	/**
 	 * Launch the application.
@@ -240,7 +239,7 @@ public class Menu {
 	protected void registrarCliqueBotaoSalvarEndereco() {
 		painelCadastroEndereco.getBtnSalvar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroEndereco.cadastrarEndereco(endereco);
+				painelCadastroEndereco.cadastrarEndereco();
 			}
 		}));
 	}
@@ -248,7 +247,7 @@ public class Menu {
 	protected void registrarCliqueBotaoEditarListagemEndereco() {
 		painelListagemEndereco.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				endereco = painelListagemEndereco.getEnderecoSelecionado();
+				Endereco endereco = painelListagemEndereco.getEnderecoSelecionado();
 				painelCadastroEndereco = new PainelCadastroEndereco(endereco);
 				frame.setContentPane(painelCadastroEndereco);
 				frame.revalidate();

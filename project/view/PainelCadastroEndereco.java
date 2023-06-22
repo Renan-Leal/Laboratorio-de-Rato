@@ -135,7 +135,7 @@ public class PainelCadastroEndereco extends JPanel {
 		this.endereco = endereco;
 		if(this.endereco != null) {
 			preencherCamposTela();
-		}else {
+		} else {
 			this.endereco = new Endereco();
 		}
 	}
@@ -144,24 +144,24 @@ public class PainelCadastroEndereco extends JPanel {
 		return btnSalvar;
 	}
 	
-	public void cadastrarEndereco(Endereco endereco) {
-		endereco.setCep(txtCep.getText());
-		endereco.setNumero(txtNumero.getText());
-		endereco.setRua(txtRua.getText());
-		endereco.setComplemento(txtComplemento.getText());
-		endereco.setBairro(txtBairro.getText());
-		endereco.setCidade(txtCidade.getText());
-		endereco.setEstado((String) cbEstado.getSelectedItem());
+	public void cadastrarEndereco() {
+		this.endereco.setCep(txtCep.getText());
+		this.endereco.setNumero(txtNumero.getText());
+		this.endereco.setRua(txtRua.getText());
+		this.endereco.setComplemento(txtComplemento.getText());
+		this.endereco.setBairro(txtBairro.getText());
+		this.endereco.setCidade(txtCidade.getText());
+		this.endereco.setEstado((String) cbEstado.getSelectedItem());
 		
 		EnderecoController enderecoController = new EnderecoController();
 		
 		try {
 			if(endereco.getId() == null) {
-				enderecoController.inserir(endereco);
+				enderecoController.inserir(this.endereco);
 				JOptionPane.showMessageDialog(null, "Endereço cadastrado com sucesso!", 
 						"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 			} else {
-				enderecoController.atualizar(endereco);
+				enderecoController.atualizar(this.endereco);
 				JOptionPane.showMessageDialog(null, "Endereço atualizado com sucesso!", 
 						"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 			}
