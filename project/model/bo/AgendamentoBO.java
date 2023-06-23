@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.dao.AgendamentoDAO;
 import model.exception.CampoInvalidoException;
+import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
 
 public class AgendamentoBO {
@@ -28,6 +29,18 @@ private AgendamentoDAO dao = new AgendamentoDAO();
 	
 	public List<Agendamento> consultarTodos() {
 		return dao.consultarTodos();
+	}
+	
+	public int contarTotalRegistros(Agendamento agendamento) {
+		return dao.contarTotalRegistros(agendamento);
+	}
+
+	public boolean recusar(int id) throws CampoInvalidoException {
+		return dao.recusar(id);
+	}
+	
+	public boolean aceitar(int id) throws CampoInvalidoException {
+		return dao.aceitar(id);
 	}
 
 }

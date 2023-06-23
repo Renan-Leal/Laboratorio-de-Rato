@@ -1,9 +1,12 @@
 package model.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.bo.TreinoBO;
 import model.exception.CampoInvalidoException;
+import model.gerador.GeradorPlanilha;
+import model.seletor.TreinoSeletor;
 import model.vo.Treino;
 
 public class TreinoController {
@@ -56,6 +59,22 @@ public class TreinoController {
 	
 	public List<Treino> consultarTodos() {
 		return bo.consultarTodos();
+	}
+	
+	public List<Treino> consultarComFiltros(TreinoSeletor seletor) {
+		return bo.consultarComFiltros(seletor);
+	}
+
+	public int contarTotalRegistrosComFiltros(TreinoSeletor seletor) {
+		return bo.contarTotalRegistrosComFiltros(seletor);
+	}
+
+	public String gerarPlanilha(ArrayList<Treino> treinos, String destinoArquivo) throws CampoInvalidoException{
+		if(treinos == null || destinoArquivo == null || destinoArquivo.trim().isEmpty()) {
+			throw new CampoInvalidoException("Preencha todos os campos!");
+		}
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaTreinos(treinos, destinoArquivo);
 	}
 
 }

@@ -114,9 +114,9 @@ public class Usuario extends Pessoa{
 		this.dataExpiracao = dataExpiracao;
 	}
 	
-	
-
-	
-	
+	@Override
+	public String toString() {
+		return pessoa.getNome();
+	}
 
 }

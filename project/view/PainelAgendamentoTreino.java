@@ -21,6 +21,8 @@ import model.controller.AgendamentoController;
 import model.exception.CampoInvalidoException;
 import model.vo.Agendamento;
 import model.vo.Usuario;
+import java.awt.Color;
+import java.awt.Font;
 
 public class PainelAgendamentoTreino extends JPanel {
 	
@@ -39,61 +41,143 @@ public class PainelAgendamentoTreino extends JPanel {
 	private Agendamento agendamento;
 	private String[] horarios = {"07:00","08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00" +
 			"16:00", "17:00", "18:00", "19:00", "20:00", "21:00"};
+	private JButton btnVoltar;
 	
 	public PainelAgendamentoTreino() {
+		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("18px"),
-				ColumnSpec.decode("53px"),
-				ColumnSpec.decode("18px"),
-				ColumnSpec.decode("125px"),
-				ColumnSpec.decode("21px"),
-				ColumnSpec.decode("53px"),
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("125px"),},
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(69dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(14dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(15dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(169dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(156dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,},
 			new RowSpec[] {
-				RowSpec.decode("32px"),
-				RowSpec.decode("22px"),
-				RowSpec.decode("28px"),
-				RowSpec.decode("22px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("22px"),
-				RowSpec.decode("35px"),
-				RowSpec.decode("23px"),}));
+				RowSpec.decode("fill:max(23dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:max(11dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:max(23dlu;pref):grow"),}));
 		
 		lblCliente = new JLabel("Cliente:");
-		add(lblCliente, "2, 2, left, center");
+		lblCliente.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblCliente.setForeground(Color.BLACK);
+		add(lblCliente, "16, 9, fill, fill");
 		
 		cbCliente = new JComboBox();
-		add(cbCliente, "4, 2, 5, 1, fill, top");
+		cbCliente.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(cbCliente, "18, 9, fill, fill");
 		
 		lblPersonal = new JLabel("Personal:");
-		add(lblPersonal, "2, 4, left, center");
+		lblPersonal.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblPersonal.setForeground(Color.BLACK);
+		add(lblPersonal, "22, 9, fill, center");
 		
 		cbProfissional = new JComboBox();
-		add(cbProfissional, "4, 4, 5, 1, fill, top");
+		cbProfissional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		add(cbProfissional, "24, 9, fill, fill");
 		
 		lblInicio = new JLabel("Inicio -");
-		add(lblInicio, "2, 6, left, top");
-		
-		lblDataInicio = new JLabel("Data Hora:");
-		add(lblDataInicio, "2, 8, left, center");
-		
-		cbHoraInicio = new JComboBox(horarios);
-		add(cbHoraInicio, "4, 8, fill, top");
-		
-		cbHoraFinal = new JComboBox(horarios);
-		cbHoraFinal.setSelectedIndex(-1);
-		add(cbHoraFinal, "8, 8, fill, top");
-		
-		lblDataFinal = new JLabel("Data Hora:");
-		add(lblDataFinal, "6, 8, left, center");
+		lblInicio.setForeground(Color.BLACK);
+		lblInicio.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblInicio, "16, 11, fill, fill");
 		
 		lblFinal = new JLabel("Final -");
-		add(lblFinal, "6, 6, left, top");
+		lblFinal.setForeground(Color.BLACK);
+		lblFinal.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblFinal, "22, 11, fill, fill");
+		
+		lblDataInicio = new JLabel("Data Hora:");
+		lblDataInicio.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblDataInicio.setForeground(Color.BLACK);
+		add(lblDataInicio, "16, 13, fill, fill");
+		
+		cbHoraInicio = new JComboBox(horarios);
+		cbHoraInicio.setForeground(Color.BLACK);
+		cbHoraInicio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		add(cbHoraInicio, "18, 13, fill, fill");
+		
+		lblDataFinal = new JLabel("Data Hora:");
+		lblDataFinal.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblDataFinal.setForeground(Color.BLACK);
+		add(lblDataFinal, "22, 13, fill, fill");
+		
+		cbHoraFinal = new JComboBox(horarios);
+		cbHoraFinal.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		cbHoraFinal.setSelectedIndex(-1);
+		add(cbHoraFinal, "24, 13, fill, fill");
+		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnVoltar, "18, 17, left, default");
 		
 		btnSalvar = new JButton("Salvar");
+		btnSalvar.setBackground(Color.BLACK);
+		btnSalvar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnSalvar.setForeground(Color.WHITE);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agendamento.setCliente((Usuario) cbCliente.getSelectedItem());
@@ -116,7 +200,7 @@ public class PainelAgendamentoTreino extends JPanel {
 				
 			}
 		});
-		add(btnSalvar, "8, 10, right, top");
+		add(btnSalvar, "24, 17, right, fill");
 	}
 
 

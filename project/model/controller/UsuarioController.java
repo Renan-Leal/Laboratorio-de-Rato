@@ -3,6 +3,8 @@ package model.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ComboBoxModel;
+
 import model.bo.UsuarioBO;
 import model.exception.CampoInvalidoException;
 import model.gerador.GeradorPlanilha;
@@ -93,6 +95,7 @@ public class UsuarioController {
 	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
 		return bo.contarTotalRegistrosComFiltros(seletor);
 	}
+
 
 
 }

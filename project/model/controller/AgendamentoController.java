@@ -1,8 +1,10 @@
 package model.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.bo.AgendamentoBO;
 import model.exception.CampoInvalidoException;
+import model.gerador.GeradorPlanilha;
 import model.vo.Agendamento;
 
 public class AgendamentoController {
@@ -49,12 +51,32 @@ private AgendamentoBO bo = new AgendamentoBO();
 		return bo.excluir(id);
 	}
 	
+	public boolean recusar(int id) throws CampoInvalidoException {
+		return bo.recusar(id);
+	}
+	
+	public boolean aceitar(int id) throws CampoInvalidoException {
+		return bo.aceitar(id);
+	}
+	
 	public Agendamento consultarPorId(int id) {
 		return bo.consultarPorId(id);
 	}
 	
 	public List<Agendamento> consultarTodos() {
 		return bo.consultarTodos();
+	}
+	
+	public int contarTotalRegistros(Agendamento agendamento) {
+		return bo.contarTotalRegistros(agendamento);
+	}
+	
+	public String gerarPlanilha(ArrayList<Agendamento> agendamentos, String destinoArquivo) throws CampoInvalidoException{
+		if(agendamentos == null || destinoArquivo == null || destinoArquivo.trim().isEmpty()) {
+			throw new CampoInvalidoException("Preencha todos os campos!");
+		}
+		GeradorPlanilha gerador = new GeradorPlanilha();
+		return gerador.gerarPlanilhaAgendamentos(agendamentos, destinoArquivo);
 	}
 
 }

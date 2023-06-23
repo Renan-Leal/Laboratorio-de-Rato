@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.seletor.EnderecoSeletor;
 import model.seletor.UsuarioSeletor;
-import model.vo.Endereco;
 import model.vo.TipoUsuario;
 import model.vo.Usuario;
 
@@ -109,6 +107,7 @@ public class UsuarioDAO {
 		
 		return usuarioConsultado;
 	}
+
 	
 	public Usuario consultarPorLoginSenha(String login, String senha) {
 		Usuario usuarioConsultado = null;
