@@ -30,4 +30,8 @@ public class PessoaBO {
 		return dao.consultarTodos();
 	}
 
+	public Pessoa consultarPorCpf(Pessoa pessoa) {
+		return  dao.consultarPorCpf(pessoa.getCpf());
+	}
+
 }

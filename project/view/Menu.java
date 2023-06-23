@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.exception.CampoInvalidoException;
+import model.exception.SenhaInvalidaException;
 import model.vo.Endereco;
 import model.vo.TipoUsuario;
 import model.vo.Usuario;
@@ -102,7 +103,8 @@ public class Menu {
 							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.CLIENTE) {
 						mnAgendamentos.setEnabled(true);
 					} else {
-						JOptionPane.showMessageDialog(null, "Usuário não cadastrado!", "Erro", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Usuário não cadastrado!", "Erro",
+								JOptionPane.ERROR_MESSAGE);
 					}
 
 				} catch (CampoInvalidoException exception) {
@@ -123,10 +125,11 @@ public class Menu {
 		mntmCadastrarUsuario = new JMenuItem("Cadastrar");
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO continuar método de cadastrar usuário
-				painelCadastroUsuario = new PainelCadastroUsuario(null, null);
+				// TODO continuar método de cadastrar usuário
+				painelCadastroUsuario = new PainelCadastroUsuario(null);
 				frame.setContentPane(painelCadastroUsuario);
 				frame.revalidate();
+				registrarCliqueBotaoSalvarUsuario();
 
 			}
 		});
@@ -239,6 +242,20 @@ public class Menu {
 
 		// Método para desbloquear o menu
 		bloquearTodoMenu();
+	}
+
+	protected void registrarCliqueBotaoSalvarUsuario() {
+		painelCadastroUsuario.getBtnSalvar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					painelCadastroUsuario.cadastrarUsuario();
+				} catch (SenhaInvalidaException excecao) {
+					JOptionPane.showMessageDialog(null, excecao.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+		}));
+
 	}
 
 	protected void registrarCliqueBotaoSalvarEndereco() {

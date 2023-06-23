@@ -23,6 +23,9 @@ public class PessoaDAO {
 		PreparedStatement query = Banco.getPreparedStatementWithPk(conexao, sql);
 			
 		//executar o INSERT
+		Pessoa pessoaConsultadaPorCpf = this.consultarPorCpf(novaPessoa.getCpf());
+		
+		
 		try {
 			query.setString(1, novaPessoa.getNome());
 			query.setString(2, novaPessoa.getCpf());
@@ -95,6 +98,31 @@ public class PessoaDAO {
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar pessoa com id: + " + id 
+								+ "\n Causa: " + e.getMessage());	
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return pessoaConsultada;
+	}
+	
+	public Pessoa consultarPorCpf(String cpf) {
+		Pessoa pessoaConsultada = null;
+		Connection conexao = Banco.getConnection();
+		String sql =  " SELECT * FROM PESSOA "
+				    + " WHERE CPF = ?";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		
+		try {
+			query.setString(1, cpf);
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				pessoaConsultada = converterDeResultSetParaEntidade(resultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar pessoa com cpf: + " + cpf 
 								+ "\n Causa: " + e.getMessage());	
 		}finally {
 			Banco.closePreparedStatement(query);
