@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.exception.CampoInvalidoException;
+import model.exception.SenhaInvalidaException;
 import model.vo.Endereco;
 import model.vo.TipoUsuario;
 import model.vo.Usuario;
@@ -101,8 +102,13 @@ public class Menu {
 							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.PERSONAL_TRAINER) {
 						mnAgendamentos.setEnabled(true);
 						mnTreinos.setEnabled(true);
-					} else {
+
+					} else if (usuarioAutenticado != null
+							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.CLIENTE) {
 						mnAgendamentos.setEnabled(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Usuário não cadastrado!", "Erro",
+								JOptionPane.ERROR_MESSAGE);
 					}
 
 				} catch (CampoInvalidoException exception) {
@@ -129,9 +135,11 @@ public class Menu {
 		mntmCadastrarUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroUsuario = new PainelCadastroUsuario();
+				// TODO continuar método de cadastrar usuário
+				painelCadastroUsuario = new PainelCadastroUsuario(null);
 				frame.setContentPane(painelCadastroUsuario);
 				frame.revalidate();
+				registrarCliqueBotaoSalvarUsuario();
 
 			}
 		});
@@ -148,6 +156,7 @@ public class Menu {
 				painelListagemUsuario = new PainelListagemUsuarios();
 				frame.setContentPane(painelListagemUsuario);
 				frame.revalidate();
+				registrarCliqueBotaoEditarListagemUsuario();
 
 			}
 		});
@@ -197,7 +206,7 @@ public class Menu {
 		mnAgendamentos.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
 		mnAgendamentos
 		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-women-track-and-field-50.png")));
-		menuBar.add(mnAgendamentos);
+
 
 		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
 		mntmCadastrarAgendamento.setBackground(Color.WHITE);
@@ -274,6 +283,33 @@ public class Menu {
 
 		// Método para desbloquear o menu
 		bloquearTodoMenu();
+	}
+
+	protected void registrarCliqueBotaoSalvarUsuario() {
+		painelCadastroUsuario.getBtnSalvar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					painelCadastroUsuario.cadastrarUsuario();
+				} catch (SenhaInvalidaException excecao) {
+					JOptionPane.showMessageDialog(null, excecao.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+		}));
+
+	}
+	
+	protected void registrarCliqueBotaoEditarListagemUsuario() {
+		painelListagemUsuario.getBtnEditar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario usuario = painelListagemUsuario.getUsuarioSelecionado();
+				painelCadastroUsuario = new PainelCadastroUsuario(usuario);
+				frame.setContentPane(painelCadastroUsuario);
+				frame.revalidate();
+				registrarCliqueBotaoSalvarUsuario();
+			}
+		});
+
 	}
 
 	protected void registrarCliqueBotaoSalvarEndereco() {

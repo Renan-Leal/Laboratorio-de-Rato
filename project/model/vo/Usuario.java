@@ -2,7 +2,7 @@ package model.vo;
 
 import java.time.LocalDateTime;
 
-public class Usuario extends Pessoa{
+public class Usuario {
 	private Integer id;
 	private Pessoa pessoa;
 	private TipoUsuario tipoUsuario;

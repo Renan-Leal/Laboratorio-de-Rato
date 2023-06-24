@@ -118,7 +118,7 @@ public class GeradorPlanilha {
 		int contadorLinhas = 1;
 		for(Agendamento a: agendamentos) {
 			HSSFRow novaLinha = abaPlanilha.createRow(contadorLinhas);
-			novaLinha.createCell(0).setCellValue(a.getCliente().getNome());
+			novaLinha.createCell(0).setCellValue(a.getCliente().getPessoa().getNome());
 			novaLinha.createCell(1).setCellValue(a.getDataHoraInicio());
 			novaLinha.createCell(2).setCellValue(a.getDataHoraFinal());
 			novaLinha.createCell(3).setCellValue(a.getAceito());
@@ -141,8 +141,8 @@ public class GeradorPlanilha {
 		int contadorLinhas = 1;
 		for(Treino t: treinos) {
 			HSSFRow novaLinha = abaPlanilha.createRow(contadorLinhas);
-			novaLinha.createCell(0).setCellValue(t.getCliente().getNome());
-			novaLinha.createCell(1).setCellValue(t.getProfissional().getNome());
+			novaLinha.createCell(0).setCellValue(t.getCliente().getPessoa().getNome());
+			novaLinha.createCell(1).setCellValue(t.getProfissional().getPessoa().getNome());
 			novaLinha.createCell(2).setCellValue(t.getNivelTreino().getValor());
 			novaLinha.createCell(3).setCellValue(t.getTreino());
 			contadorLinhas++;
