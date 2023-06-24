@@ -27,11 +27,11 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-
+//TODO Finalizar o método de consultar com filtro
 public class PainelListagemUsuarios extends JPanel {
 	
 	private ArrayList<Usuario> usuarios;
-	private String[] nomesColunas = { "Nome", "CPF", "Tel", "Dt.Nasc", "Tipo", "Matricula", "E-mail", "Valor Hora" };
+	private String[] nomesColunas = { "Nome", "CPF", "Tel", "Dt.Nasc", "Tipo", "Matricula", "E-mail"};
 	private JTextField txtNome;
 	private JTable tblUsuarios;
 	private JButton btnEditar;
@@ -63,14 +63,14 @@ public class PainelListagemUsuarios extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
 
 		for (Usuario u : usuarios) {
-			Object[] novaLinhaDaTabela = new Object[5];
+			Object[] novaLinhaDaTabela = new Object[7];
 			novaLinhaDaTabela[0] = u.getPessoa().getNome();
 			novaLinhaDaTabela[1] = u.getPessoa().getCpf();
 			novaLinhaDaTabela[2] = u.getPessoa().getTelefone();
 			novaLinhaDaTabela[3] = u.getPessoa().getDtNascimento();
-			novaLinhaDaTabela[4] = u.getTipoUsuario();
-			novaLinhaDaTabela[5] = u.getEmail();
-			novaLinhaDaTabela[6] = u.getValorHora();
+			novaLinhaDaTabela[4] = u.getTipoUsuario().getValor() == 1 ? "Administrador" : u.getTipoUsuario().getValor() == 2 ? "Personal Trainer" : u.getTipoUsuario().getValor() == 3 ? "Cliente" : "NULL";
+			novaLinhaDaTabela[5] = u.getMatricula();
+			novaLinhaDaTabela[6] = u.getEmail();
 			model.addRow(novaLinhaDaTabela);
 		}
 	}
@@ -87,7 +87,7 @@ public class PainelListagemUsuarios extends JPanel {
 		add(txtNome);
 		txtNome.setColumns(10);
 		
-		cbTipoUsuario = new JComboBox(new String[] {"Administrador","Clientes","Personal"});
+		cbTipoUsuario = new JComboBox(new String[] {"Administrador","Cliente","Personal"});
 		cbTipoUsuario.setBounds(337, 30, 154, 22);
 		add(cbTipoUsuario);
 		
