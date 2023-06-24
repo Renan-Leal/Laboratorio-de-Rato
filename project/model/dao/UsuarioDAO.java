@@ -70,6 +70,7 @@ public class UsuarioDAO {
 			query.setString(5, usuarioEditado.getEmail());
 			query.setString(6, usuarioEditado.getLogin());
 			query.setString(7, usuarioEditado.getSenha());
+			query.setInt(8, usuarioEditado.getId());
 			query.execute();
 			
 			int quantidadeLinhasAtualizadas = query.executeUpdate();
@@ -137,17 +138,17 @@ public class UsuarioDAO {
 	}
 	
 	private Usuario montarUsuarioComResultadoDoBanco(ResultSet resultado) throws SQLException {
-		Usuario pessoaConsultada = new Usuario();
+		Usuario usuarioConsultado = new Usuario();
 		PessoaDAO pessoa = new PessoaDAO();
-		pessoaConsultada.setId(resultado.getInt("id"));
-		pessoaConsultada.setPessoa(pessoa.consultarPorId(resultado.getInt("ID_PESSOA")));;
-		pessoaConsultada.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(resultado.getInt("ID_TIPOUSUARIO")));
-		pessoaConsultada.setMatricula(resultado.getInt("MATRICULA"));
-		pessoaConsultada.setValorHora(resultado.getDouble("VALORHORA"));
-		pessoaConsultada.setEmail(resultado.getString("EMAIL"));
-		pessoaConsultada.setLogin(resultado.getString("LOGIN"));
-		pessoaConsultada.setSenha(resultado.getString("SENHA"));
-		return pessoaConsultada;
+		usuarioConsultado.setId(resultado.getInt("id"));
+		usuarioConsultado.setPessoa(pessoa.consultarPorId(resultado.getInt("ID_PESSOA")));;
+		usuarioConsultado.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(resultado.getInt("ID_TIPOUSUARIO")));
+		usuarioConsultado.setMatricula(resultado.getInt("MATRICULA"));
+		usuarioConsultado.setValorHora(resultado.getDouble("VALORHORA"));
+		usuarioConsultado.setEmail(resultado.getString("EMAIL"));
+		usuarioConsultado.setLogin(resultado.getString("LOGIN"));
+		usuarioConsultado.setSenha(resultado.getString("SENHA"));
+		return usuarioConsultado;
 	}
 	
 	public boolean excluir(int id) {

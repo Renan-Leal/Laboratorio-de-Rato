@@ -65,7 +65,7 @@ public class PessoaController {
 
 	public Pessoa consultarPorCpf(Pessoa pessoa) throws CampoInvalidoException  {
 		validarCamposObrigatorios(pessoa);
-		return bo.consultarPorCpf(pessoa);
+		return bo.consultarPorCpf(pessoa.getCpf());
 	}
 
 }

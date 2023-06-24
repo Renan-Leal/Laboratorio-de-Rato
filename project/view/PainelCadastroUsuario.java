@@ -187,14 +187,15 @@ public class PainelCadastroUsuario extends JPanel {
 	private void preencherCamposTela() {
 		this.txtNome.setText(this.usuario.getPessoa().getNome());
 		this.txtCPF.setText(this.usuario.getPessoa().getCpf());
-		this.txtDtNascimento.setText(this.usuario.getPessoa().getDtNascimento().toString());
+		this.txtDtNascimento.setText(this.usuario.getPessoa().getDtNascimento().toString()
+				.replaceAll("(\\d{4})-(\\d{2})-(\\d{2})", "$3/$2/$1"));
 		this.txtEmail.setText(this.usuario.getEmail());
 		this.txtTelefone.setText(this.usuario.getPessoa().getTelefone());
 		this.txtValorHora.setText(this.usuario.getValorHora().toString());
 		this.txtLogin.setText(this.usuario.getLogin());
 		this.txtSenha.setText(this.usuario.getSenha());
 		this.cbEndereco.setSelectedItem(this.usuario.getPessoa().getEndereco());
-		this.cbTipoUsuario.setSelectedIndex(this.usuario.getTipoUsuario().getValor());
+		this.cbTipoUsuario.setSelectedIndex(this.usuario.getTipoUsuario().getValor() - 1);
 
 	}
 
@@ -213,20 +214,22 @@ public class PainelCadastroUsuario extends JPanel {
 				.setDtNascimento(LocalDate.parse(txtDtNascimento.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		this.usuario.getPessoa().setTelefone(txtTelefone.getText());
 
-		this.usuario.setMatricula(new Random().nextInt(900000) + 100000);
+		if (this.usuario.getId() == null) {
+			this.usuario.setMatricula(new Random().nextInt(900000) + 100000);
+		}
+
 		this.usuario.setValorHora(Double.parseDouble(txtValorHora.getText()));
 		this.usuario.setEmail(txtEmail.getText());
 		this.usuario.setLogin(txtLogin.getText());
-		if(txtSenha.getText().length() != 4) {
+		if (txtSenha.getText().length() != 4) {
 			throw new SenhaInvalidaException("Sua senha deve conter 4 dígitos");
 		} else {
 			this.usuario.setSenha(txtSenha.getText());
 		}
-		
+
 		this.usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex() + 1));
 		this.usuario.getPessoa().setEndereco((Endereco) cbEndereco.getSelectedItem());
 
-		// TODO Finalizar o método de Cadastro de Pessoa e Usuário
 		UsuarioController usuarioController = new UsuarioController();
 		PessoaController pessoaController = new PessoaController();
 
@@ -249,6 +252,17 @@ public class PainelCadastroUsuario extends JPanel {
 							JOptionPane.INFORMATION_MESSAGE);
 
 				}
+
+			} else {
+				Pessoa pessoaConsultada = pessoaController.consultarPorCpf(this.usuario.getPessoa());
+				this.usuario.getPessoa().setId(pessoaConsultada.getId());
+
+				if (pessoaController.atualizar(this.usuario.getPessoa())) {
+					usuarioController.atualizar(this.usuario);
+					JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				;
 
 			}
 		} catch (CampoInvalidoException excecao) {

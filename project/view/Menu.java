@@ -143,6 +143,7 @@ public class Menu {
 				painelListagemUsuario = new PainelListagemUsuarios();
 				frame.setContentPane(painelListagemUsuario);
 				frame.revalidate();
+				registrarCliqueBotaoEditarListagemUsuario();
 
 			}
 		});
@@ -255,6 +256,19 @@ public class Menu {
 
 			}
 		}));
+
+	}
+	
+	protected void registrarCliqueBotaoEditarListagemUsuario() {
+		painelListagemUsuario.getBtnEditar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario usuario = painelListagemUsuario.getUsuarioSelecionado();
+				painelCadastroUsuario = new PainelCadastroUsuario(usuario);
+				frame.setContentPane(painelCadastroUsuario);
+				frame.revalidate();
+				registrarCliqueBotaoSalvarUsuario();
+			}
+		});
 
 	}
 
