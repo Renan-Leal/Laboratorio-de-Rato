@@ -24,6 +24,8 @@ import model.vo.Endereco;
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -79,20 +81,83 @@ public class PainelListagemEndereco extends JPanel {
 	
 	public PainelListagemEndereco() {
 		
-		btnBuscar = new JButton("Buscar COM FILTROS");
-		btnBuscar.setBounds(460, 22, 154, 23);
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buscarEnderecosComFiltros();
-				atualizarTabelaEnderecos();
-			}
-		});
-		setLayout(null);
-		this.add(btnBuscar);
-
-		tblEnderecos = new JTable();
-		this.limparTabelaEnderecos();
+		setBackground(new Color(108, 255, 108));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(249dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(0dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(41dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(59dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(68dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(59dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(81dlu;default):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,},
+			new RowSpec[] {
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:max(65dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+				RowSpec.decode("fill:max(61dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:max(23dlu;pref):grow"),
+				RowSpec.decode("fill:pref:grow"),}));
 		
+		lblCidade = new JLabel("Cidade:");
+		lblCidade.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblCidade.setForeground(Color.BLACK);
+		add(lblCidade, "12, 7, center, fill");
+		
+		txtCidade = new JTextField();
+		add(txtCidade, "13, 7, 4, 1, fill, fill");
+		txtCidade.setColumns(10);
+		
+		tblEnderecos = new JTable();
+		tblEnderecos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		limparTabelaEnderecos();
 		tblEnderecos.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int indiceSelecionado = tblEnderecos.getSelectedRow();
@@ -107,25 +172,114 @@ public class PainelListagemEndereco extends JPanel {
 				}
 			}
 		});
-		tblEnderecos.setBounds(41, 88, 603, 133);
-		this.add(tblEnderecos);
 		
-		lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(243, 26, 46, 14);
-		add(lblCidade);
+		btnBuscar = new JButton("Buscar Com Filtros");
+		btnBuscar.setBackground(Color.BLACK);
+		btnBuscar.setForeground(Color.WHITE);
+		btnBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscarEnderecosComFiltros();
+				atualizarTabelaEnderecos();
+			}
+		});
+		add(btnBuscar, "18, 7, fill, fill");
+		
+		lblBairro = new JLabel("Bairro:");
+		lblBairro.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblBairro.setForeground(Color.BLACK);
+		add(lblBairro, "12, 9, center, fill");
 		
 		txtBairro = new JTextField();
-		txtBairro.setBounds(86, 23, 140, 20);
-		add(txtBairro);
+		add(txtBairro, "13, 9, 4, 1, fill, fill");
 		txtBairro.setColumns(10);
-		add(btnBuscar);
+		
+				btnBuscarTodos = new JButton("Buscar Todos");
+				btnBuscarTodos.setBackground(Color.BLACK);
+				btnBuscarTodos.setForeground(Color.WHITE);
+				btnBuscarTodos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				btnBuscarTodos.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						buscarEnderecosComFiltros();
+						atualizarTabelaEnderecos();
+					}
+				});
+				add(btnBuscarTodos, "18, 9, fill, fill");
+		add(tblEnderecos, "12, 12, 9, 4, fill, fill");
+		
+		
+		
+		btnAvancarPagina = new JButton("Avançar >>");
+		btnAvancarPagina.setBackground(Color.BLACK);
+		btnAvancarPagina.setForeground(Color.WHITE);
+		btnAvancarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnAvancarPagina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				paginaAtual++;
+				buscarEnderecosComFiltros();
+				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+				btnVoltarPagina.setEnabled(paginaAtual > 1);
+				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+			}
+		});
+		
+		lblPaginacao = new JLabel("1 / " + totalPaginas);
+		lblPaginacao.setForeground(Color.BLACK);
+		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblPaginacao, "12, 17");
+		add(btnAvancarPagina, "12, 19, fill, fill");
+		
+		btnVoltarPagina = new JButton("<< Voltar");
+		btnVoltarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltarPagina.setBackground(Color.BLACK);
+		btnVoltarPagina.setForeground(Color.WHITE);
+		btnVoltarPagina.setEnabled(false);
+		btnVoltarPagina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paginaAtual--;
+				buscarEnderecosComFiltros();
+				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+				btnVoltarPagina.setEnabled(paginaAtual > 1);
+				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+			}
+		});
+		add(btnVoltarPagina, "14, 19, fill, fill");
 		
 		btnEditar = new JButton("Editar");
+		btnEditar.setForeground(Color.WHITE);
+		btnEditar.setBackground(Color.BLACK);
+		btnEditar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(141, 282, 65, 23);
-		add(btnEditar);
+		add(btnEditar, "12, 21, fill, fill");
+		
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.setBackground(Color.BLACK);
+		btnExcluir.setForeground(Color.WHITE);
+		btnExcluir.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnExcluir.setEnabled(false);
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do endereço selecionado?");
+				
+				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
+					try {
+						controller.excluir(enderecoSelecionado.getId());
+						JOptionPane.showMessageDialog(null, "Endereço excluído com sucesso");
+						enderecos = (ArrayList<Endereco>) controller.consultarTodos();
+						atualizarTabelaEnderecos();
+					} catch (EnderecoInvalidoException e1) {
+						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			}
+		});
+		add(btnExcluir, "14, 21, fill, fill");
 		
 		btnGerarPlanilha = new JButton("Gerar Planilha");
+		btnGerarPlanilha.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnGerarPlanilha.setBackground(Color.BLACK);
+		btnGerarPlanilha.setForeground(Color.WHITE);
 		btnGerarPlanilha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
@@ -143,83 +297,8 @@ public class PainelListagemEndereco extends JPanel {
 				}
 			}
 		});
-		btnGerarPlanilha.setBounds(41, 238, 99, 23);
-		this.add(btnGerarPlanilha);
-		
-		btnExcluir = new JButton("Excluir");
-		btnExcluir.setEnabled(false);
-		btnExcluir.setBounds(41, 282, 65, 23);
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do endereço selecionado?");
-				
-				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-					try {
-						controller.excluir(enderecoSelecionado.getId());
-						JOptionPane.showMessageDialog(null, "Endereço excluído com sucesso");
-						enderecos = (ArrayList<Endereco>) controller.consultarTodos();
-						atualizarTabelaEnderecos();
-					} catch (EnderecoInvalidoException e1) {
-						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			}
-		});
-		this.add(btnExcluir);
-		
-		lblBairro = new JLabel("Bairro:");
-		lblBairro.setBounds(41, 26, 46, 14);
-		add(lblBairro);
-		
-		txtCidade = new JTextField();
-		txtCidade.setBounds(299, 23, 140, 20);
-		add(txtCidade);
-		txtCidade.setColumns(10);
-		
-		lblPaginacao = new JLabel("1 / " + totalPaginas);
-		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPaginacao.setBounds(283, 323, 105, 14);
-		add(lblPaginacao);
-		
+		add(btnGerarPlanilha, "16, 21, fill, fill");
 		atualizarQuantidadePaginas();
-		
-		btnVoltarPagina = new JButton("<< Voltar");
-		btnVoltarPagina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				paginaAtual--;
-				buscarEnderecosComFiltros();
-				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-				btnVoltarPagina.setEnabled(paginaAtual > 1);
-				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
-			}
-		});
-		btnVoltarPagina.setEnabled(false);
-		btnVoltarPagina.setBounds(533, 238, 109, 23);
-		add(btnVoltarPagina);
-		
-		btnAvancarPagina = new JButton("Avançar >>");
-		btnAvancarPagina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				paginaAtual++;
-				buscarEnderecosComFiltros();
-				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-				btnVoltarPagina.setEnabled(paginaAtual > 1);
-				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
-			}
-		});
-		btnAvancarPagina.setBounds(380, 238, 120, 23);
-		add(btnAvancarPagina);
-		
-		btnBuscarTodos = new JButton("Buscar Todos");
-		btnBuscarTodos.setBounds(460, 22, 154, 23);
-		btnBuscarTodos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buscarEnderecos();
-				atualizarTabelaEnderecos();
-			}
-		});
-		btnBuscarTodos.setBounds(460, 56, 154, 23);
-		this.add(btnBuscarTodos);
 
 	}
 	

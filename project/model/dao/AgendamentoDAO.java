@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
 
 public class AgendamentoDAO {
@@ -152,6 +152,71 @@ public class AgendamentoDAO {
 		}
 
 		return agendamentos;
+	}
+	
+	public int contarTotalRegistros(Agendamento agendamento) {
+		int total = 0;
+		Connection conexao = Banco.getConnection();
+		String sql = " select count(*) from ENDERECO ";
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				total = resultado.getInt(1);
+			}
+		}catch (Exception e) {
+			System.out.println("Erro contar o total de agendamentos" 
+					+ "\n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return total;
+	}
+
+	public boolean recusar(int id) {
+		boolean recusado = false;
+
+		Connection conexao = Banco.getConnection();
+		String sql = " UPDATE AGENDAMENTO " + " SET ACEITO = ?, "
+				+ " MOTIVO_REJEICAO = ?" + " WHERE ID = ? ";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			query.setInt(1, id);
+
+			int quantidadeLinhasAtualizadas = query.executeUpdate();
+			recusado = quantidadeLinhasAtualizadas > 0;
+		} catch (SQLException excecao) {
+			System.out.println("Erro ao recusar o agendamento. " + "\n Causa: " + excecao.getMessage());
+		} finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		return recusado;
+	}
+	
+	public boolean aceitar(int id) {
+		boolean aceito = false;
+
+		Connection conexao = Banco.getConnection();
+		String sql = " UPDATE AGENDAMENTO " + " SET ACEITO = ?, "
+				+ " WHERE ID = ? ";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			query.setInt(1, id);
+
+			int quantidadeLinhasAtualizadas = query.executeUpdate();
+			aceito = quantidadeLinhasAtualizadas > 0;
+		} catch (SQLException excecao) {
+			System.out.println("Erro ao aceitar o agendamento. " + "\n Causa: " + excecao.getMessage());
+		} finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		return aceito;
 	}
 
 }
