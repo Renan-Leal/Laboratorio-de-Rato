@@ -2,6 +2,8 @@ package model.bo;
 
 import java.util.List;
 
+import javax.swing.ComboBoxModel;
+
 import model.dao.UsuarioDAO;
 import model.exception.CampoInvalidoException;
 import model.seletor.UsuarioSeletor;
@@ -45,4 +47,5 @@ public class UsuarioBO {
 	public List<Usuario> consultarComFiltros(UsuarioSeletor seletor) {
 		return dao.consultarComFiltros(seletor);
 	}
+
 }

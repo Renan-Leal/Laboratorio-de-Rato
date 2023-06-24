@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -15,11 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import model.controller.TreinoController;
-import model.controller.UsuarioController;
 import model.exception.CampoInvalidoException;
-import model.vo.Endereco;
 import model.vo.NivelTreino;
-import model.vo.TipoUsuario;
 import model.vo.Treino;
 import model.vo.Usuario;
 
@@ -30,7 +29,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JTextArea;
 
 public class PainelCadastroTreino extends JPanel {
-	private JLabel lblNvl;
+	private JLabel lblNivel;
 	private JLabel lblTreino;
 	private JComboBox cbNivel;
 	private JButton btnCadastrar;
@@ -42,52 +41,124 @@ public class PainelCadastroTreino extends JPanel {
 	private JComboBox cbCliente;
 
 	public PainelCadastroTreino() {
+		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("60px"),
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("141px"),
-				ColumnSpec.decode("23px"),
-				ColumnSpec.decode("27px"),
-				ColumnSpec.decode("45px"),
-				ColumnSpec.decode("119px"),},
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(57dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(40dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(253dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,},
 			new RowSpec[] {
-				RowSpec.decode("30px"),
-				RowSpec.decode("23px"),
+				RowSpec.decode("fill:pref:grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("22px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("134px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("23px"),}));
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:max(15dlu;pref)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:max(95dlu;default):grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				RowSpec.decode("fill:pref:grow"),}));
 		
 		lblCliente = new JLabel("Cliente:");
-		add(lblCliente, "2, 2, right, center");
+		lblCliente.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblCliente.setForeground(Color.BLACK);
+		add(lblCliente, "16, 5, right, center");
 		
 		cbCliente = new JComboBox();
-		add(cbCliente, "4, 2, fill, top");
-		
-		lblNvl = new JLabel("Nível:");
-		add(lblNvl, "6, 2, left, center");
-		
-		cbNivel = new JComboBox(new String[] {"BÁSICO","INTERMEDIÁRIO","AVANÇADO"});
-		add(cbNivel, "8, 2, fill, fill");
+		cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		cbCliente.setForeground(Color.BLACK);
+		add(cbCliente, "18, 5, fill, top");
 		
 		lblProfissional = new JLabel("Profissional:");
-		add(lblProfissional, "2, 4, left, center");
+		lblProfissional.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblProfissional.setForeground(Color.BLACK);
+		add(lblProfissional, "16, 7, right, center");
 		
 		cbProfissional = new JComboBox();
-		add(cbProfissional, "4, 4, fill, top");
+		cbProfissional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		cbProfissional.setForeground(Color.BLACK);
+		add(cbProfissional, "18, 7, fill, fill");
+		
+		lblNivel = new JLabel("Nível:");
+		lblNivel.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblNivel.setForeground(Color.BLACK);
+		add(lblNivel, "16, 9, right, center");
+		
+		cbNivel = new JComboBox(new String[] {"BÁSICO","INTERMEDIÁRIO","AVANÇADO"});
+		cbNivel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		cbNivel.setForeground(Color.BLACK);
+		add(cbNivel, "18, 9, fill, fill");
 		
 		lblTreino = new JLabel("Treino:");
-		add(lblTreino, "2, 6, right, top");
+		lblTreino.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblTreino.setForeground(Color.BLACK);
+		add(lblTreino, "16, 11, right, top");
 		
 		txtTreino = new JTextArea();
-		add(txtTreino, "2, 8, 7, 1, fill, fill");
+		txtTreino.setForeground(Color.BLACK);
+		add(txtTreino, "18, 11, fill, fill");
 		
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setBackground(Color.BLACK);
+		btnCadastrar.setForeground(Color.WHITE);
+		btnCadastrar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnCadastrar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			treino.setCliente((Usuario) cbCliente.getSelectedItem());
@@ -109,6 +180,6 @@ public class PainelCadastroTreino extends JPanel {
 			}
 		}
 		});
-		add(btnCadastrar, "4, 10, 5, 1, fill, top");
+		add(btnCadastrar, "18, 13, right, top");
 	}
 }

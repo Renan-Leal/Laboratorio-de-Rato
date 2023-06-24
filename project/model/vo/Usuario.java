@@ -114,9 +114,9 @@ public class Usuario {
 		this.dataExpiracao = dataExpiracao;
 	}
 	
-	
-
-	
-	
+	@Override
+	public String toString() {
+		return pessoa.getNome();
+	}
 
 }

@@ -19,6 +19,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import java.awt.Color;
+import java.awt.Font;
 
 public class PainelCadastroEndereco extends JPanel {
 
@@ -42,95 +44,156 @@ public class PainelCadastroEndereco extends JPanel {
 	private JButton btnSalvar;
 	
 	public PainelCadastroEndereco(Endereco endereco) {
+		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("30px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("40px"),
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("78px"),
-				ColumnSpec.decode("30px"),
-				ColumnSpec.decode("10px"),
-				ColumnSpec.decode("30px"),
-				ColumnSpec.decode("46px"),
+				ColumnSpec.decode("max(91dlu;pref):grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("90px"),},
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(14dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(15dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(86dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(10dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(55dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(130dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,},
 			new RowSpec[] {
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("10px"),
-				RowSpec.decode("26px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("24px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("24px"),
-				RowSpec.decode("20px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("22px"),
+				RowSpec.decode("fill:max(23dlu;pref):grow"),
 				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("24px"),}));
-		
-		JPanel panel = new JPanel();
-		add(panel, "8, 2, left, top");
-		
-		txtCep = new JTextField();
-		add(txtCep, "5, 4, 2, 1, fill, top");
-		txtCep.setColumns(10);
-		
-		txtNumero = new JTextField();
-		add(txtNumero, "12, 4, center, top");
-		txtNumero.setColumns(10);
+				RowSpec.decode("fill:max(11dlu;default)"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("fill:max(23dlu;pref):grow"),}));
 		
 		lblCep = new JLabel("CEP:");
-		add(lblCep, "2, 4, 3, 1, center, center");
+		lblCep.setForeground(Color.BLACK);
+		lblCep.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblCep, "16, 5, fill, center");
+		
+		txtCep = new JTextField();
+		add(txtCep, "18, 5, fill, top");
+		txtCep.setColumns(10);
 		
 		lblNumero = new JLabel("N\u00FAmero:");
-		add(lblNumero, "10, 4, fill, center");
+		lblNumero.setForeground(Color.BLACK);
+		lblNumero.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblNumero, "22, 5, right, fill");
+		
+		txtNumero = new JTextField();
+		add(txtNumero, "24, 5, fill, fill");
+		txtNumero.setColumns(10);
 		
 		lblRua = new JLabel("Rua: ");
-		add(lblRua, "2, 6, right, center");
+		lblRua.setForeground(Color.BLACK);
+		lblRua.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblRua, "16, 7, fill, center");
 		
 		txtRua = new JTextField();
-		add(txtRua, "4, 6, 9, 1, fill, top");
+		add(txtRua, "18, 7, 7, 1, fill, fill");
 		txtRua.setColumns(10);
 		
 		lblComplemento = new JLabel("Complemento:");
-		add(lblComplemento, "2, 8, 3, 1, fill, center");
+		lblComplemento.setForeground(Color.BLACK);
+		lblComplemento.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblComplemento, "16, 9, fill, center");
 		
 		txtComplemento = new JTextField();
-		add(txtComplemento, "6, 8, 7, 1, fill, top");
+		add(txtComplemento, "18, 9, 7, 1, fill, top");
 		txtComplemento.setColumns(10);
 		
 		lblBairro = new JLabel("Bairro: ");
-		add(lblBairro, "2, 10, 3, 1, center, center");
+		lblBairro.setForeground(Color.BLACK);
+		lblBairro.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblBairro, "16, 11, fill, center");
 		
 		txtBairro = new JTextField();
-		add(txtBairro, "6, 10, 7, 1, fill, top");
+		add(txtBairro, "18, 11, 7, 1, fill, top");
 		txtBairro.setColumns(10);
 		
 		lblCidade = new JLabel("Cidade:");
-		add(lblCidade, "2, 12, 3, 1, center, center");
+		lblCidade.setForeground(Color.BLACK);
+		lblCidade.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblCidade, "16, 13, fill, center");
 		
 		txtCidade = new JTextField();
-		add(txtCidade, "6, 12, 7, 1, fill, top");
+		add(txtCidade, "18, 13, 7, 1, fill, fill");
 		txtCidade.setColumns(10);
 		
 		lblEstado = new JLabel("Estado:");
-		add(lblEstado, "2, 14, 3, 1, center, center");
+		lblEstado.setForeground(Color.BLACK);
+		lblEstado.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblEstado, "16, 15, fill, center");
 		
 		cbEstado = new JComboBox(estados);
-		this.add(cbEstado, "6, 14, 7, 1, fill, fill");
-		
-		btnSalvar = new JButton("Salvar");
-		add(btnSalvar, "12, 16, fill, top");
+		cbEstado.setForeground(Color.WHITE);
+		cbEstado.setBackground(Color.DARK_GRAY);
+		cbEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		this.add(cbEstado, "18, 15, 7, 1, fill, fill");
 		
 		
 		
 		btnVoltar = new JButton("Voltar");
-		add(btnVoltar, "2, 16, 5, 1, left, bottom");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(btnVoltar, "16, 19, fill, bottom");
+		
+		btnSalvar = new JButton("Salvar");
+		btnSalvar.setBackground(Color.BLACK);
+		btnSalvar.setForeground(Color.WHITE);
+		btnSalvar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(btnSalvar, "24, 19, fill, fill");
 		
 		this.endereco = endereco;
 		if(this.endereco != null) {
