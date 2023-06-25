@@ -206,6 +206,7 @@ public class Menu {
 		mnAgendamentos.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
 		mnAgendamentos
 		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-women-track-and-field-50.png")));
+		menuBar.add(mnAgendamentos);
 
 
 		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
