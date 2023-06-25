@@ -55,6 +55,7 @@ public class PainelListagemEndereco extends JPanel {
 	private EnderecoController controller = new EnderecoController();
 	private Endereco enderecoSelecionado;
 	private JButton btnBuscarTodos;
+	private JButton btnVoltar;
 	
 	private void limparTabelaEnderecos() {
 		tblEnderecos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -246,6 +247,16 @@ public class PainelListagemEndereco extends JPanel {
 		});
 		add(btnVoltarPagina, "14, 19, fill, fill");
 		
+		btnVoltar = new JButton("Página Inicial");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnVoltar, "16, 19, fill, fill");
+		
 		btnEditar = new JButton("Editar");
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setBackground(Color.BLACK);
@@ -341,6 +352,10 @@ public class PainelListagemEndereco extends JPanel {
 
 		public Endereco getEnderecoSelecionado() {
 			return enderecoSelecionado;
+		}
+		
+		public JButton getBtnVoltar() {
+			return btnVoltar;
 		}
 
 }

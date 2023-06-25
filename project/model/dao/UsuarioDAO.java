@@ -217,24 +217,11 @@ public class UsuarioDAO {
 
 	private String preencherFiltros(String sql, UsuarioSeletor seletor) {
 		boolean primeiro = true;
-		if (seletor.getNome() != null && !seletor.getNome().trim().isEmpty()) {
-			if (primeiro) {
 				sql += " WHERE ";
 			} else {
 				sql += " AND ";
 			}
-
-			sql += " USUARIO LIKE '%" + seletor.getNome() + "%'";
-			primeiro = false;
-		}
-
-		if (seletor.getTipo() != null && !seletor.getTipo().trim().isEmpty()) {
-			if (primeiro) {
-				sql += " WHERE ";
-			} else {
-				sql += " AND ";
-			}
-			sql += " TIPO LIKE '%" + seletor.getTipo() + "%'";
+			sql += " ID_TIPOUSUARIO = " + seletor.getTipo();
 			primeiro = false;
 		}
 		return sql;
