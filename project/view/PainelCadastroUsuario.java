@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
@@ -48,6 +50,7 @@ public class PainelCadastroUsuario extends JPanel {
 	private JTextField txtValorHora;
 	private Usuario usuario;
 	private MaskFormatter mascaraCpf;
+	private MaskFormatter mascaraTel;
 	private JLabel lblNome;
 	private JComboBox cbTipoUsuario;
 	private JLabel lblSenha;
@@ -65,31 +68,67 @@ public class PainelCadastroUsuario extends JPanel {
 	private PessoaController pessoaController = new PessoaController();
 
 	public PainelCadastroUsuario(Usuario usuario) {
-		setLayout(new FormLayout(
-				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(14dlu;default)"),
-						ColumnSpec.decode("79px"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("134px"),
-						ColumnSpec.decode("-4px"), ColumnSpec.decode("55px"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-						ColumnSpec.decode("24px"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("94px"),
-						ColumnSpec.decode("18px"), ColumnSpec.decode("30px"), ColumnSpec.decode("117px"),
-						ColumnSpec.decode("63px"), },
-				new RowSpec[] { FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), FormSpecs.LINE_GAP_ROWSPEC,
-						RowSpec.decode("20px"), FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("20px"),
-						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("21px"), FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("20px"), FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("26px"),
-						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("23px"), }));
+		setBackground(new Color(108, 255, 108));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("max(119dlu;pref):grow"),
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("42px"),
+				ColumnSpec.decode("49px"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("228px"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("68px"),
+				ColumnSpec.decode("4px"),
+				ColumnSpec.decode("191px"),
+				ColumnSpec.decode("16px"),
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("24px"),
+				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("94px"),},
+			new RowSpec[] {
+				FormSpecs.LINE_GAP_ROWSPEC,
+				RowSpec.decode("pref:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.LINE_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.LINE_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("21px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("20px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("22px"),
+				FormSpecs.UNRELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("pref:grow"),}));
 
 		lblNome = new JLabel("Nome:");
-		lblNome.setBounds(20, 14, 46, 14);
-		add(lblNome, "3, 2, center, center");
-
+		lblNome.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblNome.setForeground(Color.BLACK);
+		add(lblNome, "7, 6, center, fill");
+		
 		txtNome = new JTextField();
-		txtNome.setBounds(63, 11, 330, 20);
-		add(txtNome, "5, 2, 7, 1, fill, top");
+		add(txtNome, "9, 6, 5, 1, fill, fill");
 		txtNome.setColumns(10);
 
 		lblCPF = new JLabel("CPF:");
-		lblCPF.setBounds(20, 48, 46, 14);
-		add(lblCPF, "3, 4, center, center");
+		lblCPF.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblCPF.setForeground(Color.BLACK);
+		add(lblCPF, "7, 8, center, fill");
 
 		try {
 			mascaraCpf = new MaskFormatter("###.###.###-##");
@@ -97,87 +136,100 @@ public class PainelCadastroUsuario extends JPanel {
 		} catch (ParseException e) {
 			// silent
 		}
-
-		txtCPF = new JFormattedTextField(mascaraCpf);
-		txtCPF.setBounds(63, 45, 132, 20);
-		add(txtCPF, "5, 4, left, top");
-		txtCPF.setColumns(10);
-
-		lblDtNascimento = new JLabel("Dt. Nasc:");
-		lblDtNascimento.setBounds(207, 83, 46, 14);
-		add(lblDtNascimento, "7, 4, 3, 1, left, center");
-
-		txtDtNascimento = new JTextField();
-		txtDtNascimento.setBounds(261, 81, 132, 20);
-		add(txtDtNascimento, "11, 4, 3, 1, left, top");
-		txtDtNascimento.setColumns(10);
+		
+				txtCPF = new JFormattedTextField(mascaraCpf);
+				add(txtCPF, "9, 8, fill, fill");
+				txtCPF.setColumns(10);
+				
+				lblDtNascimento = new JLabel("Dt. Nasc:");
+				lblDtNascimento.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				lblDtNascimento.setForeground(Color.BLACK);
+				add(lblDtNascimento, "11, 8, center, center");
+		
+				txtDtNascimento = new JTextField();
+				add(txtDtNascimento, "13, 8, fill, fill");
+				txtDtNascimento.setColumns(10);
 
 		lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(20, 117, 46, 14);
-		add(lblEmail, "3, 6, center, center");
-
-		txtEmail = new JTextField();
-		txtEmail.setColumns(10);
-		txtEmail.setBounds(63, 114, 330, 20);
-		add(txtEmail, "5, 6, left, top");
+		lblEmail.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblEmail.setForeground(Color.BLACK);
+		add(lblEmail, "7, 10, center, fill");
+		
+				txtEmail = new JTextField();
+				txtEmail.setColumns(10);
+				add(txtEmail, "9, 10, fill, fill");
+		
+				lblValorHora = new JLabel("Valor Hora:");
+				lblValorHora.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				lblValorHora.setForeground(Color.BLACK);
+				add(lblValorHora, "11, 10, center, center");
+		
+				txtValorHora = new JTextField();
+				txtValorHora.setColumns(10);
+				add(txtValorHora, "13, 10, fill, fill");
 
 		lblTelefone = new JLabel("Telefone:");
-		lblTelefone.setBounds(13, 82, 46, 14);
-		add(lblTelefone, "3, 8, center, center");
-
-		txtTelefone = new JTextField();
-		txtTelefone.setBounds(64, 81, 132, 20);
-		add(txtTelefone, "5, 8, fill, fill");
-		txtTelefone.setColumns(10);
-
-		lblValorHora = new JLabel("Valor Hora:");
-		lblValorHora.setBounds(206, 223, 66, 14);
-		add(lblValorHora, "7, 8, 3, 1, right, center");
-
-		txtValorHora = new JTextField();
-		txtValorHora.setColumns(10);
-		txtValorHora.setBounds(263, 219, 130, 20);
-		add(txtValorHora, "11, 8, 3, 1, left, center");
+		lblTelefone.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblTelefone.setForeground(Color.BLACK);
+		add(lblTelefone, "7, 12, center, fill");
+		
+		try {
+			mascaraTel = new MaskFormatter("(##)#####-####");
+			mascaraTel.setValueContainsLiteralCharacters(false);
+		} catch (ParseException e) {
+			// silent
+		}
+		
+				txtTelefone = new JFormattedTextField(mascaraTel);
+				add(txtTelefone, "9, 12, fill, fill");
+				txtTelefone.setColumns(10);
+		
+				lblSenha = new JLabel("Senha:");
+				lblSenha.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				lblSenha.setForeground(Color.BLACK);
+				add(lblSenha, "11, 12, center, center");
+		
+				txtSenha = new JTextField();
+				txtSenha.setColumns(10);
+				add(txtSenha, "13, 12, fill, fill");
 
 		lblLogin = new JLabel("Login:");
-		lblLogin.setBounds(21, 152, 46, 14);
-		add(lblLogin, "3, 10, center, center");
-
-		txtLogin = new JTextField();
-		txtLogin.setColumns(10);
-		txtLogin.setBounds(64, 147, 131, 20);
-		add(txtLogin, "5, 10, left, center");
-
-		lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(216, 151, 46, 14);
-		add(lblSenha, "7, 10, left, center");
-
-		txtSenha = new JTextField();
-		txtSenha.setColumns(10);
-		txtSenha.setBounds(263, 147, 129, 20);
-		add(txtSenha, "11, 10, 3, 1, left, center");
-
-		lblEndereco = new JLabel("Endere\u00E7o:");
-		lblEndereco.setBounds(11, 185, 53, 14);
-		add(lblEndereco, "3, 12, center, center");
-
-		cbEndereco = new JComboBox(new EnderecoController().consultarTodos().toArray());
-		cbEndereco.setBounds(65, 181, 330, 22);
-		add(cbEndereco, "5, 12, left, top");
-
-		lblTipoUsuario = new JLabel("Tipo:");
-		lblTipoUsuario.setBounds(20, 225, 46, 14);
-		add(lblTipoUsuario, "9, 12, right, center");
-
-		cbTipoUsuario = new JComboBox(new String[] { "Administrador", "Personal Trainer", "Cliente" });
-		cbTipoUsuario.setBounds(65, 221, 130, 22);
-		add(cbTipoUsuario, "11, 12, fill, top");
-
-		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(153, 254, 89, 23);
-		add(btnSalvar, "11, 14, fill, fill");
-
+		lblLogin.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblLogin.setForeground(Color.BLACK);
+		add(lblLogin, "7, 14, center, fill");
+		
+				txtLogin = new JTextField();
+				txtLogin.setColumns(10);
+				add(txtLogin, "9, 14, fill, fill");
+										
+												lblTipoUsuario = new JLabel("Tipo:");
+												lblTipoUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+												lblTipoUsuario.setForeground(Color.BLACK);
+												add(lblTipoUsuario, "11, 14, center, center");
+										
+												cbTipoUsuario = new JComboBox(new String[] { "Administrador", "Personal Trainer", "Cliente" });
+												cbTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+												cbTipoUsuario.setBackground(Color.LIGHT_GRAY);
+												cbTipoUsuario.setForeground(Color.BLACK);
+												add(cbTipoUsuario, "13, 14, fill, top");
+								
+										lblEndereco = new JLabel("Endereço:");
+										lblEndereco.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+										lblEndereco.setForeground(Color.BLACK);
+										add(lblEndereco, "7, 16, center, fill");
+						
+								cbEndereco = new JComboBox(new EnderecoController().consultarTodos().toArray());
+								cbEndereco.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+								cbEndereco.setForeground(Color.BLACK);
+								cbEndereco.setBackground(Color.LIGHT_GRAY);
+								add(cbEndereco, "9, 16, 5, 1, fill, fill");
 		this.usuario = usuario;
+						
+								btnSalvar = new JButton("Cadastrar");
+								btnSalvar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+								btnSalvar.setBackground(Color.BLACK);
+								btnSalvar.setForeground(Color.WHITE);
+								add(btnSalvar, "13, 18, right, fill");
 
 		if (this.usuario != null) {
 			preencherCamposTela();
@@ -215,7 +267,12 @@ public class PainelCadastroUsuario extends JPanel {
 
 		this.usuario.getPessoa()
 				.setDtNascimento(LocalDate.parse(txtDtNascimento.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		this.usuario.getPessoa().setTelefone(txtTelefone.getText());
+		try {
+			String telefoneSemMascara = (String) mascaraTel.stringToValue(txtTelefone.getText());
+			this.usuario.getPessoa().setTelefone(telefoneSemMascara);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao converter o telefone", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
 
 		if (this.usuario.getId() == null) {
 			this.usuario.setMatricula(new Random().nextInt(900000) + 100000);

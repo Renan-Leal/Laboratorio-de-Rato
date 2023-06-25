@@ -16,7 +16,8 @@ public class Banco {
 					+ BANCODADOS + "?useSSL=false&serverTimezone=UTC&useTimezone=true";
 	private static final String USER = "root";
 //	private static final String PASSWORD = "root";
-	private static final String PASSWORD = "R3un1d@s";
+	private static final String PASSWORD = "admin";
+//	private static final String PASSWORD = "R3un1d@s";
 	
 	public static Connection getConnection(){
 		try {
