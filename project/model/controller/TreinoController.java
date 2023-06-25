@@ -77,4 +77,8 @@ public class TreinoController {
 		return gerador.gerarPlanilhaTreinos(treinos, destinoArquivo);
 	}
 
+	public ArrayList<Treino> consultarTreinosUsuarioAutenticado(Integer id) {
+		return bo.consultarTreinosUsuarioAutenticado(id);
+	}
+
 }

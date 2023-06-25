@@ -13,6 +13,7 @@ import model.exception.CampoInvalidoException;
 import model.exception.SenhaInvalidaException;
 import model.vo.Endereco;
 import model.vo.TipoUsuario;
+import model.vo.Treino;
 import model.vo.Usuario;
 
 import java.awt.event.ActionListener;
@@ -143,8 +144,8 @@ public class Menu {
 
 			}
 		});
-		mntmCadastrarUsuario.setIcon(
-				new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-usuário-do-sexo-feminino-50.png")));
+		mntmCadastrarUsuario.setIcon(new ImageIcon(
+				Menu.class.getResource("/model/icones/icons8-adicionar-usuário-do-sexo-feminino-50.png")));
 		mnUsuarios.add(mntmCadastrarUsuario);
 
 		mntmListarUsuario = new JMenuItem("Listagem");
@@ -156,12 +157,12 @@ public class Menu {
 				painelListagemUsuario = new PainelListagemUsuarios();
 				frame.setContentPane(painelListagemUsuario);
 				frame.revalidate();
-				registrarCliqueBotaoEditarListagemUsuario();
+				registrarCliqueBotaoEditarUsuario();
 
 			}
 		});
 		mntmListarUsuario
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-utilizador-50.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-utilizador-50.png")));
 		mnUsuarios.add(mntmListarUsuario);
 
 		mnTreinos = new JMenu("Treinos");
@@ -177,7 +178,7 @@ public class Menu {
 		mntmCadastrarTreino.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarTreino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroTreino = new PainelCadastroTreino(usuarioAutenticado);
+				painelCadastroTreino = new PainelCadastroTreino(usuarioAutenticado, null);
 				frame.setContentPane(painelCadastroTreino);
 				frame.revalidate();
 				registrarCliqueBotaoSalvarTreino();
@@ -192,13 +193,13 @@ public class Menu {
 		mntmListarTreinos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmListarTreinos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelListagemTreino = new PainelListagemTreinos();
+				painelListagemTreino = new PainelListagemTreinos(usuarioAutenticado);
 				frame.setContentPane(painelListagemTreino);
 				frame.revalidate();
+				registrarCliqueBotaoEditarTreino();
 			}
 		});
-		mntmListarTreinos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-vários-50.png")));
+		mntmListarTreinos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-vários-50.png")));
 		mnTreinos.add(mntmListarTreinos);
 
 		mnAgendamentos = new JMenu("Agendamentos");
@@ -206,8 +207,7 @@ public class Menu {
 		mnAgendamentos.setForeground(Color.WHITE);
 		mnAgendamentos.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
 		mnAgendamentos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-women-track-and-field-50.png")));
-
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-women-track-and-field-50.png")));
 
 		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
 		mntmCadastrarAgendamento.setBackground(Color.WHITE);
@@ -221,7 +221,7 @@ public class Menu {
 			}
 		});
 		mntmCadastrarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-arquivo-50.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-arquivo-50.png")));
 		mnAgendamentos.add(mntmCadastrarAgendamento);
 
 		mntmListarAgendamento = new JMenuItem("Listagem");
@@ -236,7 +236,7 @@ public class Menu {
 			}
 		});
 		mntmListarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-50.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-50.png")));
 		mnAgendamentos.add(mntmListarAgendamento);
 
 		mnEnderecos = new JMenu("Endereços");
@@ -251,7 +251,7 @@ public class Menu {
 		mntmCadastrarEndereco.setForeground(Color.BLACK);
 		mntmCadastrarEndereco.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarEndereco
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-endereço-50 (1).png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-endereço-50 (1).png")));
 		mntmCadastrarEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroEndereco = new PainelCadastroEndereco(null);
@@ -286,18 +286,30 @@ public class Menu {
 		bloquearTodoMenu();
 	}
 
+	protected void registrarCliqueBotaoEditarTreino() {
+		painelListagemTreino.getBtnEditar().addActionListener((new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Treino treinoSelecionado = painelListagemTreino.getTreinoSelecionado();
+				painelCadastroTreino = new PainelCadastroTreino(usuarioAutenticado, treinoSelecionado);
+				frame.setContentPane(painelCadastroTreino);
+				frame.revalidate();
+				registrarCliqueBotaoSalvarTreino();
+
+			}
+		}));
+
+	}
+
 	protected void registrarCliqueBotaoSalvarTreino() {
 		painelCadastroTreino.getBtnCadastrar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					painelCadastroTreino.cadastrarTreino();
-				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(null, exception.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-				
+
+				painelCadastroTreino.cadastrarTreino();
+
 			}
 		}));
-		
+
 	}
 
 	protected void registrarCliqueBotaoSalvarUsuario() {
@@ -313,8 +325,8 @@ public class Menu {
 		}));
 
 	}
-	
-	protected void registrarCliqueBotaoEditarListagemUsuario() {
+
+	protected void registrarCliqueBotaoEditarUsuario() {
 		painelListagemUsuario.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario usuario = painelListagemUsuario.getUsuarioSelecionado();

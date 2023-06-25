@@ -25,6 +25,7 @@ import org.apache.poi.hpsf.Array;
 import model.controller.TreinoController;
 import model.controller.UsuarioController;
 import model.exception.CampoInvalidoException;
+import model.vo.Endereco;
 import model.vo.NivelTreino;
 import model.vo.TipoUsuario;
 import model.vo.Treino;
@@ -45,10 +46,10 @@ public class PainelCadastroTreino extends JPanel {
 	private JLabel lblCliente;
 	private JLabel lblProfissional;
 	private JComboBox cbProfissional;
-	private Treino treino = new Treino();
+	private Treino treino;
 	private JComboBox cbCliente;
 
-	public PainelCadastroTreino(Usuario usuarioAutenticado) {
+	public PainelCadastroTreino(Usuario usuarioAutenticado, Treino treino) {
 		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(
 				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(57dlu;pref):grow"),
@@ -82,12 +83,24 @@ public class PainelCadastroTreino extends JPanel {
 		lblCliente.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblCliente.setForeground(Color.BLACK);
 		add(lblCliente, "16, 5, right, center");
+		
+		if (usuarioAutenticado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+			cbCliente = new JComboBox(
+					new UsuarioController().consultarPorTipoUsuario(TipoUsuario.CLIENTE.getValor()).toArray());
+			cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+			cbCliente.setForeground(Color.BLACK);
+			add(cbCliente, "18, 5, fill, top");
+			
+		} else {
+			cbCliente = new JComboBox(new UsuarioController().
+					consultarClientesUsuarioAutenticado(usuarioAutenticado.getId()).toArray());
+			cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+			cbCliente.setForeground(Color.BLACK);
+			add(cbCliente, "18, 5, fill, top");
+			
+		}
 
-		cbCliente = new JComboBox(
-				new UsuarioController().consultarPorTipoUsuario(TipoUsuario.CLIENTE.getValor()).toArray());
-		cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		cbCliente.setForeground(Color.BLACK);
-		add(cbCliente, "18, 5, fill, top");
+		
 
 		lblProfissional = new JLabel("Profissional:");
 		lblProfissional.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -125,7 +138,25 @@ public class PainelCadastroTreino extends JPanel {
 		btnCadastrar.setForeground(Color.WHITE);
 		btnCadastrar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		add(btnCadastrar, "18, 13, right, top");
+		
+		this.treino = treino;
+		if(this.treino != null) {
+			preencherCamposTela();
+		} else {
+			this.treino = new Treino();
+		}
 	}
+	
+
+	private void preencherCamposTela() {
+		this.cbCliente.setSelectedItem(this.treino.getCliente());
+		this.cbProfissional.setSelectedItem(this.treino.getProfissional());
+		this.cbNivel.setSelectedIndex(this.treino.getNivelTreino().getValor() - 1);
+		this.txtTreino.setText(this.treino.getTreino());
+		
+	}
+
+
 
 	public JButton getBtnCadastrar() {
 		return btnCadastrar;
@@ -144,6 +175,10 @@ public class PainelCadastroTreino extends JPanel {
 			if(this.treino.getId() == null) {
 				treinoController.inserir(treino);
 				JOptionPane.showMessageDialog(null, "Treino cadastrado com sucesso!", 
+						"Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				treinoController.atualizar(treino);
+				JOptionPane.showMessageDialog(null, "Treino atualizado com sucesso!", 
 						"Sucesso", JOptionPane.INFORMATION_MESSAGE);
 			}
 		} catch (CampoInvalidoException excecao) {

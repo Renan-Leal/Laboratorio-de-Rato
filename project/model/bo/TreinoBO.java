@@ -1,5 +1,6 @@
 package model.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.TreinoDAO;
@@ -37,6 +38,10 @@ public class TreinoBO {
 
 	public List<Treino> consultarComFiltros(TreinoSeletor seletor) {
 		return dao.consultarComFiltros(seletor);
+	}
+
+	public ArrayList<Treino> consultarTreinosUsuarioAutenticado(Integer id) {
+		return dao.consultarTreinosUsuarioAutenticado(id);
 	}
 		
 
