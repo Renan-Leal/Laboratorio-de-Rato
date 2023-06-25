@@ -88,34 +88,34 @@ public class PainelLogin extends JPanel {
 				FormSpecs.DEFAULT_ROWSPEC,
 				RowSpec.decode("fill:pref:grow"),}));
 																
-																		lblLogin = new JLabel("Login:");
-																		lblLogin.setForeground(Color.BLACK);
-																		lblLogin.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
-																		add(lblLogin, "16, 6, fill, fill");
+				lblLogin = new JLabel("Login:");
+				lblLogin.setForeground(Color.BLACK);
+				lblLogin.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+				add(lblLogin, "16, 6, fill, fill");
 														
-																txtLogin = new JTextField();
-																txtLogin.setForeground(Color.BLACK);
-																add(txtLogin, "19, 6, fill, fill");
-																txtLogin.setColumns(10);
+				txtLogin = new JTextField();
+				txtLogin.setForeground(Color.BLACK);
+				add(txtLogin, "19, 6, fill, fill");
+				txtLogin.setColumns(10);
 												
-														lblSenha = new JLabel("Senha:");
-														lblSenha.setForeground(Color.BLACK);
-														lblSenha.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
-														add(lblSenha, "16, 10, fill, fill");
+				lblSenha = new JLabel("Senha:");
+				lblSenha.setForeground(Color.BLACK);
+				lblSenha.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+				add(lblSenha, "16, 10, fill, fill");
 										
-												txtSenha = new JPasswordField();
-												txtSenha.setForeground(Color.BLACK);
-												add(txtSenha, "19, 10, fill, fill");
+				txtSenha = new JPasswordField();
+				txtSenha.setForeground(Color.BLACK);
+				add(txtSenha, "19, 10, fill, fill");
 										
-												btnLogar = new JButton("Logar");
-												btnLogar.setForeground(Color.WHITE);
-												btnLogar.setBackground(Color.BLACK);
-												btnLogar.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
-												btnLogar.addActionListener(new ActionListener() {
-													public void actionPerformed(ActionEvent e) {
-													}
-												});
-												add(btnLogar, "19, 14, fill, fill");
+				btnLogar = new JButton("Logar");
+				btnLogar.setForeground(Color.WHITE);
+				btnLogar.setBackground(Color.BLACK);
+				btnLogar.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+				btnLogar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+				});
+				add(btnLogar, "19, 14, fill, fill");
 
 	}
 
