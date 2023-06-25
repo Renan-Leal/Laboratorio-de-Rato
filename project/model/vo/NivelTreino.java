@@ -16,7 +16,7 @@ public enum NivelTreino {
 	public static NivelTreino getNivelTreinoPorValor(Integer valor) {
 		NivelTreino nivelTreino = null;
 		for (NivelTreino elemento : NivelTreino.values()) {
-			if (nivelTreino.getValor() == valor) {
+			if (elemento.getValor() == valor) {
 				nivelTreino = elemento;
 			}
 		}

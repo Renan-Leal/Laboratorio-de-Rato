@@ -32,6 +32,7 @@ import model.vo.Pessoa;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
@@ -60,6 +61,8 @@ public class PainelCadastroUsuario extends JPanel {
 	private JLabel lblValorHora;
 	private JLabel lblLogin;
 	private JLabel lblEndereco;
+	private UsuarioController usuarioController = new UsuarioController();
+	private PessoaController pessoaController = new PessoaController();
 
 	public PainelCadastroUsuario(Usuario usuario) {
 		setLayout(new FormLayout(
@@ -201,7 +204,7 @@ public class PainelCadastroUsuario extends JPanel {
 
 	public Usuario cadastrarUsuario() throws SenhaInvalidaException {
 		this.usuario.setPessoa(new Pessoa());
-
+		
 		this.usuario.getPessoa().setNome(txtNome.getText());
 		try {
 			String cpfSemMascara = (String) mascaraCpf.stringToValue(txtCPF.getText());
@@ -229,15 +232,14 @@ public class PainelCadastroUsuario extends JPanel {
 
 		this.usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex() + 1));
 		this.usuario.getPessoa().setEndereco((Endereco) cbEndereco.getSelectedItem());
-
-		UsuarioController usuarioController = new UsuarioController();
-		PessoaController pessoaController = new PessoaController();
+		
+		this.usuario.setDataCadastro(LocalDateTime.now());
 
 		try {
 			if (this.usuario.getId() == null) {
-				Pessoa pessoaConsultada = pessoaController.consultarPorCpf(this.usuario.getPessoa());
+				Pessoa pessoaConsultada = this.pessoaController.consultarPorCpf(this.usuario.getPessoa());
 				if (pessoaConsultada == null) {
-					Pessoa pessoaCadastrada = pessoaController.inserir(this.usuario.getPessoa());
+					Pessoa pessoaCadastrada = this.pessoaController.inserir(this.usuario.getPessoa());
 					this.usuario.getPessoa().setId(pessoaCadastrada.getId());
 					usuarioController.inserir(this.usuario);
 

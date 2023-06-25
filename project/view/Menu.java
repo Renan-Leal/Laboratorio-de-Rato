@@ -48,6 +48,7 @@ public class Menu {
 	private JMenuItem mntmCadastrarAgendamento;
 	private JMenuItem mntmListarAgendamento;
 	private JMenu mnEnderecos;
+	protected Usuario usuarioAutenticado;
 
 	/**
 	 * Launch the application.
@@ -89,7 +90,7 @@ public class Menu {
 		painelLogin.getBtnLogar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Usuario usuarioAutenticado = painelLogin.autenticar();
+					usuarioAutenticado = painelLogin.autenticar();
 					bloquearTodoMenu();
 					if (usuarioAutenticado != null
 							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
@@ -135,7 +136,6 @@ public class Menu {
 		mntmCadastrarUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO continuar método de cadastrar usuário
 				painelCadastroUsuario = new PainelCadastroUsuario(null);
 				frame.setContentPane(painelCadastroUsuario);
 				frame.revalidate();
@@ -177,9 +177,10 @@ public class Menu {
 		mntmCadastrarTreino.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarTreino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroTreino = new PainelCadastroTreino();
+				painelCadastroTreino = new PainelCadastroTreino(usuarioAutenticado);
 				frame.setContentPane(painelCadastroTreino);
 				frame.revalidate();
+				registrarCliqueBotaoSalvarTreino();
 			}
 		});
 		mntmCadastrarTreino.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-50 (1).png")));
@@ -283,6 +284,20 @@ public class Menu {
 
 		// Método para desbloquear o menu
 		bloquearTodoMenu();
+	}
+
+	protected void registrarCliqueBotaoSalvarTreino() {
+		painelCadastroTreino.getBtnCadastrar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					painelCadastroTreino.cadastrarTreino();
+				} catch (Exception exception) {
+					JOptionPane.showMessageDialog(null, exception.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		}));
+		
 	}
 
 	protected void registrarCliqueBotaoSalvarUsuario() {

@@ -48,4 +48,9 @@ public class UsuarioBO {
 		return dao.consultarComFiltros(seletor);
 	}
 
+	public List<Usuario> consultarPorTipoUsuario(Integer tipoUsuario) {
+		
+		return dao.consultarPorTipoUsuario(tipoUsuario);
+	}
+
 }
