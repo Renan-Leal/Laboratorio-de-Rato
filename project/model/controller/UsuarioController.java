@@ -107,6 +107,10 @@ public class UsuarioController {
 		return bo.contarTotalRegistrosComFiltros(seletor);
 	}
 
+	public List<Usuario>  consultarPorTipoUsuario(Integer tipoUsuario) {
+		return bo.consultarPorTipoUsuario(tipoUsuario);
+	}
+
 
 
 }
