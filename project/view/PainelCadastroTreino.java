@@ -39,6 +39,7 @@ public class PainelCadastroTreino extends JPanel {
 	private JComboBox cbProfissional;
 	private Treino treino;
 	private JComboBox cbCliente;
+	private JButton btnVoltar;
 
 	public PainelCadastroTreino() {
 		setBackground(new Color(108, 255, 108));
@@ -181,5 +182,19 @@ public class PainelCadastroTreino extends JPanel {
 		}
 		});
 		add(btnCadastrar, "18, 13, right, top");
+		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnVoltar, "18, 15, right, fill");
+	}
+	
+	public JButton getBtnVoltar() {
+		return btnVoltar;
 	}
 }
