@@ -54,6 +54,7 @@ public class PainelListagemAgendamentos extends JPanel {
 	
 	private AgendamentoController controller = new AgendamentoController();
 	private Agendamento agendamentoSelecionado;
+	private JButton btnVoltar;
 	
 	private void limparTabelaAgendamentos() {
 		tblAgendamentos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -308,8 +309,17 @@ public class PainelListagemAgendamentos extends JPanel {
 			}
 		});
 		add(btnExcluir, "24, 17, fill, fill");
-
-	}
+		
+		btnVoltar = new JButton("Pagina Inicial");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnVoltar, "16, 17");
+		}
 	
 	private void atualizarQuantidadePaginas() {
 		//Cálculo do total de páginas
@@ -328,4 +338,10 @@ public class PainelListagemAgendamentos extends JPanel {
 		public Agendamento getAgendamentoSelecionado() {
 			return agendamentoSelecionado;
 		}
+		
+		public JButton getBtnVoltar() {
+			return btnVoltar;
+		}
+		
+		
 }

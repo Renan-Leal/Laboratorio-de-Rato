@@ -48,6 +48,7 @@ public class PainelCadastroTreino extends JPanel {
 	private JComboBox cbProfissional;
 	private Treino treino;
 	private JComboBox cbCliente;
+	private JButton btnVoltar;
 
 	public PainelCadastroTreino(Usuario usuarioAutenticado, Treino treino) {
 		setBackground(new Color(108, 255, 108));

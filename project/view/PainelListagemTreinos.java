@@ -320,7 +320,6 @@ public class PainelListagemTreinos extends JPanel {
 		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPaginacao, "20, 9, right, fill");
-		add(btnAvancarPagina, "12, 19, fill, fill");
 		
 		btnVoltarPagina = new JButton("<< Voltar");
 		btnVoltarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -359,6 +358,17 @@ public class PainelListagemTreinos extends JPanel {
 				}
 			}
 		});
+		
+		btnVoltar = new JButton("Pagina Inicial");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnVoltar, "18, 15, fill, fill");
+
 		add(btnGerarPlanilha, "20, 15, fill, fill");
 
 
@@ -378,12 +388,12 @@ public class PainelListagemTreinos extends JPanel {
 	}
 
 	protected void buscarTreinosComFiltros() {
-		seletor = new TreinoSeletor();
-		seletor.setLimite(TAMANHO_PAGINA);
-		seletor.setPagina(paginaAtual);
-		seletor.setCliente(cbCliente.getSelectedIndex());
-		seletor.setProfissional(cbProfissional.getSelectedIndex());
-		seletor.setNivel(cbNivel.getSelectedIndex());
+//		seletor = new TreinoSeletor();
+//		seletor.setLimite(TAMANHO_PAGINA);
+//		seletor.setPagina(paginaAtual);
+//		seletor.setCliente(cbCliente.getSelectedIndex());
+//		seletor.setProfissional(cbProfissional.getSelectedIndex());
+//		seletor.setNivel(cbNivel.getSelectedIndex());
 
 		treinos = (ArrayList<Treino>) controller.consultarComFiltros(seletor);
 		atualizarTabelaTreinos();
@@ -402,7 +412,11 @@ public class PainelListagemTreinos extends JPanel {
 				}
 				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
 	}
-	//Torna o btnEditar acessível externamente à essa classe
+	
+	public JButton getBtnVoltar() {
+		return this.btnVoltar;
+	}
+
 		public JButton getBtnEditar() {
 			return this.btnEditar;
 		}
