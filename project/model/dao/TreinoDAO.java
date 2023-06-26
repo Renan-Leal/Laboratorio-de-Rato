@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+import model.seletor.TreinoSeletor;
 import model.vo.NivelTreino;
 import model.vo.Treino;
 
@@ -86,7 +88,7 @@ public class TreinoDAO {
 			ResultSet resultado = query.executeQuery();
 
 			if (resultado.next()) {
-				treinoConsultado = converterDeResultSetParaEntidade(resultado);
+				treinoConsultado = montarTreinoComResultadoDoBanco(resultado);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao buscar treino com id: + " + id + "\n Causa: " + e.getMessage());
@@ -98,14 +100,14 @@ public class TreinoDAO {
 		return treinoConsultado;
 	}
 
-	private Treino converterDeResultSetParaEntidade(ResultSet resultado) throws SQLException {
+	private Treino montarTreinoComResultadoDoBanco(ResultSet resultado) throws SQLException {
 		Treino treinoConsultado = new Treino();
 		UsuarioDAO usuarioDao = new UsuarioDAO();
 		treinoConsultado.setId(resultado.getInt("ID"));
 		treinoConsultado.setProfissional(usuarioDao.consultarPorId(resultado.getInt("ID_PROFISSIONAL")));
 		treinoConsultado.setCliente(usuarioDao.consultarPorId(resultado.getInt("ID_CLIENTE")));
-		treinoConsultado.setDtCadastro(LocalDateTime.parse(resultado.getString("DT_CADASTRO")));
-		treinoConsultado.setDtTermino(LocalDateTime.parse(resultado.getString("DT_TERMINO")));
+		treinoConsultado.setDtCadastro(LocalDate.parse(resultado.getString("DT_CADASTRO")));
+		treinoConsultado.setDtTermino(LocalDate.parse(resultado.getString("DT_TERMINO")));
 		treinoConsultado.setNivelTreino(NivelTreino.getNivelTreinoPorValor(resultado.getInt("ID_NIVELTREINO")));
 		treinoConsultado.setTreino(resultado.getString("TREINO"));
 		return treinoConsultado;
@@ -140,7 +142,7 @@ public class TreinoDAO {
 		try {
 			ResultSet resultado = query.executeQuery();
 			while (resultado.next()) {
-				Treino treinoConsultado = converterDeResultSetParaEntidade(resultado);
+				Treino treinoConsultado = montarTreinoComResultadoDoBanco(resultado);
 				treinos.add(treinoConsultado);
 			}
 		} catch (SQLException e) {
@@ -151,6 +153,101 @@ public class TreinoDAO {
 		}
 
 		return treinos;
+	}
+
+	public List<Treino> consultarComFiltros(TreinoSeletor seletor) {
+		List<Treino> treinos = new ArrayList<Treino>();
+		Connection conexao = Banco.getConnection();
+		String sql = " select * from TREINO ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		if(seletor.temPaginacao()) {
+			sql += " LIMIT "  + seletor.getLimite()
+				 + " OFFSET " + seletor.getOffset();  
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			while(resultado.next()) {
+				Treino treinoBuscado = montarTreinoComResultadoDoBanco(resultado);
+				treinos.add(treinoBuscado);
+			}
+			
+		}catch (Exception e) {
+			System.out.println("Erro ao buscar todos os treinos. \n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return treinos;
+	}
+
+	private String preencherFiltros(String sql, TreinoSeletor seletor) {
+		boolean primeiro = true;
+		if(seletor.getCliente() != 0) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			
+			sql += " ID_CLIENTE = " + seletor.getCliente();
+			primeiro = false;
+		}
+		
+		if(seletor.getProfissional() != 0) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " ID_PROFISSIONAL = " + seletor.getProfissional();
+			primeiro = false;
+		}
+		
+		if(seletor.getNivel() != 0) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " ID_NIVELTREINO =" + seletor.getNivel();
+			primeiro = false;
+		}
+		return sql;
+	}
+	
+	public int contarTotalRegistrosComFiltros(TreinoSeletor seletor) {
+		int total = 0;
+		Connection conexao = Banco.getConnection();
+		String sql = " select count(*) from TREINO ";
+		
+		if(seletor.temFiltro()) {
+			sql = preencherFiltros(sql, seletor);
+		}
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				total = resultado.getInt(1);
+			}
+		}catch (Exception e) {
+			System.out.println("Erro contar o total de treinos" 
+					+ "\n Causa:" + e.getMessage());
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return total;
 	}
 
 }

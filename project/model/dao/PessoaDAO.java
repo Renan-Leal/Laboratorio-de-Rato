@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class PessoaDAO {
 		PreparedStatement query = Banco.getPreparedStatementWithPk(conexao, sql);
 			
 		//executar o INSERT
+		Pessoa pessoaConsultadaPorCpf = this.consultarPorCpf(novaPessoa.getCpf());
+		
+		
 		try {
 			query.setString(1, novaPessoa.getNome());
 			query.setString(2, novaPessoa.getCpf());
@@ -104,15 +108,40 @@ public class PessoaDAO {
 		return pessoaConsultada;
 	}
 	
+	public Pessoa consultarPorCpf(String cpf) {
+		Pessoa pessoaConsultada = null;
+		Connection conexao = Banco.getConnection();
+		String sql =  " SELECT * FROM PESSOA "
+				    + " WHERE CPF = ?";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		
+		try {
+			query.setString(1, cpf);
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				pessoaConsultada = converterDeResultSetParaEntidade(resultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar pessoa com cpf: + " + cpf 
+								+ "\n Causa: " + e.getMessage());	
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return pessoaConsultada;
+	}
+	
 	private Pessoa converterDeResultSetParaEntidade(ResultSet resultado) throws SQLException {
 		Pessoa pessoaConsultada = new Pessoa();
 		EnderecoDAO enderecoDAO = new EnderecoDAO();
-		pessoaConsultada.setId(resultado.getInt("id"));
-		pessoaConsultada.setNome(resultado.getString("nome"));
-		pessoaConsultada.setCpf(resultado.getString("cpf"));
-		pessoaConsultada.setTelefone(resultado.getString("telefone"));
+		pessoaConsultada.setId(resultado.getInt("ID"));
+		pessoaConsultada.setNome(resultado.getString("NOME"));
+		pessoaConsultada.setCpf(resultado.getString("CPF"));
+		pessoaConsultada.setTelefone(resultado.getString("TELEFONE"));
 		pessoaConsultada.setDtNascimento(LocalDate.parse(resultado.getString("DT_NASCIMENTO")));
-		pessoaConsultada.setEndereco(enderecoDAO.consultarPorId(resultado.getInt("ID")));
+		pessoaConsultada.setEndereco(enderecoDAO.consultarPorId(resultado.getInt("ID_ENDERECO")));
 		return pessoaConsultada;
 	}
 	

@@ -6,7 +6,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import model.vo.Agendamento;
 import model.vo.Endereco;
+import model.vo.Treino;
 import model.vo.Usuario;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -98,6 +101,53 @@ public class GeradorPlanilha {
 			novaLinha.createCell(7).setCellValue(u.getValorHora());
 			contadorLinhas++;
 		}
+		return salvarNoDisco(arquivoExcel, destinoArquivo);
+	}
+	
+	public String gerarPlanilhaAgendamentos(ArrayList<Agendamento> agendamentos, String destinoArquivo) {
+		HSSFWorkbook arquivoExcel = new HSSFWorkbook();
+		HSSFSheet abaPlanilha = arquivoExcel.createSheet("Agendamentos");
+		
+		HSSFRow linhaCabecalho = abaPlanilha.createRow(0);
+		linhaCabecalho.createCell(0).setCellValue("Cliente");
+		linhaCabecalho.createCell(1).setCellValue("Data Hora Inicio");
+		linhaCabecalho.createCell(2).setCellValue("Data Hora Final");
+		linhaCabecalho.createCell(3).setCellValue("Aceito");
+		linhaCabecalho.createCell(4).setCellValue("Motivo Rejeicao");
+		
+		int contadorLinhas = 1;
+		for(Agendamento a: agendamentos) {
+			HSSFRow novaLinha = abaPlanilha.createRow(contadorLinhas);
+			novaLinha.createCell(0).setCellValue(a.getCliente().getPessoa().getNome());
+			novaLinha.createCell(1).setCellValue(a.getDataHoraInicio());
+			novaLinha.createCell(2).setCellValue(a.getDataHoraFinal());
+			novaLinha.createCell(3).setCellValue(a.getAceito());
+			novaLinha.createCell(4).setCellValue(a.getMotivoRejeicao());
+			contadorLinhas++;
+		}
+		return salvarNoDisco(arquivoExcel, destinoArquivo);
+	}
+	
+	public String gerarPlanilhaTreinos(List<Treino> treinos, String destinoArquivo) {
+		HSSFWorkbook arquivoExcel = new HSSFWorkbook();
+		HSSFSheet abaPlanilha = arquivoExcel.createSheet("Treinos");
+		
+		HSSFRow linhaCabecalho = abaPlanilha.createRow(0);
+		linhaCabecalho.createCell(0).setCellValue("Cliente");
+		linhaCabecalho.createCell(1).setCellValue("Personal");
+		linhaCabecalho.createCell(2).setCellValue("Nivel Treino");
+		linhaCabecalho.createCell(3).setCellValue("Treino");
+		
+		int contadorLinhas = 1;
+		for(Treino t: treinos) {
+			HSSFRow novaLinha = abaPlanilha.createRow(contadorLinhas);
+			novaLinha.createCell(0).setCellValue(t.getCliente().getPessoa().getNome());
+			novaLinha.createCell(1).setCellValue(t.getProfissional().getPessoa().getNome());
+			novaLinha.createCell(2).setCellValue(t.getNivelTreino().getValor());
+			novaLinha.createCell(3).setCellValue(t.getTreino());
+			contadorLinhas++;
+		}
+		
 		return salvarNoDisco(arquivoExcel, destinoArquivo);
 	}
 

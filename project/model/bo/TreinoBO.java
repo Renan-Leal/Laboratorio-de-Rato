@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.dao.TreinoDAO;
 import model.exception.CampoInvalidoException;
+import model.seletor.TreinoSeletor;
 import model.vo.Treino;
 
 public class TreinoBO {
@@ -28,6 +29,14 @@ public class TreinoBO {
 	
 	public List<Treino> consultarTodos() {
 		return dao.consultarTodos();
+	}
+	
+	public int contarTotalRegistrosComFiltros(TreinoSeletor seletor) {
+		return dao.contarTotalRegistrosComFiltros(seletor);
+	}
+
+	public List<Treino> consultarComFiltros(TreinoSeletor seletor) {
+		return dao.consultarComFiltros(seletor);
 	}
 		
 

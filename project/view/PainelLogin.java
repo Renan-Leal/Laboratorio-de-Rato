@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class PainelLogin extends JPanel {
 	private JTextField txtLogin;
@@ -26,35 +29,93 @@ public class PainelLogin extends JPanel {
 	private JButton btnLogar;
 
 	public PainelLogin() {
-		setLayout(new FormLayout(
-				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("max(92dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("max(36dlu;default)"), },
-				new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, }));
-
-		lblLogin = new JLabel("Login:");
-		add(lblLogin, "10, 8, right, default");
-
-		txtLogin = new JTextField();
-		add(txtLogin, "12, 8, fill, default");
-		txtLogin.setColumns(10);
-
-		lblSenha = new JLabel("Senha:");
-		add(lblSenha, "10, 12, right, default");
-
-		txtSenha = new JPasswordField();
-		add(txtSenha, "12, 12, fill, default");
-
-		btnLogar = new JButton("Logar");
-		add(btnLogar, "12, 16");
+		setBackground(new Color(108, 255, 108));
+		setForeground(SystemColor.desktop);
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(40dlu;pref):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.GROWING_BUTTON_COLSPEC,},
+			new RowSpec[] {
+				RowSpec.decode("fill:pref:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				RowSpec.decode("fill:pref:grow"),}));
+																
+				lblLogin = new JLabel("Login:");
+				lblLogin.setForeground(Color.BLACK);
+				lblLogin.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+				add(lblLogin, "16, 6, fill, fill");
+														
+				txtLogin = new JTextField();
+				txtLogin.setForeground(Color.BLACK);
+				add(txtLogin, "19, 6, fill, fill");
+				txtLogin.setColumns(10);
+												
+				lblSenha = new JLabel("Senha:");
+				lblSenha.setForeground(Color.BLACK);
+				lblSenha.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+				add(lblSenha, "16, 10, fill, fill");
+										
+				txtSenha = new JPasswordField();
+				txtSenha.setForeground(Color.BLACK);
+				add(txtSenha, "19, 10, fill, fill");
+										
+				btnLogar = new JButton("Logar");
+				btnLogar.setForeground(Color.WHITE);
+				btnLogar.setBackground(Color.BLACK);
+				btnLogar.setFont(new Font("Segoe UI Black", Font.PLAIN, 16));
+				btnLogar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+				});
+				add(btnLogar, "19, 14, fill, fill");
 
 	}
 
@@ -65,7 +126,7 @@ public class PainelLogin extends JPanel {
 	@SuppressWarnings("deprecation")
 	public Usuario autenticar() throws CampoInvalidoException {
 		Usuario usuarioAutenticado = null;
-		usuarioAutenticado = new UsuarioController().consultarPorLoginSenha(this.txtLogin.getText(), this.txtSenha.getText());
+		usuarioAutenticado = new UsuarioController().consultarPorLoginSenha(this.txtLogin.getText(), String.valueOf(this.txtSenha.getPassword()));
 		return usuarioAutenticado;
 	}
 	
