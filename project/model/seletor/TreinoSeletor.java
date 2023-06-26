@@ -36,4 +36,16 @@ public class TreinoSeletor extends BaseSeletor{
 		this.nivel = nivel;
 	}
 
+
+	public void setCliente(int selectedIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void setProfissional(int selectedIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

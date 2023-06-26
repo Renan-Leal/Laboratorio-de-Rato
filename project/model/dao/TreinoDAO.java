@@ -107,7 +107,8 @@ public class TreinoDAO {
 		treinoConsultado.setProfissional(usuarioDao.consultarPorId(resultado.getInt("ID_PROFISSIONAL")));
 		treinoConsultado.setCliente(usuarioDao.consultarPorId(resultado.getInt("ID_CLIENTE")));
 		treinoConsultado.setDtCadastro(LocalDate.parse(resultado.getString("DT_CADASTRO")));
-		treinoConsultado.setDtTermino(LocalDate.parse(resultado.getString("DT_TERMINO")));
+//		treinoConsultado.setDtTermino(LocalDate.parse(resultado.getString("DT_TERMINO")));
+		
 		treinoConsultado.setNivelTreino(NivelTreino.getNivelTreinoPorValor(resultado.getInt("ID_NIVELTREINO")));
 		treinoConsultado.setTreino(resultado.getString("TREINO"));
 		return treinoConsultado;
@@ -250,4 +251,44 @@ public class TreinoDAO {
 		return total;
 	}
 
-}
+	public ArrayList<Treino> consultarTreinosUsuarioAutenticado(Integer id) {
+		
+		ArrayList<Treino> treinos = new ArrayList<Treino>();
+		Connection conexao = Banco.getConnection();
+		String sql = " SELECT \r\n"
+				+ "	TREINO.ID AS ID\r\n"
+				+ "    , TREINO.ID_CLIENTE\r\n"
+				+ "    , TREINO.ID_PROFISSIONAL\r\n"
+				+ "    , TREINO.ID_NIVELTREINO\r\n"
+				+ "    , TREINO.DT_CADASTRO\r\n"
+				+ "    , TREINO.DT_TERMINO\r\n"
+				+ "    , TREINO.TREINO\r\n"
+				+ "FROM\r\n"
+				+ "	TREINO\r\n"
+				+ "INNER JOIN USUARIO ON\r\n"
+				+ "	TREINO.ID_CLIENTE = USUARIO.ID\r\n"
+				+ "INNER JOIN PESSOA ON\r\n"
+				+ "	USUARIO.ID_PESSOA = PESSOA.ID\r\n"
+				+ "WHERE ID_PROFISSIONAL = ?";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+
+		try {
+			query.setInt(1, id);
+			ResultSet resultado = query.executeQuery();
+			while (resultado.next()) {
+				Treino treinoConsultado = montarTreinoComResultadoDoBanco(resultado);
+				treinos.add(treinoConsultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar todos os treinos" + "\n Causa: " + e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+
+		return treinos;
+	}
+		
+	}
+
+

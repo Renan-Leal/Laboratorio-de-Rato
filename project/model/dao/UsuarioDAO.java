@@ -140,6 +140,20 @@ public class UsuarioDAO {
 		usuarioConsultado.setSenha(resultado.getString("SENHA"));
 		return usuarioConsultado;
 	}
+	private Usuario montarClienteComResultadoDoBanco(ResultSet resultado) throws SQLException {
+		Usuario usuarioConsultado = new Usuario();
+		PessoaDAO pessoa = new PessoaDAO();
+		usuarioConsultado.setId(resultado.getInt("ID_CLIENTE"));
+		usuarioConsultado.setPessoa(pessoa.consultarPorId(resultado.getInt("ID_PESSOA")));
+		;
+		usuarioConsultado.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(resultado.getInt("ID_TIPOUSUARIO")));
+		usuarioConsultado.setMatricula(resultado.getInt("MATRICULA"));
+		usuarioConsultado.setValorHora(resultado.getDouble("VALORHORA"));
+		usuarioConsultado.setEmail(resultado.getString("EMAIL"));
+		usuarioConsultado.setLogin(resultado.getString("LOGIN"));
+		usuarioConsultado.setSenha(resultado.getString("SENHA"));
+		return usuarioConsultado;
+	}
 
 	public boolean excluir(int id) {
 		boolean excluiu = false;
@@ -216,29 +230,18 @@ public class UsuarioDAO {
 	}
 
 	private String preencherFiltros(String sql, UsuarioSeletor seletor) {
-		boolean primeiro = true;
-		if (seletor.getNome() != null && !seletor.getNome().trim().isEmpty()) {
-			if (primeiro) {
-				sql += " WHERE ";
-			} else {
-				sql += " AND ";
-			}
-
-			sql += " USUARIO LIKE '%" + seletor.getNome() + "%'";
-			primeiro = false;
-		}
-
-		if (seletor.getTipo() != null && !seletor.getTipo().trim().isEmpty()) {
-			if (primeiro) {
-				sql += " WHERE ";
-			} else {
-				sql += " AND ";
-			}
-			sql += " TIPO LIKE '%" + seletor.getTipo() + "%'";
-			primeiro = false;
-		}
-		return sql;
-	}
+        boolean primeiro = true;
+        if(seletor.getTipo() != 0) {
+        if(primeiro) {
+                sql += " WHERE ";
+            } else {
+                sql += " AND ";
+            }
+            sql += " ID_TIPOUSUARIO = " + seletor.getTipo();
+            primeiro = false;
+        }
+        return sql;
+    }
 
 	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
 		int total = 0;
@@ -290,4 +293,36 @@ public class UsuarioDAO {
 		return usuarios;
 	}
 
+	public List<Usuario> consultarClientesUsuarioAutenticado(Integer id) {
+		List<Usuario> clientes = new ArrayList<Usuario>();
+		
+		Connection conexao = Banco.getConnection();
+		String sql = "SELECT * \n"
+				+ "FROM\n"
+				+ "	TREINO\n"
+				+ "INNER JOIN USUARIO ON\n"
+				+ "	TREINO.ID_CLIENTE = USUARIO.ID\n"
+				+ "INNER JOIN PESSOA ON\n"
+				+ "	USUARIO.ID_PESSOA = PESSOA.ID\n"
+				+ "WHERE \n"
+				+ "	ID_PROFISSIONAL = ?";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+
+		try {
+
+			query.setInt(1, id);
+			ResultSet resultado = query.executeQuery();
+			while (resultado.next()) {
+				Usuario usuarioConsultado = montarClienteComResultadoDoBanco(resultado);
+				clientes.add(usuarioConsultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar todas os clientes" + "\n Causa: " + e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+
+		return clientes;
+	}
 }

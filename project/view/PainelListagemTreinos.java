@@ -12,7 +12,9 @@ import model.controller.TreinoController;
 import model.controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.seletor.TreinoSeletor;
+import model.vo.TipoUsuario;
 import model.vo.Treino;
+import model.vo.Usuario;
 
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -24,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import com.jgoodies.forms.layout.FormLayout;
@@ -56,6 +59,10 @@ public class PainelListagemTreinos extends JPanel {
 	private TreinoSeletor seletor = new TreinoSeletor();
 	private TreinoController controller = new TreinoController();
 	private Treino treinoSelecionado;
+	private UsuarioController usuarioController = new UsuarioController();
+	private Usuario usuarioAutenticado;
+	private JButton btnVoltar;
+
 	
 	private void limparTabelaTreinos() {
 		tblTreinos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -76,7 +83,8 @@ public class PainelListagemTreinos extends JPanel {
 		}
 	}
 	
-	public PainelListagemTreinos() {
+	public PainelListagemTreinos(Usuario usuarioAutenticado) {
+		this.usuarioAutenticado = usuarioAutenticado;
 		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -165,8 +173,11 @@ public class PainelListagemTreinos extends JPanel {
 		lblProfissional.setForeground(Color.BLACK);
 		add(lblProfissional, "12, 5, center, center");
 		
-		UsuarioController usuarioController = new UsuarioController();
-		cbProfissional = new JComboBox();
+
+		usuarioController = new UsuarioController();
+		List<Usuario> usuariosAutenticados = new ArrayList<Usuario>();
+		usuariosAutenticados.add(usuarioAutenticado);
+		cbProfissional = new JComboBox(usuariosAutenticados.toArray());
 		cbProfissional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		cbProfissional.setForeground(Color.BLACK);
 		add(cbProfissional, "14, 5, 5, 1, fill, top");
@@ -189,10 +200,22 @@ public class PainelListagemTreinos extends JPanel {
 		lblCliente.setForeground(Color.BLACK);
 		add(lblCliente, "12, 7, center, center");
 		
-		cbCliente = new JComboBox();
-		cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		cbCliente.setForeground(Color.BLACK);
-		add(cbCliente, "14, 7, 5, 1, fill, top");
+		
+		if (usuarioAutenticado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR){
+			cbCliente = new JComboBox(
+					new UsuarioController().consultarPorTipoUsuario(TipoUsuario.CLIENTE.getValor()).toArray());
+			cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+			cbCliente.setForeground(Color.BLACK);
+			add(cbCliente, "14, 7, 5, 1, fill, top");
+			
+		} else {
+			cbCliente = new JComboBox(new UsuarioController().
+					consultarClientesUsuarioAutenticado(usuarioAutenticado.getId()).toArray());
+			cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+			cbCliente.setForeground(Color.BLACK);
+			add(cbCliente, "14, 7, 5, 1, fill, top");
+			
+		}
 		
 		btnBuscarTodos = new JButton("Buscar Todos");
 		btnBuscarTodos.setBackground(Color.BLACK);
@@ -200,7 +223,9 @@ public class PainelListagemTreinos extends JPanel {
 		btnBuscarTodos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnBuscarTodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buscarTreinosComFiltros();
+				buscarTreinos();
+			
+				
 				atualizarTabelaTreinos();
 			}
 		});
@@ -215,6 +240,16 @@ public class PainelListagemTreinos extends JPanel {
 		cbNivel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		cbNivel.setForeground(Color.BLACK);
 		add(cbNivel, "14, 9, 5, 1, fill, top");
+		
+		lblCliente = new JLabel("Cliente: ");
+		lblCliente.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblCliente.setForeground(Color.BLACK);
+		add(lblCliente, "12, 7, center, center");
+		
+		cbCliente = new JComboBox();
+		cbCliente.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		cbCliente.setForeground(Color.BLACK);
+		add(cbCliente, "14, 7, 5, 1, fill, top");
 		
 		tblTreinos = new JTable();
 		tblTreinos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -234,7 +269,6 @@ public class PainelListagemTreinos extends JPanel {
 			}
 		});
 		add(tblTreinos, "12, 11, 9, 1, fill, fill");
-		
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setForeground(Color.WHITE);
@@ -333,7 +367,13 @@ public class PainelListagemTreinos extends JPanel {
 	}
 	
 	protected void buscarTreinos() {
-		this.treinos = (ArrayList<Treino>) controller.consultarTodos();
+		if(usuarioAutenticado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+			this.treinos = (ArrayList<Treino>) controller.consultarTodos();
+		} else {
+			this.treinos = (ArrayList<Treino>) controller.consultarTreinosUsuarioAutenticado(usuarioAutenticado.getId());
+		}
+		
+		
 		
 	}
 
@@ -367,7 +407,7 @@ public class PainelListagemTreinos extends JPanel {
 			return this.btnEditar;
 		}
 
-		public Treino getEnderecoSelecionado() {
+		public Treino getTreinoSelecionado() {
 			return treinoSelecionado;
 		}
 }

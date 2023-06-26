@@ -13,6 +13,7 @@ import model.exception.CampoInvalidoException;
 import model.exception.SenhaInvalidaException;
 import model.vo.Endereco;
 import model.vo.TipoUsuario;
+import model.vo.Treino;
 import model.vo.Usuario;
 
 import java.awt.event.ActionListener;
@@ -71,14 +72,17 @@ public class Menu {
 	 */
 	public Menu() {
 		initialize();
+
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
 		frame = new JFrame();
 		frame.setBounds(100, 100, 601, 344);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		menuBar = new JMenuBar();
@@ -143,8 +147,8 @@ public class Menu {
 
 			}
 		});
-		mntmCadastrarUsuario.setIcon(
-				new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-usuário-do-sexo-feminino-50.png")));
+		mntmCadastrarUsuario.setIcon(new ImageIcon(
+				Menu.class.getResource("/model/icones/icons8-adicionar-usuário-do-sexo-feminino-50.png")));
 		mnUsuarios.add(mntmCadastrarUsuario);
 
 		mntmListarUsuario = new JMenuItem("Listagem");
@@ -156,12 +160,13 @@ public class Menu {
 				painelListagemUsuario = new PainelListagemUsuarios();
 				frame.setContentPane(painelListagemUsuario);
 				frame.revalidate();
+				registrarCliqueBotaoEditarUsuario();
 				registrarCliqueBotaoEditarListagemUsuario();
 
 			}
 		});
 		mntmListarUsuario
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-utilizador-50.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-utilizador-50.png")));
 		mnUsuarios.add(mntmListarUsuario);
 
 		mnTreinos = new JMenu("Treinos");
@@ -177,7 +182,7 @@ public class Menu {
 		mntmCadastrarTreino.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarTreino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroTreino = new PainelCadastroTreino(usuarioAutenticado);
+				painelCadastroTreino = new PainelCadastroTreino(usuarioAutenticado, null);
 				frame.setContentPane(painelCadastroTreino);
 				frame.revalidate();
 				registrarCliqueBotaoSalvarTreino();
@@ -192,9 +197,11 @@ public class Menu {
 		mntmListarTreinos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmListarTreinos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelListagemTreino = new PainelListagemTreinos();
+				painelListagemTreino = new PainelListagemTreinos(usuarioAutenticado);
 				frame.setContentPane(painelListagemTreino);
 				frame.revalidate();
+				registrarCliqueBotaoEditarTreino();
+				registrarCliqueBotaoVoltarListagemTreino();
 			}
 		});
 		mntmListarTreinos
@@ -208,8 +215,6 @@ public class Menu {
 		mnAgendamentos
 		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-women-track-and-field-50.png")));
 		menuBar.add(mnAgendamentos);
-
-
 		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
 		mntmCadastrarAgendamento.setBackground(Color.WHITE);
 		mntmCadastrarAgendamento.setForeground(Color.BLACK);
@@ -287,18 +292,30 @@ public class Menu {
 		bloquearTodoMenu();
 	}
 
+	protected void registrarCliqueBotaoEditarTreino() {
+		painelListagemTreino.getBtnEditar().addActionListener((new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Treino treinoSelecionado = painelListagemTreino.getTreinoSelecionado();
+				painelCadastroTreino = new PainelCadastroTreino(usuarioAutenticado, treinoSelecionado);
+				frame.setContentPane(painelCadastroTreino);
+				frame.revalidate();
+				registrarCliqueBotaoSalvarTreino();
+
+			}
+		}));
+
+	}
+
 	protected void registrarCliqueBotaoSalvarTreino() {
 		painelCadastroTreino.getBtnCadastrar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					painelCadastroTreino.cadastrarTreino();
-				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(null, exception.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-				
+
+				painelCadastroTreino.cadastrarTreino();
+
 			}
 		}));
-		
+
 	}
 
 	protected void registrarCliqueBotaoSalvarUsuario() {
@@ -314,8 +331,8 @@ public class Menu {
 		}));
 
 	}
-	
-	protected void registrarCliqueBotaoEditarListagemUsuario() {
+
+	protected void registrarCliqueBotaoEditarUsuario() {
 		painelListagemUsuario.getBtnEditar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario usuario = painelListagemUsuario.getUsuarioSelecionado();

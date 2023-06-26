@@ -111,6 +111,10 @@ public class UsuarioController {
 		return bo.consultarPorTipoUsuario(tipoUsuario);
 	}
 
+	public List<Usuario> consultarClientesUsuarioAutenticado(Integer id) {
+		return bo.consultarClientesUsuarioAutenticado(id);
+	}
+
 
 
 }
