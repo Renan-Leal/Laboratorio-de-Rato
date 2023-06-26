@@ -113,7 +113,6 @@ public class TreinoDAO {
 		treinoConsultado.setTreino(resultado.getString("TREINO"));
 		return treinoConsultado;
 	}
-
 	public boolean excluir(int id) {
 		boolean excluiu = false;
 

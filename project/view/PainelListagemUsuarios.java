@@ -35,7 +35,6 @@ public class PainelListagemUsuarios extends JPanel {
 	
 	private ArrayList<Usuario> usuarios;
 	private String[] nomesColunas = { "Nome", "CPF", "Tel", "Dt.Nasc", "Tipo", "Matricula", "E-mail"};
-	private JTextField txtNome;
 	private JTable tblUsuarios;
 	private JButton btnEditar;
 	private JButton btnBuscar;
@@ -47,7 +46,6 @@ public class PainelListagemUsuarios extends JPanel {
 	private JComboBox cbTipoUsuario;
 	private JButton btnAvancarPagina;
 	private JButton btnVoltarPagina;
-	private JLabel lblNome;
 	private final int TAMANHO_PAGINA = 5;
 	private int paginaAtual = 1;
 	private int totalPaginas = 0;
@@ -160,25 +158,16 @@ public class PainelListagemUsuarios extends JPanel {
 			}
 		});
 		
-		lblNome = new JLabel("Nome: ");
-		lblNome.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		lblNome.setForeground(Color.BLACK);
-		add(lblNome, "6, 3, center, center");
-		
-		txtNome = new JTextField();
-		add(txtNome, "8, 3, fill, center");
-		txtNome.setColumns(10);
-		
 		lblTipoUsuario = new JLabel("Tipo de Usuário:");
 		lblTipoUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblTipoUsuario.setForeground(Color.BLACK);
-		add(lblTipoUsuario, "10, 3, center, center");
+		add(lblTipoUsuario, "6, 3, center, center");
 		
-		cbTipoUsuario = new JComboBox(new String[] {"Administrador","Cliente","Personal"});
+		cbTipoUsuario = new JComboBox(new String[] {"Administrador","Personal","Cliente"});
 		cbTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		cbTipoUsuario.setForeground(Color.BLACK);
-		add(cbTipoUsuario, "12, 3, fill, fill");
-		add(btnBuscarComFiltro, "14, 3, fill, fill");
+		add(cbTipoUsuario, "8, 3, fill, fill");
+		add(btnBuscarComFiltro, "10, 3, fill, fill");
 		
 		btnBuscarTodos = new JButton("Buscar Todos");
 		btnBuscarTodos.setBackground(Color.BLACK);
@@ -190,13 +179,13 @@ public class PainelListagemUsuarios extends JPanel {
 				atualizarTabelaUsuarios();
 			}
 		});
+		add(btnBuscarTodos, "12, 3, fill, fill");
 		
 		lblPaginacao = new JLabel("1 / " + totalPaginas);
 		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblPaginacao.setForeground(Color.BLACK);
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPaginacao, "6, 5, left, bottom");
-		add(btnBuscarTodos, "14, 5, fill, fill");
 		add(tblUsuarios, "6, 7, 9, 1, fill, fill");
 		
 		atualizarQuantidadePaginas();

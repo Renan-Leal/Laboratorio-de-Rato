@@ -82,7 +82,7 @@ public class PainelCadastroUsuario extends JPanel {
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("42px"),
-				ColumnSpec.decode("49px"),
+				ColumnSpec.decode("73px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("228px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -205,10 +205,6 @@ public class PainelCadastroUsuario extends JPanel {
 		txtSenha.setColumns(10);
 		add(txtSenha, "13, 12, fill, fill");
 
-		txtTelefone = new JFormattedTextField(mascaraTel);
-		add(txtTelefone, "9, 12, fill, fill");
-		txtTelefone.setColumns(10);
-
 		lblLogin = new JLabel("Login:");
 		lblLogin.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblLogin.setForeground(Color.BLACK);
@@ -228,16 +224,16 @@ public class PainelCadastroUsuario extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+				cbTipoUsuario = new JComboBox(new String[] { "Administrador", "Personal Trainer", "Cliente" });
+				cbTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				cbTipoUsuario.setBackground(Color.LIGHT_GRAY);
+				cbTipoUsuario.setForeground(Color.BLACK);
+				add(cbTipoUsuario, "13, 14, fill, top");
 		btnVoltar.setBackground(Color.BLACK);
 		btnVoltar.setForeground(Color.WHITE);
 		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		add(btnVoltar, "7, 18, fill, bottom");
-
-		cbTipoUsuario = new JComboBox(new String[] { "Administrador", "Personal Trainer", "Cliente" });
-		cbTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		cbTipoUsuario.setBackground(Color.LIGHT_GRAY);
-		cbTipoUsuario.setForeground(Color.BLACK);
-		add(cbTipoUsuario, "12, 14, fill, top");
 
 		lblEndereco = new JLabel("Endereço:");
 		lblEndereco.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));

@@ -103,15 +103,24 @@ public class Menu {
 						mnTreinos.setEnabled(true);
 						mnEnderecos.setEnabled(true);
 						mnUsuarios.setEnabled(true);
+						painelPrincipal = new PainelPrincipal();
+						frame.setContentPane(painelPrincipal);
+						frame.revalidate();
 
 					} else if (usuarioAutenticado != null
 							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.PERSONAL_TRAINER) {
 						mnAgendamentos.setEnabled(true);
 						mnTreinos.setEnabled(true);
+						painelPrincipal = new PainelPrincipal();
+						frame.setContentPane(painelPrincipal);
+						frame.revalidate();
 
 					} else if (usuarioAutenticado != null
 							&& usuarioAutenticado.getTipoUsuario() == TipoUsuario.CLIENTE) {
 						mnAgendamentos.setEnabled(true);
+						painelPrincipal = new PainelPrincipal();
+						frame.setContentPane(painelPrincipal);
+						frame.revalidate();
 					} else {
 						JOptionPane.showMessageDialog(null, "Usuário não cadastrado!", "Erro",
 								JOptionPane.ERROR_MESSAGE);
