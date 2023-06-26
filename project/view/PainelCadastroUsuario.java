@@ -70,6 +70,7 @@ public class PainelCadastroUsuario extends JPanel {
 	private PessoaController pessoaController = new PessoaController();
 	private DatePicker dataNascimento;
 	private DatePickerSettings dateSettings;
+	private JButton btnVoltar;
 
 
 	public PainelCadastroUsuario(Usuario usuario) {
@@ -357,6 +358,10 @@ public class PainelCadastroUsuario extends JPanel {
 
 	public JButton getBtnSalvar() {
 		return btnSalvar;
+	}
+	
+	public JButton getBtnVoltar() {
+		return btnVoltar;
 	}
 
 }

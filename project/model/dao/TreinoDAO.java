@@ -161,14 +161,14 @@ public class TreinoDAO {
 		Connection conexao = Banco.getConnection();
 		String sql = " select * from TREINO ";
 		
-		if(seletor.temFiltro()) {
-			sql = preencherFiltros(sql, seletor);
-		}
-		
-		if(seletor.temPaginacao()) {
-			sql += " LIMIT "  + seletor.getLimite()
-				 + " OFFSET " + seletor.getOffset();  
-		}
+//		if(seletor.temFiltro()) {
+//			sql = preencherFiltros(sql, seletor);
+//		}
+//		
+//		if(seletor.temPaginacao()) {
+//			sql += " LIMIT "  + seletor.getLimite()
+//				 + " OFFSET " + seletor.getOffset();  
+//		}
 		
 		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
 		try {
@@ -189,49 +189,49 @@ public class TreinoDAO {
 		return treinos;
 	}
 
-	private String preencherFiltros(String sql, TreinoSeletor seletor) {
-		boolean primeiro = true;
-		if(seletor.getCliente() != 0) {
-			if(primeiro) {
-				sql += " WHERE ";
-			} else {
-				sql += " AND ";
-			}
-			
-			sql += " ID_CLIENTE = " + seletor.getCliente();
-			primeiro = false;
-		}
-		
-		if(seletor.getProfissional() != 0) {
-			if(primeiro) {
-				sql += " WHERE ";
-			} else {
-				sql += " AND ";
-			}
-			sql += " ID_PROFISSIONAL = " + seletor.getProfissional();
-			primeiro = false;
-		}
-		
-		if(seletor.getNivel() != 0) {
-			if(primeiro) {
-				sql += " WHERE ";
-			} else {
-				sql += " AND ";
-			}
-			sql += " ID_NIVELTREINO =" + seletor.getNivel();
-			primeiro = false;
-		}
-		return sql;
-	}
+//	private String preencherFiltros(String sql, TreinoSeletor seletor) {
+//		boolean primeiro = true;
+//		if(seletor.getCliente() != 0) {
+//			if(primeiro) {
+//				sql += " WHERE ";
+//			} else {
+//				sql += " AND ";
+//			}
+//			
+//			sql += " ID_CLIENTE = " + seletor.getCliente();
+//			primeiro = false;
+//		}
+//		
+//		if(seletor.getProfissional() != 0) {
+//			if(primeiro) {
+//				sql += " WHERE ";
+//			} else {
+//				sql += " AND ";
+//			}
+//			sql += " ID_PROFISSIONAL = " + seletor.getProfissional();
+//			primeiro = false;
+//		}
+//		
+//		if(seletor.getNivel() != 0) {
+//			if(primeiro) {
+//				sql += " WHERE ";
+//			} else {
+//				sql += " AND ";
+//			}
+//			sql += " ID_NIVELTREINO =" + seletor.getNivel();
+//			primeiro = false;
+//		}
+//		return sql;
+//	}
 	
 	public int contarTotalRegistrosComFiltros(TreinoSeletor seletor) {
 		int total = 0;
 		Connection conexao = Banco.getConnection();
 		String sql = " select count(*) from TREINO ";
 		
-		if(seletor.temFiltro()) {
-			sql = preencherFiltros(sql, seletor);
-		}
+//		if(seletor.temFiltro()) {
+//			sql = preencherFiltros(sql, seletor);
+//		}
 		
 		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
 		try {

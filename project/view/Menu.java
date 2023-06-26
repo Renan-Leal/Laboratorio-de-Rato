@@ -50,6 +50,7 @@ public class Menu {
 	private JMenuItem mntmListarAgendamento;
 	private JMenu mnEnderecos;
 	protected Usuario usuarioAutenticado;
+	private PainelPrincipal painelPrincipal;
 
 	/**
 	 * Launch the application.
@@ -144,6 +145,7 @@ public class Menu {
 				frame.setContentPane(painelCadastroUsuario);
 				frame.revalidate();
 				registrarCliqueBotaoSalvarUsuario();
+				registrarCliqueBotaoVoltarDoPainelCadastroUsuario();
 
 			}
 		});
@@ -161,7 +163,7 @@ public class Menu {
 				frame.setContentPane(painelListagemUsuario);
 				frame.revalidate();
 				registrarCliqueBotaoEditarUsuario();
-				registrarCliqueBotaoEditarListagemUsuario();
+				registrarCliqueBotaoVoltarDoPainelListagemUsuario();
 
 			}
 		});
@@ -186,6 +188,7 @@ public class Menu {
 				frame.setContentPane(painelCadastroTreino);
 				frame.revalidate();
 				registrarCliqueBotaoSalvarTreino();
+				registrarCliqueBotaoVoltarDoPainelCadastroTreino();
 			}
 		});
 		mntmCadastrarTreino.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-50 (1).png")));
@@ -201,7 +204,7 @@ public class Menu {
 				frame.setContentPane(painelListagemTreino);
 				frame.revalidate();
 				registrarCliqueBotaoEditarTreino();
-				registrarCliqueBotaoVoltarListagemTreino();
+				registrarCliqueBotaoVoltarDoPainelListarTreino();
 			}
 		});
 		mntmListarTreinos
@@ -224,6 +227,7 @@ public class Menu {
 				painelAgendamentoTreino = new PainelAgendamentoTreino();
 				frame.setContentPane(painelAgendamentoTreino);
 				frame.revalidate();
+				registrarCliqueBotaoVoltarDoPainelCadastrarAgendamento();
 			}
 		});
 		mntmCadastrarAgendamento
@@ -239,6 +243,7 @@ public class Menu {
 				painelListagemAgendamento = new PainelListagemAgendamentos();
 				frame.setContentPane(painelListagemAgendamento);
 				frame.revalidate();
+				registrarCliqueBotaoVoltarDoPainelListarAgendamento();
 			}
 		});
 		mntmListarAgendamento
@@ -266,6 +271,7 @@ public class Menu {
 				frame.setContentPane(painelCadastroEndereco);
 				frame.revalidate();
 				registrarCliqueBotaoSalvarEndereco();
+				registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
 			}
 		});
 		mnEnderecos.add(mntmCadastrarEndereco);
@@ -280,6 +286,7 @@ public class Menu {
 				painelListagemEndereco = new PainelListagemEndereco();
 				painelListagemEndereco.setVisible(true);
 				registrarCliqueBotaoEditarListagemEndereco();
+				registrarCliqueBotaoVoltarDoPainelListagemEndereco();
 
 				frame.setContentPane(painelListagemEndereco);
 				// Atualiza a tela principal
@@ -364,6 +371,78 @@ public class Menu {
 			}
 		});
 
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelCadastroEndereco() {
+		painelCadastroEndereco.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelListagemEndereco() {
+		painelListagemEndereco.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelCadastroUsuario() {
+		painelCadastroUsuario.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelListagemUsuario() {
+		painelListagemUsuario.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelCadastroTreino() {
+		painelCadastroTreino.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelListarTreino() {
+		painelListagemTreino.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelCadastrarAgendamento() {
+		painelAgendamentoTreino.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
+	}
+	
+	protected void registrarCliqueBotaoVoltarDoPainelListarAgendamento() {
+		painelListagemAgendamento.getBtnVoltar().addActionListener((new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setContentPane(painelPrincipal);
+				frame.revalidate();
+			}
+		}));
 	}
 
 	private void bloquearTodoMenu() {

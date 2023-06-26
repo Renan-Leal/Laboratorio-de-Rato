@@ -55,6 +55,7 @@ public class PainelListagemUsuarios extends JPanel {
 	private UsuarioController controller = new UsuarioController();
 	private Usuario usuarioSelecionado;
 	private UsuarioSeletor seletor = new UsuarioSeletor();
+	private JButton btnVoltar;
 
 	private void limparTabelaUsuarios() {
 		tblUsuarios.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -274,6 +275,18 @@ public class PainelListagemUsuarios extends JPanel {
 			}
 		});
 		add(btnGerarPlanilha, "8, 9, left, fill");
+		
+		btnVoltar = new JButton("Pagina Inicial");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnVoltar, "10, 9");
+		
+		
 		add(btnAvancarPagina, "12, 9, right, top");
 		btnVoltarPagina.setEnabled(false);
 		add(btnVoltarPagina, "14, 9, right, top");
@@ -284,6 +297,8 @@ public class PainelListagemUsuarios extends JPanel {
 		btnEditar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnEditar.setEnabled(false);
 		add(btnEditar, "6, 11, fill, top");
+		
+		
 
 	}
 
@@ -296,7 +311,7 @@ public class PainelListagemUsuarios extends JPanel {
 		seletor = new UsuarioSeletor();
 		seletor.setLimite(TAMANHO_PAGINA);
 		seletor.setPagina(paginaAtual);
-		seletor.setNome(txtNome.getText());
+		seletor.setTipo(cbTipoUsuario.getSelectedIndex() + 1);
 		usuarios = (ArrayList<Usuario>) controller.consultarComFiltros(seletor);
 		atualizarTabelaUsuarios();
 		atualizarQuantidadePaginas();
@@ -322,5 +337,9 @@ public class PainelListagemUsuarios extends JPanel {
 
 		public Usuario getUsuarioSelecionado() {
 			return usuarioSelecionado;
+		}
+		
+		public JButton getBtnVoltar() {
+			return this.btnVoltar;
 		}
 }
