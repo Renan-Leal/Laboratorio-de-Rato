@@ -61,6 +61,7 @@ public class PainelListagemTreinos extends JPanel {
 	private Treino treinoSelecionado;
 	private UsuarioController usuarioController = new UsuarioController();
 	private Usuario usuarioAutenticado;
+	private JButton btnVoltar;
 	
 	private void limparTabelaTreinos() {
 		tblTreinos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -104,7 +105,7 @@ public class PainelListagemTreinos extends JPanel {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(68dlu;pref):grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(62dlu;default)"),
+				ColumnSpec.decode("max(72dlu;default)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.GROWING_BUTTON_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -237,6 +238,7 @@ public class PainelListagemTreinos extends JPanel {
 		cbNivel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		cbNivel.setForeground(Color.BLACK);
 		add(cbNivel, "14, 9, 5, 1, fill, top");
+		UsuarioController usuarioController = new UsuarioController();
 		
 		tblTreinos = new JTable();
 		tblTreinos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -257,74 +259,17 @@ public class PainelListagemTreinos extends JPanel {
 		});
 		add(tblTreinos, "12, 11, 9, 1, fill, fill");
 		
-		
-		btnEditar = new JButton("Editar");
-		btnEditar.setForeground(Color.WHITE);
-		btnEditar.setBackground(Color.BLACK);
-		btnEditar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnEditar.setEnabled(false);
-		add(btnEditar, "12, 13, fill, fill");
-		
-		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBackground(Color.BLACK);
-		btnExcluir.setForeground(Color.WHITE);
-		btnExcluir.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnExcluir.setEnabled(false);
-		btnExcluir.addActionListener(new ActionListener() {
+		btnBuscarTodos = new JButton("Buscar Todos");
+		btnBuscarTodos.setBackground(Color.BLACK);
+		btnBuscarTodos.setForeground(Color.WHITE);
+		btnBuscarTodos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnBuscarTodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do endereço selecionado?");
-				
-				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-					try {
-						controller.excluir(treinoSelecionado.getId());
-						JOptionPane.showMessageDialog(null, "Endereço excluído com sucesso");
-						treinos = (ArrayList<Treino>) controller.consultarTodos();
-						atualizarTabelaTreinos();
-					} catch (CampoInvalidoException e1) {
-						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			}
-		});
-		add(btnExcluir, "14, 13, fill, top");
-		
-		btnAvancarPagina = new JButton("Avançar >>");
-		btnAvancarPagina.setBackground(Color.BLACK);
-		btnAvancarPagina.setForeground(Color.WHITE);
-		btnAvancarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnAvancarPagina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				paginaAtual++;
 				buscarTreinosComFiltros();
-				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-				btnVoltarPagina.setEnabled(paginaAtual > 1);
-				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+				atualizarTabelaTreinos();
 			}
 		});
-		add(btnAvancarPagina, "18, 13, fill, fill");
-		
-		lblPaginacao = new JLabel("1 / " + totalPaginas);
-		lblPaginacao.setForeground(Color.BLACK);
-		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblPaginacao, "20, 9, right, fill");
-		add(btnAvancarPagina, "12, 19, fill, fill");
-		
-		btnVoltarPagina = new JButton("<< Voltar");
-		btnVoltarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnVoltarPagina.setBackground(Color.BLACK);
-		btnVoltarPagina.setForeground(Color.WHITE);
-		btnVoltarPagina.setEnabled(false);
-		btnVoltarPagina.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				paginaAtual--;
-				buscarTreinosComFiltros();
-				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-				btnVoltarPagina.setEnabled(paginaAtual > 1);
-				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
-			}
-		});
-		add(btnVoltarPagina, "20, 13, fill, fill");
+		add(btnBuscarTodos, "12, 7, fill, fill");
 		
 		btnGerarPlanilha = new JButton("Gerar Planilha");
 		btnGerarPlanilha.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -347,7 +292,99 @@ public class PainelListagemTreinos extends JPanel {
 				}
 			}
 		});
-		add(btnGerarPlanilha, "20, 15, fill, fill");
+		add(btnGerarPlanilha, "14, 7, fill, fill");
+		
+		lblPaginacao = new JLabel("1 / " + totalPaginas);
+		lblPaginacao.setForeground(Color.BLACK);
+		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblPaginacao, "18, 7, right, fill");
+		add(tblTreinos, "12, 9, 7, 1, fill, fill");
+		
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setForeground(Color.WHITE);
+		btnEditar.setBackground(Color.BLACK);
+		btnEditar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnEditar.setEnabled(false);
+		add(btnEditar, "12, 11, fill, fill");
+		
+		btnAvancarPagina = new JButton("Avançar >>");
+		btnAvancarPagina.setBackground(Color.BLACK);
+		btnAvancarPagina.setForeground(Color.WHITE);
+		btnAvancarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnAvancarPagina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				paginaAtual++;
+				buscarTreinosComFiltros();
+				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+				btnVoltarPagina.setEnabled(paginaAtual > 1);
+				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+			}
+		});
+		
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.setBackground(Color.BLACK);
+		btnExcluir.setForeground(Color.WHITE);
+		btnExcluir.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnExcluir.setEnabled(false);
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do endereço selecionado?");
+				
+				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
+					try {
+						controller.excluir(treinoSelecionado.getId());
+						JOptionPane.showMessageDialog(null, "Endereço excluído com sucesso");
+						treinos = (ArrayList<Treino>) controller.consultarTodos();
+						atualizarTabelaTreinos();
+					} catch (CampoInvalidoException e1) {
+						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			}
+		});
+		add(btnExcluir, "14, 11, fill, top");
+		add(btnAvancarPagina, "16, 11, right, fill");
+		
+		btnVoltarPagina = new JButton("<< Voltar");
+		btnVoltarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnVoltarPagina.setBackground(Color.BLACK);
+		btnVoltarPagina.setForeground(Color.WHITE);
+		btnVoltarPagina.setEnabled(false);
+		btnVoltarPagina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paginaAtual--;
+				buscarTreinosComFiltros();
+				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+				btnVoltarPagina.setEnabled(paginaAtual > 1);
+				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
+			}
+		});
+		add(btnVoltarPagina, "18, 11, fill, fill");
+		
+		btnVoltar = new JButton("Página Inicial");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser janelaSelecaoDestinoArquivo = new JFileChooser();
+				janelaSelecaoDestinoArquivo.setDialogTitle("Selecione um destino para a planilha...");
+				int opcaoSelecionada = janelaSelecaoDestinoArquivo.showSaveDialog(null);
+				if (opcaoSelecionada == JFileChooser.APPROVE_OPTION) {
+					String caminhoEscolhido = janelaSelecaoDestinoArquivo.getSelectedFile().getAbsolutePath();
+					String resultado;
+					try {
+						resultado = controller.gerarPlanilha(treinos, caminhoEscolhido);
+						JOptionPane.showMessageDialog(null, resultado);
+					} catch (CampoInvalidoException e1) {
+						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			}
+		});
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(btnVoltar, "12, 13, fill, bottom");
 
 
 
@@ -397,5 +434,9 @@ public class PainelListagemTreinos extends JPanel {
 
 		public Treino getTreinoSelecionado() {
 			return treinoSelecionado;
+		}
+		
+		public JButton getBtnVoltar() {
+			return btnVoltar;
 		}
 }
