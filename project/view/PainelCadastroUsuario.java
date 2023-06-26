@@ -90,23 +90,7 @@ public class PainelCadastroUsuario extends JPanel {
 						RowSpec.decode("22px"), FormSpecs.UNRELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
 						RowSpec.decode("pref:grow"), }));
-		setLayout(new FormLayout(
-				new ColumnSpec[] { ColumnSpec.decode("max(113dlu;pref):grow"), FormSpecs.DEFAULT_COLSPEC,
-						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("26px"), ColumnSpec.decode("80px"), FormSpecs.RELATED_GAP_COLSPEC,
-						ColumnSpec.decode("228px"), FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("85px"),
-						ColumnSpec.decode("191px"), ColumnSpec.decode("16px"), FormSpecs.UNRELATED_GAP_COLSPEC,
-						ColumnSpec.decode("24px"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-						FormSpecs.GROWING_BUTTON_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
-						FormSpecs.DEFAULT_COLSPEC, ColumnSpec.decode("94px"), },
-				new RowSpec[] { FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("pref:grow"), FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("20px"),
-						FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), FormSpecs.LINE_GAP_ROWSPEC,
-						RowSpec.decode("20px"), FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("21px"),
-						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("20px"), FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("22px"), FormSpecs.UNRELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("pref:grow"), }));
+	
 
 		lblNome = new JLabel("Nome:");
 		lblNome.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
