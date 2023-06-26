@@ -184,10 +184,6 @@ public class PainelCadastroEndereco extends JPanel {
 		
 		
 		btnVoltar = new JButton("Voltar");
-		btnVoltar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnVoltar.setBackground(Color.BLACK);
 		btnVoltar.setForeground(Color.WHITE);
 		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));

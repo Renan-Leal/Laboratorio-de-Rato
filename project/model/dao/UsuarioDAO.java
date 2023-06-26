@@ -242,7 +242,6 @@ public class UsuarioDAO {
         }
         return sql;
     }
-	
 
 	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
 		int total = 0;

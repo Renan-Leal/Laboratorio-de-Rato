@@ -1,21 +1,29 @@
 package model.seletor;
 
-
 public class UsuarioSeletor extends BaseSeletor{
-
-	private int tipo;
+	
+	private String nome;
+	private String tipo;
 
 	@Override
 	public boolean temFiltro() {
-		return (this.tipo != 0);
+		return (this.nome != null && this.nome.trim().length() > 0) || (this.tipo != null && this.tipo.trim().length() > 0);
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
-	public int getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(int i) {
-		this.tipo = i;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 }

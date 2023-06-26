@@ -202,13 +202,7 @@ public class PainelAgendamentoTreino extends JPanel {
 		});
 		add(btnSalvar, "24, 17, right, fill");
 	}
-	
-	public JButton getBtnVoltar() {
-		return btnVoltar;
-	}
 
-	public JButton getBtnSalvar() {
-		return btnSalvar;
-	}
+
 
 }
