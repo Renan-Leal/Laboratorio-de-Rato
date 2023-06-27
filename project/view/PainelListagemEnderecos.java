@@ -30,7 +30,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class PainelListagemEndereco extends JPanel {
+public class PainelListagemEnderecos extends JPanel {
 	
 	private ArrayList<Endereco> enderecos;
 	private String[] nomesColunas = { "Rua", "Numero", "CEP", "Bairro", "Cidade", "Estado" };
@@ -80,7 +80,7 @@ public class PainelListagemEndereco extends JPanel {
 	}
 	
 	
-	public PainelListagemEndereco() {
+	public PainelListagemEnderecos() {
 		
 		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(new ColumnSpec[] {

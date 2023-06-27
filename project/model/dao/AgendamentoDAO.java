@@ -7,17 +7,19 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.controller.TreinoController;
 import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
 
 public class AgendamentoDAO {
 	
 	public Agendamento inserir(Agendamento novoAgendamento) {
-
+		
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO AGENDAMENTO (ID_CLIENTE, ID_PROFISSIONAL, ACEITO, MOTIVO_REJEICAO, "
+		String sql = " INSERT INTO AGENDAMENTO (ID_CLIENTE, ID_PROFISSIONAL, "
 		+ " DATAHORA_INICIO, DATAHORA_FINAL) "
-				+ " VALUES (?,?,?,?,?,?)";
+				+ " VALUES (?,?,?,?)";
 
 		PreparedStatement query = Banco.getPreparedStatementWithPk(conexao, sql);
 
@@ -25,10 +27,10 @@ public class AgendamentoDAO {
 		try {
 			query.setInt(1, novoAgendamento.getCliente().getId());
 			query.setInt(2, novoAgendamento.getProfissional().getId());
-			query.setObject(3, novoAgendamento.getAceito());
-			query.setString(4, novoAgendamento.getMotivoRejeicao());
-			query.setObject(5, novoAgendamento.getDataHoraInicio());
-			query.setObject(6, novoAgendamento.getDataHoraFinal());
+//			query.setBoolean(3, novoAgendamento.getAceito());
+//			query.setString(4, novoAgendamento.getMotivoRejeicao());
+			query.setObject(3, novoAgendamento.getDataHoraInicio());
+			query.setObject(4, novoAgendamento.getDataHoraFinal());
 			query.execute();
 
 			// Preencher o id gerado no banco no objeto
@@ -36,6 +38,8 @@ public class AgendamentoDAO {
 			if (resultado.next()) {
 				novoAgendamento.setId(resultado.getInt(1));
 			}
+			
+			
 
 		} catch (SQLException e) {
 			System.out.println("Erro ao inserir treino. " + "\nCausa: " + e.getMessage());
