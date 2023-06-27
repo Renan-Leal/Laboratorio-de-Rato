@@ -7,6 +7,7 @@ import model.bo.TreinoBO;
 import model.exception.CampoInvalidoException;
 import model.gerador.GeradorPlanilha;
 import model.seletor.TreinoSeletor;
+import model.vo.Agendamento;
 import model.vo.Treino;
 
 public class TreinoController {
@@ -79,6 +80,10 @@ public class TreinoController {
 
 	public ArrayList<Treino> consultarTreinosUsuarioAutenticado(Integer id) {
 		return bo.consultarTreinosUsuarioAutenticado(id);
+	}
+
+	public boolean conectarClienteAoProfissional(Agendamento novoAgendamento) {
+		return bo.conectarClienteAoProfissional(novoAgendamento);
 	}
 
 }

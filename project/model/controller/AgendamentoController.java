@@ -19,8 +19,8 @@ private AgendamentoBO bo = new AgendamentoBO();
 	
 	private void validarCamposObrigatorios(Agendamento agendamento) throws CampoInvalidoException {
 		
-		String[] valores = {agendamento.getCliente().getEmail(), agendamento.getProfissional().getEmail()};
-		String[] camposInvalidos = {"Cliente", "Profisional"};
+		String[] valores = {agendamento.getCliente().getEmail(), agendamento.getProfissional().getEmail(), agendamento.getDataHoraInicio().toString()};
+		String[] camposInvalidos = {"Cliente", "Profisional", "Data e Hora"};
 		String mensagemValidacao = "";
 		
 		for (int i = 0; i < valores.length; i++) {
