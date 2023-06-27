@@ -25,7 +25,7 @@ public class AgendamentoDAO {
 		try {
 			query.setInt(1, novoAgendamento.getCliente().getId());
 			query.setInt(2, novoAgendamento.getProfissional().getId());
-			query.setObject(3, novoAgendamento.getAceito());
+			query.setBoolean(3, novoAgendamento.getAceito());
 			query.setString(4, novoAgendamento.getMotivoRejeicao());
 			query.setObject(5, novoAgendamento.getDataHoraInicio());
 			query.setObject(6, novoAgendamento.getDataHoraFinal());
