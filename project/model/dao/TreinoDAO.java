@@ -110,12 +110,11 @@ public class TreinoDAO {
 		try {
 			treinoConsultado.setDtCadastro(LocalDate.parse(resultado.getString("DT_CADASTRO")));
 			treinoConsultado.setDtTermino(LocalDate.parse(resultado.getString("DT_TERMINO")));
-		} catch (Exception e){
+		} catch (Exception e) {
 			treinoConsultado.setDtCadastro(null);
 			treinoConsultado.setDtTermino(null);
-			
-		}
 
+		}
 
 		treinoConsultado.setNivelTreino(NivelTreino.getNivelTreinoPorValor(resultado.getInt("ID_NIVELTREINO")));
 		treinoConsultado.setTreino(resultado.getString("TREINO"));
@@ -289,8 +288,7 @@ public class TreinoDAO {
 	public boolean conectarClienteAoProfissional(Agendamento novoAgendamento) {
 		Boolean conexaoClienteProfissional = false;
 		Connection conexao = Banco.getConnection();
-		String sql = " INSERT INTO TREINO (ID_CLIENTE, ID_PROFISSIONAL)" 
-		+ " VALUES (?,?)";
+		String sql = " INSERT INTO TREINO (ID_CLIENTE, ID_PROFISSIONAL)" + " VALUES (?,?)";
 
 		PreparedStatement query = Banco.getPreparedStatementWithPk(conexao, sql);
 
@@ -307,7 +305,8 @@ public class TreinoDAO {
 			conexaoClienteProfissional = true;
 
 		} catch (SQLException e) {
-			System.out.println("Erro ao inserir conexão entre o profissional e o cliente. " + "\nCausa: " + e.getMessage());
+			System.out.println(
+					"Erro ao inserir conexão entre o profissional e o cliente. " + "\nCausa: " + e.getMessage());
 		} finally {
 			// Fechar a conex�o
 			Banco.closePreparedStatement(query);
@@ -315,6 +314,30 @@ public class TreinoDAO {
 		}
 
 		return conexaoClienteProfissional;
+	}
+
+	public Integer verificarExistenciaDoCadastro(Treino treino) {
+		Treino treinoConsultado = new Treino();
+		Connection conexao = Banco.getConnection();
+		String sql = " SELECT * FROM TREINO " + " WHERE ID_CLIENTE = ?";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+
+		try {
+			query.setInt(1, treino.getCliente().getId());
+			ResultSet resultado = query.executeQuery();
+
+			if (resultado.next()) {
+				treinoConsultado = montarTreinoComResultadoDoBanco(resultado);
+			}
+		} catch (SQLException e) {
+			System.out.println(
+					"Erro ao buscar cliente com id: + " + treino.getCliente().getId() + "\n Causa: " + e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+
+		return treinoConsultado.getId();
 	}
 
 }

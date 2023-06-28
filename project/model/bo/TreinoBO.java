@@ -14,7 +14,17 @@ public class TreinoBO {
 	private TreinoDAO dao = new TreinoDAO();
 	
 	public Treino inserir(Treino novoTreino) {
-		return dao.inserir(novoTreino);
+		Integer idTreino = dao.verificarExistenciaDoCadastro(novoTreino);
+		if(idTreino ==  null) {
+			dao.inserir(novoTreino);
+			
+		} else {
+			novoTreino.setId(idTreino);
+			dao.atualizar(novoTreino);
+			
+		}
+		
+		return novoTreino;
 	}
 	
 	public boolean atualizar(Treino treinoAlterado){
