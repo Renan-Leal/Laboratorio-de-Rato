@@ -18,7 +18,7 @@ public class GerenciadorEmail {
 		
 		
 		MultiPartEmail emailRemetente = new MultiPartEmail();
-		emailRemetente.setHostName("mx1.fecammx.com.br");
+		emailRemetente.setHostName("server");
 		emailRemetente.setSmtpPort(465);
 		emailRemetente.setAuthenticator(new DefaultAuthenticator(nomeEmail, senha));
 		emailRemetente.setSSLOnConnect(true);
