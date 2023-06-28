@@ -214,6 +214,7 @@ public class Menu {
 				frame.revalidate();
 				registrarCliqueBotaoEditarTreino();
 				registrarCliqueBotaoVoltarDoPainelListarTreino();
+				registrarCliqueBotaoEncaminharEmailTreino();
 			}
 		});
 		mntmListarTreinos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-vários-50.png")));
@@ -308,15 +309,24 @@ public class Menu {
 		bloquearTodoMenu();
 	}
 
+	protected void registrarCliqueBotaoEncaminharEmailTreino() {
+		painelListagemTreino.getBtnEncaminharEmailTreino().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painelListagemTreino.encaminharEmailTreino();
+				
+			}
+		});
+
+	}
+
 	protected void registrarCliqueBotaoCadastrarAgendamento() {
 		painelCadastroAgendamento.getBtnSalvar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroAgendamento.cadastrarAgendamentoTreino();
-				
+
 			}
 		});
-		
-		
+
 	}
 
 	protected void registrarCliqueBotaoEditarTreino() {

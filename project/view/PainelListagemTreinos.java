@@ -12,11 +12,13 @@ import model.controller.TreinoController;
 import model.controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.seletor.TreinoSeletor;
+import model.vo.Email;
 import model.vo.TipoUsuario;
 import model.vo.Treino;
 import model.vo.Usuario;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 
 import java.awt.Color;
@@ -33,6 +35,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
+import email.GerenciadorEmail;
 
 public class PainelListagemTreinos extends JPanel {
 
@@ -62,6 +66,7 @@ public class PainelListagemTreinos extends JPanel {
 	private UsuarioController usuarioController = new UsuarioController();
 	private Usuario usuarioAutenticado;
 	private JButton btnVoltar;
+	private JButton btnEncaminharEmailTreino;
 
 	
 	private void limparTabelaTreinos() {
@@ -261,10 +266,12 @@ public class PainelListagemTreinos extends JPanel {
 				if (indiceSelecionado > 0) {
 					btnEditar.setEnabled(true);
 					btnExcluir.setEnabled(true);
+					btnEncaminharEmailTreino.setEnabled(true);
 					treinoSelecionado = treinos.get(indiceSelecionado - 1);
 				} else {
 					btnEditar.setEnabled(false);
 					btnExcluir.setEnabled(false);
+					btnEncaminharEmailTreino.setEnabled(false);
 				}
 			}
 		});
@@ -367,6 +374,13 @@ public class PainelListagemTreinos extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		btnEncaminharEmailTreino = new JButton("Encaminhar Email");
+		btnEncaminharEmailTreino.setForeground(Color.WHITE);
+		btnEncaminharEmailTreino.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnEncaminharEmailTreino.setEnabled(false);
+		btnEncaminharEmailTreino.setBackground(Color.BLACK);
+		add(btnEncaminharEmailTreino, "12, 15");
 		add(btnVoltar, "18, 15, fill, fill");
 
 		add(btnGerarPlanilha, "20, 15, fill, fill");
@@ -424,4 +438,28 @@ public class PainelListagemTreinos extends JPanel {
 		public Treino getTreinoSelecionado() {
 			return treinoSelecionado;
 		}
+
+		public JButton getBtnEncaminharEmailTreino() {
+			return btnEncaminharEmailTreino;
+		}
+
+		public void encaminharEmailTreino() {
+			String nomeCliente = this.treinoSelecionado.getCliente().getPessoa().getNome();
+			String emailCliente = this.treinoSelecionado.getCliente().getEmail();
+			String emailPersonal = this.treinoSelecionado.getProfissional().getEmail();
+			String treinoCliente = this.treinoSelecionado.getTreino();
+			String prazoInicial = this.treinoSelecionado.getDtCadastro().toString();
+			String prazoFinal = this.treinoSelecionado.getDtTermino().toString();
+			String nomePersonal = this.treinoSelecionado.getProfissional().getPessoa().getNome();
+			
+			Email email = new Email(nomeCliente, emailCliente, emailPersonal, treinoCliente, prazoInicial, prazoFinal, nomePersonal);
+			
+			GerenciadorEmail gerenciadorEmail = new GerenciadorEmail();
+			gerenciadorEmail.encaminharEmail(email);
+			
+			
+		}
+
+
+		
 }
