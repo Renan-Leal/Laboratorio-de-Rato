@@ -17,6 +17,7 @@ import model.vo.Treino;
 import model.vo.Usuario;
 
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -385,7 +386,13 @@ public class Menu {
 	protected void registrarCliqueBotaoSalvarEndereco() {
 		painelCadastroEndereco.getBtnSalvar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroEndereco.cadastrarEndereco();
+				try {
+					painelCadastroEndereco.cadastrarEndereco();
+				} catch (ParseException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+					
+			
+				}
 			}
 		}));
 	}

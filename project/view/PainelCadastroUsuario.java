@@ -159,6 +159,7 @@ public class PainelCadastroUsuario extends JPanel {
 		txtTelefone = new JFormattedTextField(mascaraTel);
 		add(txtTelefone, "9, 12, fill, fill");
 		txtTelefone.setColumns(10);
+		
 
 		lblSenha = new JLabel("Senha:");
 		lblSenha.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
