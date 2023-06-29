@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.controller.TreinoController;
+import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
 
@@ -221,6 +222,31 @@ public class AgendamentoDAO {
 			Banco.closeConnection(conexao);
 		}
 		return aceito;
+	}
+
+	public boolean verificarSeJaPossuiHorarioComPersonalEscolhido(Integer idProfissional, LocalDateTime horaInicio) throws PersonalJaPossuiHorarioCadastradoException {
+		boolean possuiHorarioAgendado = false; 
+		Connection conexao = Banco.getConnection();
+		String sql = "SELECT COUNT(*) AS TOTAL_REGISTROS\r\n"
+				+ "FROM\r\n"
+				+ "	AGENDAMENTO\r\n"
+				+ "WHERE AGENDAMENTO.ID_PROFISSIONAL = ? AND AGENDAMENTO.DATAHORA_INICIO = ?";
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		try {
+			query.setInt(1, idProfissional);
+			query.setObject(2, horaInicio);
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.getInt(1) == 1) {
+				possuiHorarioAgendado = true;
+				
+			}
+			
+		} catch (Exception e) {
+			throw new PersonalJaPossuiHorarioCadastradoException("Outro cliente já agendou este horário! Escolha outro!");
+		}
+		return possuiHorarioAgendado;
 	}
 
 }

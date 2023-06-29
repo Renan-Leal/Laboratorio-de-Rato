@@ -1,9 +1,11 @@
 package model.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import model.bo.AgendamentoBO;
 import model.exception.CampoInvalidoException;
+import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.gerador.GeradorPlanilha;
 import model.vo.Agendamento;
 
@@ -77,6 +79,10 @@ private AgendamentoBO bo = new AgendamentoBO();
 		}
 		GeradorPlanilha gerador = new GeradorPlanilha();
 		return gerador.gerarPlanilhaAgendamentos(agendamentos, destinoArquivo);
+	}
+
+	public boolean verificarSeJaPossuiHorarioComPersonalEscolhido(Integer idProfissional, LocalDateTime horaInicio) throws PersonalJaPossuiHorarioCadastradoException {
+		return bo.verificarSeJaPossuiHorarioComPersonalEscolhido(idProfissional, horaInicio);
 	}
 
 }
