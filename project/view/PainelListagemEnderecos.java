@@ -30,7 +30,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class PainelListagemEndereco extends JPanel {
+public class PainelListagemEnderecos extends JPanel {
 	
 	private ArrayList<Endereco> enderecos;
 	private String[] nomesColunas = { "Rua", "Numero", "CEP", "Bairro", "Cidade", "Estado" };
@@ -55,6 +55,7 @@ public class PainelListagemEndereco extends JPanel {
 	private EnderecoController controller = new EnderecoController();
 	private Endereco enderecoSelecionado;
 	private JButton btnBuscarTodos;
+	private JButton btnVoltar;
 	
 	private void limparTabelaEnderecos() {
 		tblEnderecos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -79,7 +80,7 @@ public class PainelListagemEndereco extends JPanel {
 	}
 	
 	
-	public PainelListagemEndereco() {
+	public PainelListagemEnderecos() {
 		
 		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -190,6 +191,12 @@ public class PainelListagemEndereco extends JPanel {
 		lblBairro.setForeground(Color.BLACK);
 		add(lblBairro, "12, 9, center, fill");
 		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(btnVoltar, "16, 19, fill, fill");
+		
 		txtBairro = new JTextField();
 		add(txtBairro, "13, 9, 4, 1, fill, fill");
 		txtBairro.setColumns(10);
@@ -245,6 +252,7 @@ public class PainelListagemEndereco extends JPanel {
 			}
 		});
 		add(btnVoltarPagina, "14, 19, fill, fill");
+		
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setForeground(Color.WHITE);
@@ -334,13 +342,16 @@ public class PainelListagemEndereco extends JPanel {
 				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
 		
 	}
-	//Torna o btnEditar acessível externamente à essa classe
 		public JButton getBtnEditar() {
 			return this.btnEditar;
 		}
 
 		public Endereco getEnderecoSelecionado() {
 			return enderecoSelecionado;
+		}
+		
+		public JButton getBtnVoltar() {
+			return this.btnVoltar;
 		}
 
 }

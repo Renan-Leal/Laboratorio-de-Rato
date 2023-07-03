@@ -53,4 +53,8 @@ public class UsuarioBO {
 		return dao.consultarPorTipoUsuario(tipoUsuario);
 	}
 
+	public  List<Usuario> consultarClientesUsuarioAutenticado(Integer id) {
+		return dao.consultarClientesUsuarioAutenticado(id);
+	}
+
 }
