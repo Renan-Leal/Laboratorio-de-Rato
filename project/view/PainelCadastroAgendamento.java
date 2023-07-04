@@ -27,6 +27,7 @@ import model.controller.AgendamentoController;
 import model.controller.TreinoController;
 import model.controller.UsuarioController;
 import model.exception.CampoInvalidoException;
+import model.exception.ErroNoMetodoException;
 import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.vo.Agendamento;
 import model.vo.Endereco;
@@ -156,7 +157,7 @@ public class PainelCadastroAgendamento extends JPanel {
 		try {
 			if (agendamento.getId() == null) {
 				
-				if(	agendamentoController.verificarSeJaPossuiHorarioComPersonalEscolhido(agendamento.getProfissional().getId(), agendamento.getDataHoraInicio())) {
+				if(	!agendamentoController.verificarSeJaPossuiHorarioComPersonalEscolhido(agendamento.getProfissional().getId(), agendamento.getDataHoraInicio())) {
 					
 					agendamentoController.inserir(agendamento);
 					treinoController.conectarClienteAoProfissional(agendamento);
@@ -166,7 +167,7 @@ public class PainelCadastroAgendamento extends JPanel {
 			
 				
 			}
-		} catch (CampoInvalidoException  | PersonalJaPossuiHorarioCadastradoException excecao) {
+		} catch (CampoInvalidoException  | PersonalJaPossuiHorarioCadastradoException | ErroNoMetodoException excecao) {
 			JOptionPane.showMessageDialog(null, excecao.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 

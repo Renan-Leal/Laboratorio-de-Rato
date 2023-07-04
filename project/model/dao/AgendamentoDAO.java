@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.controller.TreinoController;
+import model.exception.ErroNoMetodoException;
 import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
@@ -224,7 +225,7 @@ public class AgendamentoDAO {
 		return aceito;
 	}
 
-	public boolean verificarSeJaPossuiHorarioComPersonalEscolhido(Integer idProfissional, LocalDateTime horaInicio) throws PersonalJaPossuiHorarioCadastradoException {
+	public boolean verificarSeJaPossuiHorarioComPersonalEscolhido(Integer idProfissional, LocalDateTime horaInicio) throws PersonalJaPossuiHorarioCadastradoException, ErroNoMetodoException {
 		boolean possuiHorarioAgendado = false; 
 		Connection conexao = Banco.getConnection();
 		String sql = "SELECT COUNT(*) AS TOTAL_REGISTROS\r\n"
@@ -233,18 +234,22 @@ public class AgendamentoDAO {
 				+ "WHERE AGENDAMENTO.ID_PROFISSIONAL = ? AND AGENDAMENTO.DATAHORA_INICIO = ?";
 		
 		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		
+		
 		try {
 			query.setInt(1, idProfissional);
 			query.setObject(2, horaInicio);
 			ResultSet resultado = query.executeQuery();
 			
-			if(resultado.getInt(1) == 1) {
+			
+			if(resultado.next() && resultado.getInt("TOTAL_REGISTROS") == 1) {
 				possuiHorarioAgendado = true;
-				
+				throw new PersonalJaPossuiHorarioCadastradoException("Outro cliente já agendou este horário! Escolha outro!");
 			}
 			
 		} catch (Exception e) {
-			throw new PersonalJaPossuiHorarioCadastradoException("Outro cliente já agendou este horário! Escolha outro!");
+			throw new ErroNoMetodoException("Erro ao executar o método verificar verificarSeJaPossuiHorarioComPersonalEscolhido\nCausa: " + e.getMessage());
+			
 		}
 		return possuiHorarioAgendado;
 	}
