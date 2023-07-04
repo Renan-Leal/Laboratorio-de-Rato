@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
@@ -47,11 +48,12 @@ public class PainelCadastroUsuario extends JPanel {
 	private JTextField txtCPF;
 	private JTextField txtTelefone;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
+	private JPasswordField txtSenha;
 	private JTextField txtLogin;
 	private JTextField txtValorHora;
 	private Usuario usuario;
 	private MaskFormatter mascaraCpf;
+	private MaskFormatter mascaraValorHora;
 	private MaskFormatter mascaraTel;
 	private JLabel lblNome;
 	private JComboBox cbTipoUsuario;
@@ -135,8 +137,15 @@ public class PainelCadastroUsuario extends JPanel {
 		lblValorHora.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblValorHora.setForeground(Color.BLACK);
 		add(lblValorHora, "11, 10, center, center");
+		
+		try {
+			mascaraValorHora = new MaskFormatter("R$###.##");
+			mascaraValorHora.setValueContainsLiteralCharacters(false);
+		} catch (ParseException e) {
+			// silent
+		}
 
-		txtValorHora = new JTextField();
+		txtValorHora = new JFormattedTextField(mascaraValorHora);
 		txtValorHora.setColumns(10);
 		add(txtValorHora, "13, 10, fill, fill");
 
@@ -166,7 +175,7 @@ public class PainelCadastroUsuario extends JPanel {
 		lblSenha.setForeground(Color.BLACK);
 		add(lblSenha, "11, 12, center, center");
 
-		txtSenha = new JTextField();
+		txtSenha = new JPasswordField();
 		txtSenha.setColumns(10);
 		add(txtSenha, "13, 12, fill, fill");
 
@@ -210,7 +219,6 @@ public class PainelCadastroUsuario extends JPanel {
 		cbEndereco.setForeground(Color.BLACK);
 		cbEndereco.setBackground(Color.LIGHT_GRAY);
 		add(cbEndereco, "9, 16, 4, 1, fill, fill");
-		this.usuario = usuario;
 
 		btnSalvar = new JButton("Cadastrar");
 		btnSalvar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -259,16 +267,16 @@ public class PainelCadastroUsuario extends JPanel {
 				this.usuario.setMatricula(new Random().nextInt(900000) + 100000);
 			}
 
-			this.usuario.setValorHora(Double.parseDouble(txtValorHora.getText()));
+			Double valorHoraSemMascara = Double.parseDouble((String) mascaraValorHora.stringToValue(txtValorHora.getText()));
+			this.usuario.setValorHora(valorHoraSemMascara);
 			this.usuario.setEmail(txtEmail.getText());
 			this.usuario.setLogin(txtLogin.getText());
 
-			if (txtSenha.getText().length() != 4) {
+			if ((String.valueOf(txtSenha.getPassword()).length()) != 4) {
 				throw new SenhaInvalidaException("Sua senha deve conter 4 dígitos");
 			} else {
-				this.usuario.setSenha(txtSenha.getText());
+				this.usuario.setSenha(String.valueOf(txtSenha.getPassword()));
 			}
-
 			this.usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex() + 1));
 			this.usuario.getPessoa().setEndereco((Endereco) cbEndereco.getSelectedItem());
 
