@@ -108,6 +108,31 @@ public class PessoaDAO {
 		return pessoaConsultada;
 	}
 	
+	public Pessoa consultarPorNome(String nome) {
+		Pessoa pessoaConsultada = null;
+		Connection conexao = Banco.getConnection();
+		String sql =  " SELECT * FROM PESSOA "
+				    + " WHERE NOME = ?";
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+		
+		try {
+			query.setString(1, nome);
+			ResultSet resultado = query.executeQuery();
+			
+			if(resultado.next()) {
+				pessoaConsultada = converterDeResultSetParaEntidade(resultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar pessoa com nome: + " + nome 
+								+ "\n Causa: " + e.getMessage());	
+		}finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		return pessoaConsultada;
+	}
+	
 	public Pessoa consultarPorCpf(String cpf) {
 		Pessoa pessoaConsultada = null;
 		Connection conexao = Banco.getConnection();

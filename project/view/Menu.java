@@ -278,7 +278,6 @@ public class Menu {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroEndereco = new PainelCadastroEndereco(null);
 				painelCadastroEndereco.setVisible(true);
-				// registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
 				frame.setContentPane(painelCadastroEndereco);
 				frame.revalidate();
 				registrarCliqueBotaoSalvarEndereco();
@@ -296,12 +295,10 @@ public class Menu {
 			public void actionPerformed(ActionEvent arg0) {
 				painelListagemEndereco = new PainelListagemEnderecos();
 				painelListagemEndereco.setVisible(true);
+				frame.setContentPane(painelListagemEndereco);
+				frame.revalidate();
 				registrarCliqueBotaoEditarListagemEndereco();
 				registrarCliqueBotaoVoltarDoPainelListagemEndereco();
-
-				frame.setContentPane(painelListagemEndereco);
-				// Atualiza a tela principal
-				frame.revalidate();
 			}
 		});
 		mnEnderecos.add(mntmListarEnderecos);

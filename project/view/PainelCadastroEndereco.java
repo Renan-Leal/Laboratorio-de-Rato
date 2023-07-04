@@ -124,7 +124,7 @@ public class PainelCadastroEndereco extends JPanel {
 		add(lblCep, "16, 5, fill, center");
 		
 		try {
-			mascaraTxtCep = new MaskFormatter("####-####");
+			mascaraTxtCep = new MaskFormatter("#####-###");
 			mascaraTxtCep.setValueContainsLiteralCharacters(false);		
 		} catch (ParseException e) {
 			// silent
@@ -134,7 +134,7 @@ public class PainelCadastroEndereco extends JPanel {
 		add(txtCep, "18, 5, fill, top");
 		txtCep.setColumns(10);
 		
-		lblNumero = new JLabel("N\u00FAmero:");
+		lblNumero = new JLabel("Número:");
 		lblNumero.setForeground(Color.BLACK);
 		lblNumero.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		add(lblNumero, "22, 5, right, fill");
@@ -219,7 +219,6 @@ public class PainelCadastroEndereco extends JPanel {
 	public void cadastrarEndereco() throws ParseException {
 		String cepSemMascara = (String) mascaraTxtCep.stringToValue(txtCep.getText());
 		this.endereco.setCep(cepSemMascara);
-		this.endereco.setCep(txtCep.getText());
 		this.endereco.setNumero(txtNumero.getText());
 		this.endereco.setRua(txtRua.getText());
 		this.endereco.setComplemento(txtComplemento.getText());
