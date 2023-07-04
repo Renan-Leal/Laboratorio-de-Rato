@@ -219,6 +219,26 @@ public class EnderecoDAO {
 			sql += " CIDADE LIKE '%" + seletor.getCidade() + "%'";
 			primeiro = false;
 		}
+		
+		if(seletor.getCep() != null && !seletor.getCep().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " CEP LIKE '%" + seletor.getCep() + "%'";
+			primeiro = false;
+		}
+		
+		if(seletor.getEstado() != null && !seletor.getEstado().trim().isEmpty()) {
+			if(primeiro) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			sql += " ESTADO LIKE '%" + seletor.getEstado() + "%'";
+			primeiro = false;
+		}
 		return sql;
 	}
 	

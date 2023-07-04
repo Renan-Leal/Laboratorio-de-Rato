@@ -6,6 +6,7 @@ import java.util.List;
 import model.dao.TreinoDAO;
 import model.exception.CampoInvalidoException;
 import model.seletor.TreinoSeletor;
+import model.vo.Agendamento;
 import model.vo.Treino;
 
 public class TreinoBO {
@@ -13,7 +14,17 @@ public class TreinoBO {
 	private TreinoDAO dao = new TreinoDAO();
 	
 	public Treino inserir(Treino novoTreino) {
-		return dao.inserir(novoTreino);
+		Integer idTreino = dao.verificarExistenciaDoCadastro(novoTreino);
+		if(idTreino ==  null) {
+			dao.inserir(novoTreino);
+			
+		} else {
+			novoTreino.setId(idTreino);
+			dao.atualizar(novoTreino);
+			
+		}
+		
+		return novoTreino;
 	}
 	
 	public boolean atualizar(Treino treinoAlterado){
@@ -42,6 +53,10 @@ public class TreinoBO {
 
 	public ArrayList<Treino> consultarTreinosUsuarioAutenticado(Integer id) {
 		return dao.consultarTreinosUsuarioAutenticado(id);
+	}
+
+	public boolean conectarClienteAoProfissional(Agendamento novoAgendamento) {
+		return dao.conectarClienteAoProfissional(novoAgendamento);
 	}
 		
 

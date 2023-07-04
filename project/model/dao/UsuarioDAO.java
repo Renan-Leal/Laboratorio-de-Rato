@@ -131,7 +131,6 @@ public class UsuarioDAO {
 		PessoaDAO pessoa = new PessoaDAO();
 		usuarioConsultado.setId(resultado.getInt("id"));
 		usuarioConsultado.setPessoa(pessoa.consultarPorId(resultado.getInt("ID_PESSOA")));
-		;
 		usuarioConsultado.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(resultado.getInt("ID_TIPOUSUARIO")));
 		usuarioConsultado.setMatricula(resultado.getInt("MATRICULA"));
 		usuarioConsultado.setValorHora(resultado.getDouble("VALORHORA"));
@@ -146,6 +145,21 @@ public class UsuarioDAO {
 		usuarioConsultado.setId(resultado.getInt("ID_CLIENTE"));
 		usuarioConsultado.setPessoa(pessoa.consultarPorId(resultado.getInt("ID_PESSOA")));
 		;
+		usuarioConsultado.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(resultado.getInt("ID_TIPOUSUARIO")));
+		usuarioConsultado.setMatricula(resultado.getInt("MATRICULA"));
+		usuarioConsultado.setValorHora(resultado.getDouble("VALORHORA"));
+		usuarioConsultado.setEmail(resultado.getString("EMAIL"));
+		usuarioConsultado.setLogin(resultado.getString("LOGIN"));
+		usuarioConsultado.setSenha(resultado.getString("SENHA"));
+		return usuarioConsultado;
+	}
+	
+	private Usuario montarPessoaComResultadoDoBanco(ResultSet resultado) throws SQLException {
+		Usuario usuarioConsultado = new Usuario();
+		PessoaDAO pessoa = new PessoaDAO();
+		usuarioConsultado.setId(resultado.getInt("id"));
+		usuarioConsultado.setPessoa(pessoa.consultarPorId(resultado.getInt("ID_PESSOA")));
+		usuarioConsultado.setPessoa(pessoa.consultarPorNome(resultado.getString("PESSOA.NOME")));
 		usuarioConsultado.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(resultado.getInt("ID_TIPOUSUARIO")));
 		usuarioConsultado.setMatricula(resultado.getInt("MATRICULA"));
 		usuarioConsultado.setValorHora(resultado.getDouble("VALORHORA"));
@@ -200,7 +214,8 @@ public class UsuarioDAO {
 	public List<Usuario> consultarComFiltros(UsuarioSeletor seletor) {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		Connection conexao = Banco.getConnection();
-		String sql = " select * from USUARIO ";
+		String sql = "SELECT * \n"
+				+ "FROM\n USUARIO INNER JOIN PESSOA ON USUARIO.ID_PESSOA = PESSOA.ID";
 
 		if (seletor.temFiltro()) {
 			sql = preencherFiltros(sql, seletor);
@@ -215,7 +230,7 @@ public class UsuarioDAO {
 			ResultSet resultado = query.executeQuery();
 
 			while (resultado.next()) {
-				Usuario usuarioBuscado = montarUsuarioComResultadoDoBanco(resultado);
+				Usuario usuarioBuscado = montarPessoaComResultadoDoBanco(resultado);
 				usuarios.add(usuarioBuscado);
 			}
 
@@ -231,13 +246,22 @@ public class UsuarioDAO {
 
 	private String preencherFiltros(String sql, UsuarioSeletor seletor) {
         boolean primeiro = true;
-        if(seletor.getTipo() != 0) {
+        if(seletor.getNome() != null && !seletor.getNome().trim().isEmpty()) {
+            if(primeiro) {
+                    sql += " WHERE ";
+                } else {
+                    sql += " AND ";
+                }
+                sql += " PESSOA.NOME LIKE '%" + seletor.getNome() + "%'";
+                primeiro = false;
+            }
+        if(seletor.getTipo() != null) {
         if(primeiro) {
                 sql += " WHERE ";
             } else {
                 sql += " AND ";
             }
-            sql += " ID_TIPOUSUARIO = " + seletor.getTipo();
+            sql += " ID_TIPOUSUARIO = " + seletor.getTipo().getValor();
             primeiro = false;
         }
         return sql;
@@ -246,7 +270,7 @@ public class UsuarioDAO {
 	public int contarTotalRegistrosComFiltros(UsuarioSeletor seletor) {
 		int total = 0;
 		Connection conexao = Banco.getConnection();
-		String sql = " select count(*) from USUARIO ";
+		String sql = " select count(*) from USUARIO INNER JOIN PESSOA ON USUARIO.ID_PESSOA = PESSOA.ID";
 
 		if (seletor.temFiltro()) {
 			sql = preencherFiltros(sql, seletor);

@@ -3,13 +3,17 @@ package view;
 import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -29,8 +33,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 
-public class PainelListagemEndereco extends JPanel {
+public class PainelListagemEnderecos extends JPanel {
 	
 	private ArrayList<Endereco> enderecos;
 	private String[] nomesColunas = { "Rua", "Numero", "CEP", "Bairro", "Cidade", "Estado" };
@@ -51,11 +56,18 @@ public class PainelListagemEndereco extends JPanel {
 	private int paginaAtual = 1;
 	private int totalPaginas = 0;
 	private EnderecoSeletor seletor = new EnderecoSeletor();
+	private String[] estados = {"","PR", "RS", "SC"};
 	
 	private EnderecoController controller = new EnderecoController();
 	private Endereco enderecoSelecionado;
 	private JButton btnBuscarTodos;
 	private JButton btnVoltar;
+	private JLabel lblEstado;
+	private JComboBox cbEstado;
+	private JLabel lblCep;
+	private JTextField txtCep;
+	private MaskFormatter mascaraTxtCep;
+	private String cepSemMascara;
 	
 	private void limparTabelaEnderecos() {
 		tblEnderecos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -80,7 +92,7 @@ public class PainelListagemEndereco extends JPanel {
 	}
 	
 	
-	public PainelListagemEndereco() {
+	public PainelListagemEnderecos(){
 		
 		setBackground(new Color(108, 255, 108));
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -97,9 +109,9 @@ public class PainelListagemEndereco extends JPanel {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(41dlu;default)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(59dlu;default)"),
+				ColumnSpec.decode("max(104dlu;default):grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("max(94dlu;default)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(68dlu;default)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -131,6 +143,12 @@ public class PainelListagemEndereco extends JPanel {
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("max(6dlu;default)"),
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
@@ -146,15 +164,6 @@ public class PainelListagemEndereco extends JPanel {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("fill:max(23dlu;pref):grow"),
 				RowSpec.decode("fill:pref:grow"),}));
-		
-		lblCidade = new JLabel("Cidade:");
-		lblCidade.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		lblCidade.setForeground(Color.BLACK);
-		add(lblCidade, "12, 7, center, fill");
-		
-		txtCidade = new JTextField();
-		add(txtCidade, "13, 7, 4, 1, fill, fill");
-		txtCidade.setColumns(10);
 		
 		tblEnderecos = new JTable();
 		tblEnderecos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -173,33 +182,57 @@ public class PainelListagemEndereco extends JPanel {
 				}
 			}
 		});
-		
-		btnBuscar = new JButton("Buscar Com Filtros");
-		btnBuscar.setBackground(Color.BLACK);
-		btnBuscar.setForeground(Color.WHITE);
-		btnBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buscarEnderecosComFiltros();
-				atualizarTabelaEnderecos();
-			}
-		});
-		add(btnBuscar, "18, 7, fill, fill");
-		
-		lblBairro = new JLabel("Bairro:");
-		lblBairro.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		lblBairro.setForeground(Color.BLACK);
-		add(lblBairro, "12, 9, center, fill");
-		
-		btnVoltar = new JButton("Voltar");
-		btnVoltar.setBackground(Color.BLACK);
-		btnVoltar.setForeground(Color.WHITE);
-		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		add(btnVoltar, "16, 19, fill, fill");
-		
-		txtBairro = new JTextField();
-		add(txtBairro, "13, 9, 4, 1, fill, fill");
-		txtBairro.setColumns(10);
+				
+				lblCep = new JLabel("CEP:");
+				lblCep.setForeground(Color.BLACK);
+				lblCep.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				add(lblCep, "12, 7, center, default");
+				
+				
+				txtCep = new JFormattedTextField(mascaraTxtCep);
+				txtCep.setColumns(10);
+				add(txtCep, "14, 7, 3, 1, fill, default");
+				
+				lblBairro = new JLabel("Bairro:");
+				lblBairro.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				lblBairro.setForeground(Color.BLACK);
+				add(lblBairro, "12, 9, center, fill");
+				
+				txtBairro = new JTextField();
+				add(txtBairro, "14, 9, 3, 1, fill, fill");
+				txtBairro.setColumns(10);
+				
+				lblCidade = new JLabel("Cidade:");
+				lblCidade.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				lblCidade.setForeground(Color.BLACK);
+				add(lblCidade, "12, 11, center, fill");
+				
+				txtCidade = new JTextField();
+				add(txtCidade, "14, 11, 3, 1, fill, fill");
+				txtCidade.setColumns(10);
+				
+				lblEstado = new JLabel("Estado:");
+				lblEstado.setForeground(Color.BLACK);
+				lblEstado.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				add(lblEstado, "12, 13, center, default");
+				
+				cbEstado = new JComboBox(estados);
+				cbEstado.setForeground(Color.WHITE);
+				cbEstado.setBackground(Color.DARK_GRAY);
+				cbEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				add(cbEstado, "14, 13, 3, 1, fill, default");
+				
+				btnBuscar = new JButton("Buscar Com Filtros");
+				btnBuscar.setBackground(Color.BLACK);
+				btnBuscar.setForeground(Color.WHITE);
+				btnBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+				btnBuscar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						buscarEnderecosComFiltros();
+						atualizarTabelaEnderecos();
+					}
+				});
+				add(btnBuscar, "14, 15, fill, fill");
 		
 				btnBuscarTodos = new JButton("Buscar Todos");
 				btnBuscarTodos.setBackground(Color.BLACK);
@@ -211,8 +244,14 @@ public class PainelListagemEndereco extends JPanel {
 						atualizarTabelaEnderecos();
 					}
 				});
-				add(btnBuscarTodos, "18, 9, fill, fill");
-		add(tblEnderecos, "12, 12, 9, 4, fill, fill");
+				add(btnBuscarTodos, "16, 15, fill, fill");
+		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setBackground(Color.BLACK);
+		btnVoltar.setForeground(Color.WHITE);
+		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(btnVoltar, "16, 25, fill, fill");
+		add(tblEnderecos, "12, 18, 9, 4, fill, fill");
 		
 		
 		
@@ -234,8 +273,8 @@ public class PainelListagemEndereco extends JPanel {
 		lblPaginacao.setForeground(Color.BLACK);
 		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblPaginacao, "12, 17");
-		add(btnAvancarPagina, "12, 19, fill, fill");
+		add(lblPaginacao, "12, 23");
+		add(btnAvancarPagina, "12, 25, fill, fill");
 		
 		btnVoltarPagina = new JButton("<< Voltar");
 		btnVoltarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -251,7 +290,7 @@ public class PainelListagemEndereco extends JPanel {
 				btnAvancarPagina.setEnabled(paginaAtual < totalPaginas);
 			}
 		});
-		add(btnVoltarPagina, "14, 19, fill, fill");
+		add(btnVoltarPagina, "14, 25, fill, fill");
 		
 		
 		btnEditar = new JButton("Editar");
@@ -259,7 +298,7 @@ public class PainelListagemEndereco extends JPanel {
 		btnEditar.setBackground(Color.BLACK);
 		btnEditar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnEditar.setEnabled(false);
-		add(btnEditar, "12, 21, fill, fill");
+		add(btnEditar, "12, 27, fill, fill");
 		
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.setBackground(Color.BLACK);
@@ -282,7 +321,7 @@ public class PainelListagemEndereco extends JPanel {
 				}
 			}
 		});
-		add(btnExcluir, "14, 21, fill, fill");
+		add(btnExcluir, "14, 27, fill, fill");
 		
 		btnGerarPlanilha = new JButton("Gerar Planilha");
 		btnGerarPlanilha.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -305,7 +344,7 @@ public class PainelListagemEndereco extends JPanel {
 				}
 			}
 		});
-		add(btnGerarPlanilha, "16, 21, fill, fill");
+		add(btnGerarPlanilha, "16, 27, fill, fill");
 		atualizarQuantidadePaginas();
 
 	}
@@ -315,10 +354,12 @@ public class PainelListagemEndereco extends JPanel {
 		
 	}
 
-	protected void buscarEnderecosComFiltros() {
+	protected void buscarEnderecosComFiltros(){
 		seletor = new EnderecoSeletor();
 		seletor.setLimite(TAMANHO_PAGINA);
 		seletor.setPagina(paginaAtual);
+		seletor.setCep(txtCep.getText());
+		seletor.setEstado((String)cbEstado.getSelectedItem());
 		seletor.setBairro(txtBairro.getText());
 		seletor.setCidade(txtCidade.getText());
 

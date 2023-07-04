@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -107,10 +108,8 @@ public class PainelCadastroTreino extends JPanel {
 		lblProfissional.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblProfissional.setForeground(Color.BLACK);
 		add(lblProfissional, "16, 7, right, center");
-
-		List<Usuario> usuarios = new ArrayList<Usuario>();
-		usuarios.add(usuarioAutenticado);
-		cbProfissional = new JComboBox(usuarios.toArray());
+		
+		cbProfissional = new JComboBox(new ArrayList<Usuario>(Collections.singletonList(usuarioAutenticado)).toArray());
 		cbProfissional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		cbProfissional.setForeground(Color.BLACK);
 		add(cbProfissional, "18, 7, fill, fill");

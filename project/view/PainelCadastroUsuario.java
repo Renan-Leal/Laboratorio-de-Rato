@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
@@ -47,11 +48,12 @@ public class PainelCadastroUsuario extends JPanel {
 	private JTextField txtCPF;
 	private JTextField txtTelefone;
 	private JTextField txtEmail;
-	private JTextField txtSenha;
+	private JPasswordField txtSenha;
 	private JTextField txtLogin;
 	private JTextField txtValorHora;
 	private Usuario usuario;
 	private MaskFormatter mascaraCpf;
+	private MaskFormatter mascaraValorHora;
 	private MaskFormatter mascaraTel;
 	private JLabel lblNome;
 	private JComboBox cbTipoUsuario;
@@ -72,56 +74,24 @@ public class PainelCadastroUsuario extends JPanel {
 	private DatePickerSettings dateSettings;
 	private JButton btnVoltar;
 
-
 	public PainelCadastroUsuario(Usuario usuario) {
 		setBackground(new Color(108, 255, 108));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("max(119dlu;pref):grow"),
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("42px"),
-				ColumnSpec.decode("73px"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("228px"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("68px"),
-				ColumnSpec.decode("4px"),
-				ColumnSpec.decode("191px"),
-				ColumnSpec.decode("16px"),
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("24px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				FormSpecs.GROWING_BUTTON_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				ColumnSpec.decode("94px"),},
-			new RowSpec[] {
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("pref:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("21px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("22px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("pref:grow"),}));
-
+		setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("max(119dlu;pref):grow"),
+				FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("42px"), ColumnSpec.decode("73px"),
+				FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("228px"), FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("68px"), ColumnSpec.decode("4px"), ColumnSpec.decode("191px"),
+				ColumnSpec.decode("16px"), FormSpecs.UNRELATED_GAP_COLSPEC, ColumnSpec.decode("24px"),
+				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.GROWING_BUTTON_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC, FormSpecs.DEFAULT_COLSPEC, ColumnSpec.decode("94px"), },
+				new RowSpec[] { FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("pref:grow"), FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("20px"),
+						FormSpecs.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), FormSpecs.LINE_GAP_ROWSPEC,
+						RowSpec.decode("20px"), FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("21px"),
+						FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("20px"), FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("22px"), FormSpecs.UNRELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("pref:grow"), }));
 
 		lblNome = new JLabel("Nome:");
 		lblNome.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -144,7 +114,6 @@ public class PainelCadastroUsuario extends JPanel {
 			// silent
 		}
 
-
 		txtCPF = new JFormattedTextField(mascaraCpf);
 		add(txtCPF, "9, 8, fill, fill");
 		txtCPF.setColumns(10);
@@ -153,7 +122,6 @@ public class PainelCadastroUsuario extends JPanel {
 		dateSettings.setAllowKeyboardEditing(false);
 		dataNascimento = new DatePicker(dateSettings);
 		add(dataNascimento, "13, 8");
-
 
 		lblDtNascimento = new JLabel("Dt. Nasc:");
 		lblDtNascimento.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -165,16 +133,22 @@ public class PainelCadastroUsuario extends JPanel {
 		lblEmail.setForeground(Color.BLACK);
 		add(lblEmail, "7, 10, center, fill");
 
-
 		lblValorHora = new JLabel("Valor Hora:");
 		lblValorHora.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblValorHora.setForeground(Color.BLACK);
 		add(lblValorHora, "11, 10, center, center");
+		
+		try {
+			mascaraValorHora = new MaskFormatter("R$###.##");
+			mascaraValorHora.setValueContainsLiteralCharacters(false);
+		} catch (ParseException e) {
+			// silent
+		}
 
-		txtValorHora = new JTextField();
+		txtValorHora = new JFormattedTextField(mascaraValorHora);
 		txtValorHora.setColumns(10);
 		add(txtValorHora, "13, 10, fill, fill");
-    
+
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
 		add(txtEmail, "9, 10, fill, fill");
@@ -191,17 +165,17 @@ public class PainelCadastroUsuario extends JPanel {
 			// silent
 		}
 
-
 		txtTelefone = new JFormattedTextField(mascaraTel);
 		add(txtTelefone, "9, 12, fill, fill");
 		txtTelefone.setColumns(10);
+		
 
 		lblSenha = new JLabel("Senha:");
 		lblSenha.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblSenha.setForeground(Color.BLACK);
 		add(lblSenha, "11, 12, center, center");
 
-		txtSenha = new JTextField();
+		txtSenha = new JPasswordField();
 		txtSenha.setColumns(10);
 		add(txtSenha, "13, 12, fill, fill");
 
@@ -224,12 +198,12 @@ public class PainelCadastroUsuario extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
-				cbTipoUsuario = new JComboBox(new String[] { "Administrador", "Personal Trainer", "Cliente" });
-				cbTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-				cbTipoUsuario.setBackground(Color.LIGHT_GRAY);
-				cbTipoUsuario.setForeground(Color.BLACK);
-				add(cbTipoUsuario, "13, 14, fill, top");
+
+		cbTipoUsuario = new JComboBox(new String[] { "Administrador", "Personal Trainer", "Cliente" });
+		cbTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		cbTipoUsuario.setBackground(Color.LIGHT_GRAY);
+		cbTipoUsuario.setForeground(Color.BLACK);
+		add(cbTipoUsuario, "13, 14, fill, top");
 		btnVoltar.setBackground(Color.BLACK);
 		btnVoltar.setForeground(Color.WHITE);
 		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -245,7 +219,6 @@ public class PainelCadastroUsuario extends JPanel {
 		cbEndereco.setForeground(Color.BLACK);
 		cbEndereco.setBackground(Color.LIGHT_GRAY);
 		add(cbEndereco, "9, 16, 4, 1, fill, fill");
-		this.usuario = usuario;
 
 		btnSalvar = new JButton("Cadastrar");
 		btnSalvar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -277,42 +250,48 @@ public class PainelCadastroUsuario extends JPanel {
 	}
 
 	public Usuario cadastrarUsuario() throws SenhaInvalidaException {
-		this.usuario.setPessoa(new Pessoa());
-
-		this.usuario.getPessoa().setNome(txtNome.getText());
 		try {
+			this.usuario.setPessoa(new Pessoa());
+
+			this.usuario.getPessoa().setNome(txtNome.getText());
+
 			String cpfSemMascara = (String) mascaraCpf.stringToValue(txtCPF.getText());
 			this.usuario.getPessoa().setCpf(cpfSemMascara);
-		} catch (ParseException e1) {
-			JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE);
-		}
 
-		this.usuario.getPessoa().setDtNascimento(dataNascimento.getDate());
-		try {
+			this.usuario.getPessoa().setDtNascimento(dataNascimento.getDate());
+
 			String telefoneSemMascara = (String) mascaraTel.stringToValue(txtTelefone.getText());
 			this.usuario.getPessoa().setTelefone(telefoneSemMascara);
-		} catch (ParseException e1) {
-			JOptionPane.showMessageDialog(null, "Erro ao converter o telefone", "Erro", JOptionPane.ERROR_MESSAGE);
+
+			if (this.usuario.getId() == null) {
+				this.usuario.setMatricula(new Random().nextInt(900000) + 100000);
+			}
+
+			Double valorHoraSemMascara = Double.parseDouble((String) mascaraValorHora.stringToValue(txtValorHora.getText()));
+			this.usuario.setValorHora(valorHoraSemMascara);
+			this.usuario.setEmail(txtEmail.getText());
+			this.usuario.setLogin(txtLogin.getText());
+
+			if ((String.valueOf(txtSenha.getPassword()).length()) != 4) {
+				throw new SenhaInvalidaException("Sua senha deve conter 4 dígitos");
+			} else {
+				this.usuario.setSenha(String.valueOf(txtSenha.getPassword()));
+			}
+			this.usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex() + 1));
+			this.usuario.getPessoa().setEndereco((Endereco) cbEndereco.getSelectedItem());
+
+			this.usuario.setDataCadastro(LocalDateTime.now());
+
+		} catch (Exception e) {
+			if (e.getMessage().contains("senha")) {
+				JOptionPane.showMessageDialog(null, "Sua senha deve conter 4 dígitos!", "Erro",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Há campos a serem revisados!", "Erro",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
 		}
-
-		if (this.usuario.getId() == null) {
-			this.usuario.setMatricula(new Random().nextInt(900000) + 100000);
-		}
-
-		this.usuario.setValorHora(Double.parseDouble(txtValorHora.getText()));
-		this.usuario.setEmail(txtEmail.getText());
-		this.usuario.setLogin(txtLogin.getText());
-		if (txtSenha.getText().length() != 4) {
-			throw new SenhaInvalidaException("Sua senha deve conter 4 dígitos");
-		} else {
-			this.usuario.setSenha(txtSenha.getText());
-		}
-
-		this.usuario.setTipoUsuario(TipoUsuario.getTipoUsuarioPorValor(cbTipoUsuario.getSelectedIndex() + 1));
-		this.usuario.getPessoa().setEndereco((Endereco) cbEndereco.getSelectedItem());
-
-		this.usuario.setDataCadastro(LocalDateTime.now());
-
 		try {
 			if (this.usuario.getId() == null) {
 				Pessoa pessoaConsultada = this.pessoaController.consultarPorCpf(this.usuario.getPessoa());
@@ -355,7 +334,7 @@ public class PainelCadastroUsuario extends JPanel {
 	public JButton getBtnSalvar() {
 		return btnSalvar;
 	}
-	
+
 	public JButton getBtnVoltar() {
 		return btnVoltar;
 	}

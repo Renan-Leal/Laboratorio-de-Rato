@@ -1,9 +1,11 @@
 package model.bo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import model.dao.AgendamentoDAO;
 import model.exception.CampoInvalidoException;
+import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
 
@@ -41,6 +43,10 @@ private AgendamentoDAO dao = new AgendamentoDAO();
 	
 	public boolean aceitar(int id) throws CampoInvalidoException {
 		return dao.aceitar(id);
+	}
+
+	public boolean verificarSeJaPossuiHorarioComPersonalEscolhido(Integer idProfissional, LocalDateTime horaInicio) throws PersonalJaPossuiHorarioCadastradoException {
+		return dao.verificarSeJaPossuiHorarioComPersonalEscolhido(idProfissional, horaInicio);
 	}
 
 }

@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import model.vo.TipoUsuario;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -54,6 +55,8 @@ public class PainelListagemUsuarios extends JPanel {
 	private Usuario usuarioSelecionado;
 	private UsuarioSeletor seletor = new UsuarioSeletor();
 	private JButton btnVoltar;
+	private JLabel lblNome;
+	private JTextField txtNome;
 
 	private void limparTabelaUsuarios() {
 		tblUsuarios.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
@@ -88,7 +91,9 @@ public class PainelListagemUsuarios extends JPanel {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("max(24dlu;default)"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(98dlu;default)"),
+				ColumnSpec.decode("max(98dlu;default):grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -147,6 +152,17 @@ public class PainelListagemUsuarios extends JPanel {
 			}
 		});
 		
+		btnBuscarTodos = new JButton("Buscar Todos");
+		btnBuscarTodos.setBackground(Color.BLACK);
+		btnBuscarTodos.setForeground(Color.WHITE);
+		btnBuscarTodos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnBuscarTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscarUsuarios();
+				atualizarTabelaUsuarios();
+			}
+		});
+		
 		btnBuscarComFiltro = new JButton("Buscar com Filtro");
 		btnBuscarComFiltro.setBackground(Color.BLACK);
 		btnBuscarComFiltro.setForeground(Color.WHITE);
@@ -158,35 +174,34 @@ public class PainelListagemUsuarios extends JPanel {
 			}
 		});
 		
+		lblNome = new JLabel("Nome:");
+		lblNome.setForeground(Color.BLACK);
+		lblNome.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		add(lblNome, "6, 3, center, default");
+		
+		txtNome = new JTextField();
+		add(txtNome, "8, 3, fill, fill");
+		txtNome.setColumns(10);
+		
 		lblTipoUsuario = new JLabel("Tipo de Usuário:");
 		lblTipoUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblTipoUsuario.setForeground(Color.BLACK);
-		add(lblTipoUsuario, "6, 3, center, center");
+		add(lblTipoUsuario, "10, 3, center, center");
 		
-		cbTipoUsuario = new JComboBox(new String[] {"Administrador","Personal","Cliente"});
+		cbTipoUsuario = new JComboBox(TipoUsuario.values());
+		cbTipoUsuario.setSelectedIndex(-1);
 		cbTipoUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		cbTipoUsuario.setForeground(Color.BLACK);
-		add(cbTipoUsuario, "8, 3, fill, fill");
-		add(btnBuscarComFiltro, "10, 3, fill, fill");
-		
-		btnBuscarTodos = new JButton("Buscar Todos");
-		btnBuscarTodos.setBackground(Color.BLACK);
-		btnBuscarTodos.setForeground(Color.WHITE);
-		btnBuscarTodos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnBuscarTodos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buscarUsuarios();
-				atualizarTabelaUsuarios();
-			}
-		});
-		add(btnBuscarTodos, "12, 3, fill, fill");
+		add(cbTipoUsuario, "12, 3, fill, fill");
+		add(btnBuscarComFiltro, "14, 3, fill, fill");
+		add(btnBuscarTodos, "16, 3, fill, fill");
 		
 		lblPaginacao = new JLabel("1 / " + totalPaginas);
 		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblPaginacao.setForeground(Color.BLACK);
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPaginacao, "6, 5, left, bottom");
-		add(tblUsuarios, "6, 7, 9, 1, fill, fill");
+		add(tblUsuarios, "6, 7, 11, 1, fill, fill");
 		
 		atualizarQuantidadePaginas();
 		
@@ -273,12 +288,12 @@ public class PainelListagemUsuarios extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		add(btnVoltar, "10, 9");
+		add(btnVoltar, "12, 9");
 		
 		
-		add(btnAvancarPagina, "12, 9, right, top");
+		add(btnAvancarPagina, "14, 9, right, top");
 		btnVoltarPagina.setEnabled(false);
-		add(btnVoltarPagina, "14, 9, right, top");
+		add(btnVoltarPagina, "16, 9, right, top");
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setBackground(Color.BLACK);
@@ -300,7 +315,8 @@ public class PainelListagemUsuarios extends JPanel {
 		seletor = new UsuarioSeletor();
 		seletor.setLimite(TAMANHO_PAGINA);
 		seletor.setPagina(paginaAtual);
-		seletor.setTipo(cbTipoUsuario.getSelectedIndex() + 1);
+		seletor.setNome(txtNome.getText());
+		seletor.setTipo((TipoUsuario) cbTipoUsuario.getSelectedItem());
 		usuarios = (ArrayList<Usuario>) controller.consultarComFiltros(seletor);
 		atualizarTabelaUsuarios();
 		atualizarQuantidadePaginas();

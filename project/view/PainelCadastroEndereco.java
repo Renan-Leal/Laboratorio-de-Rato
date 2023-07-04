@@ -14,6 +14,7 @@ import model.exception.EnderecoInvalidoException;
 import model.exception.CampoInvalidoException;
 import model.vo.Endereco;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -42,6 +43,7 @@ public class PainelCadastroEndereco extends JPanel {
 	private String[] estados = {"PR", "RS", "SC"};
 	private JLabel lblCep;
 	private JButton btnSalvar;
+	private MaskFormatter mascaraTxtCep;
 	
 	public PainelCadastroEndereco(Endereco endereco) {
 		setBackground(new Color(108, 255, 108));
@@ -121,11 +123,18 @@ public class PainelCadastroEndereco extends JPanel {
 		lblCep.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		add(lblCep, "16, 5, fill, center");
 		
-		txtCep = new JTextField();
+		try {
+			mascaraTxtCep = new MaskFormatter("#####-###");
+			mascaraTxtCep.setValueContainsLiteralCharacters(false);		
+		} catch (ParseException e) {
+			// silent
+		}
+		
+		txtCep = new JFormattedTextField(mascaraTxtCep);
 		add(txtCep, "18, 5, fill, top");
 		txtCep.setColumns(10);
 		
-		lblNumero = new JLabel("N\u00FAmero:");
+		lblNumero = new JLabel("Número:");
 		lblNumero.setForeground(Color.BLACK);
 		lblNumero.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		add(lblNumero, "22, 5, right, fill");
@@ -207,8 +216,9 @@ public class PainelCadastroEndereco extends JPanel {
 		return btnSalvar;
 	}
 	
-	public void cadastrarEndereco() {
-		this.endereco.setCep(txtCep.getText());
+	public void cadastrarEndereco() throws ParseException {
+		String cepSemMascara = (String) mascaraTxtCep.stringToValue(txtCep.getText());
+		this.endereco.setCep(cepSemMascara);
 		this.endereco.setNumero(txtNumero.getText());
 		this.endereco.setRua(txtRua.getText());
 		this.endereco.setComplemento(txtComplemento.getText());

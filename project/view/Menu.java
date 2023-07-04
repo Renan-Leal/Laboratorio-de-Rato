@@ -17,6 +17,7 @@ import model.vo.Treino;
 import model.vo.Usuario;
 
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -26,11 +27,11 @@ public class Menu {
 
 	private JFrame frame;
 	private PainelLogin painelLogin;
-	private PainelAgendamentoTreino painelAgendamentoTreino;
+	private PainelCadastroAgendamento painelCadastroAgendamento;
 	private PainelCadastroEndereco painelCadastroEndereco;
 	private PainelCadastroTreino painelCadastroTreino;
 	private PainelCadastroUsuario painelCadastroUsuario;
-	private PainelListagemEndereco painelListagemEndereco;
+	private PainelListagemEnderecos painelListagemEndereco;
 	private PainelListagemUsuarios painelListagemUsuario;
 	private PainelListagemTreinos painelListagemTreino;
 	private PainelListagemAgendamentos painelListagemAgendamento;
@@ -214,10 +215,10 @@ public class Menu {
 				frame.revalidate();
 				registrarCliqueBotaoEditarTreino();
 				registrarCliqueBotaoVoltarDoPainelListarTreino();
+				registrarCliqueBotaoEncaminharEmailTreino();
 			}
 		});
-		mntmListarTreinos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-vários-50.png")));
+		mntmListarTreinos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-vários-50.png")));
 		mnTreinos.add(mntmListarTreinos);
 
 		mnAgendamentos = new JMenu("Agendamentos");
@@ -225,7 +226,7 @@ public class Menu {
 		mnAgendamentos.setForeground(Color.WHITE);
 		mnAgendamentos.setFont(new Font("Segoe UI Black", Font.BOLD, 16));
 		mnAgendamentos
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-women-track-and-field-50.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-women-track-and-field-50.png")));
 		menuBar.add(mnAgendamentos);
 		mntmCadastrarAgendamento = new JMenuItem("Cadastrar");
 		mntmCadastrarAgendamento.setBackground(Color.WHITE);
@@ -233,14 +234,15 @@ public class Menu {
 		mntmCadastrarAgendamento.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarAgendamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelAgendamentoTreino = new PainelAgendamentoTreino();
-				frame.setContentPane(painelAgendamentoTreino);
+				painelCadastroAgendamento = new PainelCadastroAgendamento(usuarioAutenticado, null);
+				frame.setContentPane(painelCadastroAgendamento);
 				frame.revalidate();
+				registrarCliqueBotaoCadastrarAgendamento();
 				registrarCliqueBotaoVoltarDoPainelCadastrarAgendamento();
 			}
 		});
 		mntmCadastrarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-arquivo-50.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-adicionar-arquivo-50.png")));
 		mnAgendamentos.add(mntmCadastrarAgendamento);
 
 		mntmListarAgendamento = new JMenuItem("Listagem");
@@ -256,7 +258,7 @@ public class Menu {
 			}
 		});
 		mntmListarAgendamento
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-50.png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-editar-propriedade-50.png")));
 		mnAgendamentos.add(mntmListarAgendamento);
 
 		mnEnderecos = new JMenu("Endereços");
@@ -271,12 +273,11 @@ public class Menu {
 		mntmCadastrarEndereco.setForeground(Color.BLACK);
 		mntmCadastrarEndereco.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmCadastrarEndereco
-		.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-endereço-50 (1).png")));
+				.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-endereço-50 (1).png")));
 		mntmCadastrarEndereco.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				painelCadastroEndereco = new PainelCadastroEndereco(null);
 				painelCadastroEndereco.setVisible(true);
-				// registrarCliqueBotaoVoltarDoPainelCadastroEndereco();
 				frame.setContentPane(painelCadastroEndereco);
 				frame.revalidate();
 				registrarCliqueBotaoSalvarEndereco();
@@ -292,20 +293,38 @@ public class Menu {
 		mntmListarEnderecos.setIcon(new ImageIcon(Menu.class.getResource("/model/icones/icons8-mapa-50.png")));
 		mntmListarEnderecos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				painelListagemEndereco = new PainelListagemEndereco();
+				painelListagemEndereco = new PainelListagemEnderecos();
 				painelListagemEndereco.setVisible(true);
+				frame.setContentPane(painelListagemEndereco);
+				frame.revalidate();
 				registrarCliqueBotaoEditarListagemEndereco();
 				registrarCliqueBotaoVoltarDoPainelListagemEndereco();
-
-				frame.setContentPane(painelListagemEndereco);
-				// Atualiza a tela principal
-				frame.revalidate();
 			}
 		});
 		mnEnderecos.add(mntmListarEnderecos);
 
 		// Método para desbloquear o menu
 		bloquearTodoMenu();
+	}
+
+	protected void registrarCliqueBotaoEncaminharEmailTreino() {
+		painelListagemTreino.getBtnEncaminharEmailTreino().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painelListagemTreino.encaminharEmailTreino();
+				
+			}
+		});
+
+	}
+
+	protected void registrarCliqueBotaoCadastrarAgendamento() {
+		painelCadastroAgendamento.getBtnSalvar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				painelCadastroAgendamento.cadastrarAgendamentoTreino();
+
+			}
+		});
+
 	}
 
 	protected void registrarCliqueBotaoEditarTreino() {
@@ -364,7 +383,13 @@ public class Menu {
 	protected void registrarCliqueBotaoSalvarEndereco() {
 		painelCadastroEndereco.getBtnSalvar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelCadastroEndereco.cadastrarEndereco();
+				try {
+					painelCadastroEndereco.cadastrarEndereco();
+				} catch (ParseException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+					
+			
+				}
 			}
 		}));
 	}
@@ -381,7 +406,7 @@ public class Menu {
 		});
 
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelCadastroEndereco() {
 		painelCadastroEndereco.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -390,7 +415,7 @@ public class Menu {
 			}
 		}));
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelListagemEndereco() {
 		painelListagemEndereco.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -399,7 +424,7 @@ public class Menu {
 			}
 		}));
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelCadastroUsuario() {
 		painelCadastroUsuario.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -408,7 +433,7 @@ public class Menu {
 			}
 		}));
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelListagemUsuario() {
 		painelListagemUsuario.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -417,7 +442,7 @@ public class Menu {
 			}
 		}));
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelCadastroTreino() {
 		painelCadastroTreino.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -426,7 +451,7 @@ public class Menu {
 			}
 		}));
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelListarTreino() {
 		painelListagemTreino.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -435,16 +460,16 @@ public class Menu {
 			}
 		}));
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelCadastrarAgendamento() {
-		painelAgendamentoTreino.getBtnVoltar().addActionListener((new ActionListener() {
+		painelCadastroAgendamento.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setContentPane(painelPrincipal);
 				frame.revalidate();
 			}
 		}));
 	}
-	
+
 	protected void registrarCliqueBotaoVoltarDoPainelListarAgendamento() {
 		painelListagemAgendamento.getBtnVoltar().addActionListener((new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
