@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionListener;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -72,7 +73,7 @@ public class PainelListagemUsuarios extends JPanel {
 			novaLinhaDaTabela[0] = u.getPessoa().getNome();
 			novaLinhaDaTabela[1] = u.getPessoa().getCpf();
 			novaLinhaDaTabela[2] = u.getPessoa().getTelefone();
-			novaLinhaDaTabela[3] = u.getPessoa().getDtNascimento();
+			novaLinhaDaTabela[3] = u.getPessoa().getDtNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			novaLinhaDaTabela[4] = u.getTipoUsuario().getValor() == 1 ? "Administrador" : u.getTipoUsuario().getValor() == 2 ? "Personal Trainer" : u.getTipoUsuario().getValor() == 3 ? "Cliente" : "NULL";
 			novaLinhaDaTabela[5] = u.getMatricula();
 			novaLinhaDaTabela[6] = u.getEmail();

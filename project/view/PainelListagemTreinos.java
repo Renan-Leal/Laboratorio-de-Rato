@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ import email.GerenciadorEmail;
 public class PainelListagemTreinos extends JPanel {
 
 	private ArrayList<Treino> treinos;
-	private String[] nomesColunas = { "Cliente", "Personal", "Nivel", "Treino" };
+	private String[] nomesColunas = { "Cliente", "Personal", "Nivel", "Treino", "Prazo Inicial", "Prazo Final"};
 	private JTable tblTreinos;
 	private JLabel lblCliente;
 	private JLabel lblProfissional;
@@ -79,11 +80,19 @@ public class PainelListagemTreinos extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) tblTreinos.getModel();
 
 		for (Treino t : treinos) {
-			Object[] novaLinhaDaTabela = new Object[4];
+			Object[] novaLinhaDaTabela = new Object[6];
 			novaLinhaDaTabela[0] = t.getCliente();
 			novaLinhaDaTabela[1] = t.getProfissional();
 			novaLinhaDaTabela[2] = t.getNivelTreino();
 			novaLinhaDaTabela[3] = t.getTreino();
+			try {
+				novaLinhaDaTabela[4] = t.getDtCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				novaLinhaDaTabela[5] = t.getDtTermino().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			} catch (Exception e) {
+				novaLinhaDaTabela[4] = "Não cadastrado";
+				novaLinhaDaTabela[5] = "Não cadastrado";
+			}
+	
 			model.addRow(novaLinhaDaTabela);
 		}
 	}

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import model.exception.ErroNoMetodoException;
 import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
+import model.vo.TipoUsuario;
+import model.vo.Usuario;
 
 public class AgendamentoDAO {
 	
@@ -108,13 +111,14 @@ public class AgendamentoDAO {
 	private Agendamento converterDeResultSetParaEntidade(ResultSet resultado) throws SQLException {
 		Agendamento agendamentoConsultado = new Agendamento();
 		UsuarioDAO usuarioDao = new UsuarioDAO();
+		
 		agendamentoConsultado.setId(resultado.getInt("ID"));
 		agendamentoConsultado.setProfissional(usuarioDao.consultarPorId(resultado.getInt("ID_PROFISSIONAL")));
 		agendamentoConsultado.setCliente(usuarioDao.consultarPorId(resultado.getInt("ID_CLIENTE")));
-		agendamentoConsultado.setDataHoraInicio(LocalDateTime.parse(resultado.getString("DATAHORA_INICIO")));;
-		agendamentoConsultado.setDataHoraFinal(LocalDateTime.parse(resultado.getString("DATAHORA_FINAL")));
-		agendamentoConsultado.setAceito(resultado.getBoolean("ACEITO"));;
-		agendamentoConsultado.setMotivoRejeicao(resultado.getString("MOTIVO_REJEICAO"));
+		agendamentoConsultado.setDataHoraInicio(LocalDateTime.parse(resultado.getString("DATAHORA_INICIO"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));;
+		agendamentoConsultado.setDataHoraFinal(LocalDateTime.parse(resultado.getString("DATAHORA_FINAL"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+//		agendamentoConsultado.setAceito(resultado.getBoolean("ACEITO"));;
+//		agendamentoConsultado.setMotivoRejeicao(resultado.getString("MOTIVO_REJEICAO"));
 		return agendamentoConsultado;
 	}
 
@@ -252,6 +256,42 @@ public class AgendamentoDAO {
 			
 		}
 		return possuiHorarioAgendado;
+	}
+
+	
+
+	public ArrayList<Agendamento> buscarAgendamentosUsuarioAutenticado(Usuario usuarioAutenticado, TipoUsuario tipoUsuario) {
+		ArrayList<Agendamento> agendamentos = new ArrayList<Agendamento>();
+		String sql = new String();
+		
+		if (tipoUsuario == TipoUsuario.PERSONAL_TRAINER) {
+			sql = "SELECT * FROM AGENDAMENTO WHERE ID_PERSONAL= ?";
+		} else if (tipoUsuario == TipoUsuario.CLIENTE) {
+			sql = "SELECT * FROM AGENDAMENTO WHERE ID_CLIENTE = ?";
+		}
+		
+		Connection conexao = Banco.getConnection();
+		
+		PreparedStatement query = Banco.getPreparedStatement(conexao, sql);
+
+		try {
+			query.setInt(1, usuarioAutenticado.getId());
+			ResultSet resultado = query.executeQuery();
+			while (resultado.next()) {
+				Agendamento agendamentoConsultado = converterDeResultSetParaEntidade(resultado);
+				agendamentos.add(agendamentoConsultado);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao buscar todos os agendamentos" + "\n Causa: " + e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(query);
+			Banco.closeConnection(conexao);
+		}
+		
+		
+		
+		return agendamentos;
+		
 	}
 
 }
