@@ -11,6 +11,7 @@ import model.exception.CampoInvalidoException;
 import model.exception.EnderecoInvalidoException;
 import model.vo.Agendamento;
 import model.vo.Endereco;
+import model.vo.TipoUsuario;
 import model.vo.Usuario;
 import model.controller.AgendamentoController;
 
@@ -20,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import com.jgoodies.forms.layout.FormLayout;
@@ -29,6 +31,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -36,14 +39,12 @@ import java.awt.event.ActionEvent;
 public class PainelListagemAgendamentos extends JPanel {
 
 	private ArrayList<Agendamento> agendamentos;
-	private String[] nomesColunas = { "Cliente", "Hora Inicio", "Hora Final", "Aceito?", "Motivo Rejeição" };
+	private String[] nomesColunas = { "Cliente", "Personal", "Hora Inicio", "Hora Final" };
 	private JTable tblAgendamentos;
-	private JLabel lblProfissional;
-	private JComboBox cbProfissional;
-	private JButton btnBuscar;
-	private JButton btnRecusar;
+	private JLabel lblUsuario;
+	private JComboBox cbUsuario;
+	private JButton btnBuscarMeusAgendamentos;
 	private JButton btnExcluir;
-	private JButton btnAceitar;
 	private JLabel lblPaginacao;
 	private JButton btnAvancarPagina;
 	private JButton btnVoltarPagina;
@@ -51,119 +52,85 @@ public class PainelListagemAgendamentos extends JPanel {
 	private final int TAMANHO_PAGINA = 5;
 	private int paginaAtual = 1;
 	private int totalPaginas = 0;
-	
+
 	private AgendamentoController controller = new AgendamentoController();
 	private Agendamento agendamentoSelecionado;
 	private JButton btnVoltar;
-	
+	private JButton btnBuscarTodosAgendamentos;
+
 	private void limparTabelaAgendamentos() {
 		tblAgendamentos.setModel(new DefaultTableModel(new Object[][] { nomesColunas, }, nomesColunas));
 	}
-	
+
 	private void atualizarTabelaAgendamentos() {
+		DateTimeFormatter dataHoraApresentavel = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		this.limparTabelaAgendamentos();
 
 		DefaultTableModel model = (DefaultTableModel) tblAgendamentos.getModel();
 
 		for (Agendamento a : agendamentos) {
-			Object[] novaLinhaDaTabela = new Object[5];
+			Object[] novaLinhaDaTabela = new Object[4];
 			novaLinhaDaTabela[0] = a.getCliente();
-			novaLinhaDaTabela[1] = a.getDataHoraInicio();
-			novaLinhaDaTabela[2] = a.getDataHoraFinal();
-			novaLinhaDaTabela[3] = a.getAceito();
-			novaLinhaDaTabela[4] = a.getMotivoRejeicao();
+			novaLinhaDaTabela[1] = a.getProfissional();
+			novaLinhaDaTabela[2] = a.getDataHoraInicio().format(dataHoraApresentavel);
+			novaLinhaDaTabela[3] = a.getDataHoraFinal().format(dataHoraApresentavel);
 
 			model.addRow(novaLinhaDaTabela);
 		}
 	}
-	
-	public PainelListagemAgendamentos() {
+
+	public PainelListagemAgendamentos(Usuario usuarioAutenticado) {
 		setBackground(new Color(108, 255, 108));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(183dlu;pref):grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(74dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(73dlu;pref):grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(36dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(59dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(60dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(57dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.GROWING_BUTTON_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.GROWING_BUTTON_COLSPEC,},
-			new RowSpec[] {
-				RowSpec.decode("fill:max(23dlu;pref):grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("fill:max(11dlu;default)"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("fill:max(89dlu;pref):grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("fill:max(23dlu;pref):grow"),}));
-		
-		lblProfissional = new JLabel("Personal:");
-		lblProfissional.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		lblProfissional.setForeground(Color.BLACK);
-		add(lblProfissional, "14, 7, center, center");
-		
-		UsuarioController usuario = new UsuarioController();
-		cbProfissional = new JComboBox(usuario.consultarTodos().toArray());
-		cbProfissional.setForeground(Color.BLACK);
-		cbProfissional.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		add(cbProfissional, "16, 7, 5, 1, fill, fill");
-		
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBackground(Color.BLACK);
-		btnBuscar.setForeground(Color.WHITE);
-		btnBuscar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnBuscar.addActionListener(new ActionListener() {
+		setLayout(new FormLayout(
+				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("max(183dlu;pref):grow"),
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("max(74dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("max(73dlu;pref):grow"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("max(36dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("max(59dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("max(60dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
+						ColumnSpec.decode("max(57dlu;default)"), FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.GROWING_BUTTON_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
+						FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
+						FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.GROWING_BUTTON_COLSPEC, },
+				new RowSpec[] { RowSpec.decode("fill:max(23dlu;pref):grow"), FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("fill:max(11dlu;default)"), FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("fill:max(89dlu;pref):grow"), FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+						RowSpec.decode("fill:max(23dlu;pref):grow"), }));
+
+		lblUsuario = new JLabel("Usuário:");
+		lblUsuario.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		lblUsuario.setForeground(Color.BLACK);
+		add(lblUsuario, "14, 7, center, center");
+
+		cbUsuario = new JComboBox(new ArrayList<Usuario>(Collections.singletonList(usuarioAutenticado)).toArray());
+		cbUsuario.setForeground(Color.BLACK);
+		cbUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		add(cbUsuario, "16, 7, 5, 1, fill, fill");
+
+		btnBuscarMeusAgendamentos = new JButton("Buscar");
+		btnBuscarMeusAgendamentos.setBackground(Color.BLACK);
+		btnBuscarMeusAgendamentos.setForeground(Color.WHITE);
+		btnBuscarMeusAgendamentos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnBuscarMeusAgendamentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					agendamentos = (ArrayList<Agendamento>) controller.consultarTodos();
+				agendamentos = (ArrayList<Agendamento>) controller
+						.buscarAgendamentosUsuarioAutenticado(usuarioAutenticado);
+				atualizarTabelaAgendamentos();
 			}
 		});
-		add(btnBuscar, "22, 7, fill, fill");
-		
+		add(btnBuscarMeusAgendamentos, "22, 7, fill, fill");
+
 		tblAgendamentos = new JTable();
 		tblAgendamentos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		limparTabelaAgendamentos();
@@ -172,25 +139,33 @@ public class PainelListagemAgendamentos extends JPanel {
 				int indiceSelecionado = tblAgendamentos.getSelectedRow();
 
 				if (indiceSelecionado > 0) {
-					btnAceitar.setEnabled(true);
 					btnExcluir.setEnabled(true);
-					btnRecusar.setEnabled(true);
 					agendamentoSelecionado = agendamentos.get(indiceSelecionado - 1);
 				} else {
-					btnAceitar.setEnabled(false);
-					btnRecusar.setEnabled(false);
 					btnExcluir.setEnabled(false);
 				}
 			}
 		});
-		
+
+		btnBuscarTodosAgendamentos = new JButton("Buscar Todos");
+		btnBuscarTodosAgendamentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				agendamentos = (ArrayList<Agendamento>) controller.consultarTodos();
+				atualizarTabelaAgendamentos();
+			}
+		});
+		btnBuscarTodosAgendamentos.setForeground(Color.WHITE);
+		btnBuscarTodosAgendamentos.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
+		btnBuscarTodosAgendamentos.setBackground(Color.BLACK);
+		add(btnBuscarTodosAgendamentos, "24, 7");
+
 		lblPaginacao = new JLabel("1 / " + totalPaginas);
 		lblPaginacao.setForeground(Color.BLACK);
 		lblPaginacao.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblPaginacao.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPaginacao, "24, 9");
 		add(tblAgendamentos, "14, 11, 11, 1, fill, fill");
-		
+
 		btnAvancarPagina = new JButton("Avançar >>");
 		btnAvancarPagina.setBackground(Color.BLACK);
 		btnAvancarPagina.setForeground(Color.WHITE);
@@ -204,7 +179,7 @@ public class PainelListagemAgendamentos extends JPanel {
 			}
 		});
 		add(btnAvancarPagina, "14, 15, fill, fill");
-		
+
 		btnVoltarPagina = new JButton("<< Voltar");
 		btnVoltarPagina.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnVoltarPagina.setBackground(Color.BLACK);
@@ -219,7 +194,7 @@ public class PainelListagemAgendamentos extends JPanel {
 			}
 		});
 		add(btnVoltarPagina, "16, 15, fill, fill");
-		
+
 		btnGerarPlanilha = new JButton("Gerar Planilha");
 		btnGerarPlanilha.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		btnGerarPlanilha.setBackground(Color.BLACK);
@@ -241,53 +216,7 @@ public class PainelListagemAgendamentos extends JPanel {
 				}
 			}
 		});
-		add(btnGerarPlanilha, "14, 17, center, fill");
-		atualizarQuantidadePaginas();
-		
-		btnRecusar = new JButton("Recusar");
-		btnRecusar.setBackground(Color.BLACK);
-		btnRecusar.setForeground(Color.WHITE);
-		btnRecusar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnRecusar.setEnabled(false);
-		btnRecusar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a recusa do agendamento selecionado?");	
-				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-					try {
-						controller.recusar(agendamentoSelecionado.getId());
-						JOptionPane.showMessageDialog(null, "Agendamento recusado.");
-						agendamentos = (ArrayList<Agendamento>) controller.consultarTodos();
-						atualizarTabelaAgendamentos();
-					} catch (CampoInvalidoException e1) {
-						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			}
-		});
-		add(btnRecusar, "22, 15, fill, fill");
-		
-		btnAceitar = new JButton("Aceitar");
-		btnAceitar.setBackground(Color.BLACK);
-		btnAceitar.setForeground(Color.WHITE);
-		btnAceitar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
-		btnAceitar.setEnabled(false);
-		btnAceitar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma o aceite do agendamento selecionado?");	
-				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
-					try {
-						controller.aceitar(agendamentoSelecionado.getId());
-						JOptionPane.showMessageDialog(null, "Agendamento confirmado!");
-						agendamentos = (ArrayList<Agendamento>) controller.consultarTodos();
-						atualizarTabelaAgendamentos();
-					} catch (CampoInvalidoException e1) {
-						JOptionPane.showConfirmDialog(null, e1.getMessage(), "Atenção", JOptionPane.WARNING_MESSAGE);
-					}
-				}
-			}
-		});
-		add(btnAceitar, "24, 15, fill, fill");
-		
+
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.setBackground(Color.BLACK);
 		btnExcluir.setForeground(Color.WHITE);
@@ -295,8 +224,9 @@ public class PainelListagemAgendamentos extends JPanel {
 		btnExcluir.setEnabled(false);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do agendamento selecionado?");	
-				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
+				int opcaoSelecionada = JOptionPane.showConfirmDialog(null,
+						"Confirma a exclusão do agendamento selecionado?");
+				if (opcaoSelecionada == JOptionPane.YES_OPTION) {
 					try {
 						controller.excluir(agendamentoSelecionado.getId());
 						JOptionPane.showMessageDialog(null, "Agendamento excluído com sucesso!");
@@ -308,8 +238,10 @@ public class PainelListagemAgendamentos extends JPanel {
 				}
 			}
 		});
-		add(btnExcluir, "24, 17, fill, fill");
-		
+		add(btnExcluir, "24, 15, fill, fill");
+		add(btnGerarPlanilha, "14, 17, center, fill");
+		atualizarQuantidadePaginas();
+
 		btnVoltar = new JButton("Pagina Inicial");
 		btnVoltar.setBackground(Color.BLACK);
 		btnVoltar.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
@@ -319,29 +251,45 @@ public class PainelListagemAgendamentos extends JPanel {
 			}
 		});
 		add(btnVoltar, "16, 17");
-		}
-	
-	private void atualizarQuantidadePaginas() {
-		//Cálculo do total de páginas
-				int totalRegistros = controller.contarTotalRegistros(agendamentoSelecionado);
 
-				//QUOCIENTE da divisão inteira
-				totalPaginas = totalRegistros / TAMANHO_PAGINA;
-				
-				//RESTO da divisão inteira
-				if(totalRegistros % TAMANHO_PAGINA > 0) { 
-					totalPaginas++;
-				}
-				lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
-		
+		if (usuarioAutenticado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+			btnBuscarTodosAgendamentos.setVisible(true);
+			btnBuscarMeusAgendamentos.setVisible(false);
+			btnExcluir.setVisible(true);
+
+		} else if (usuarioAutenticado.getTipoUsuario() == TipoUsuario.PERSONAL_TRAINER) {
+			btnBuscarTodosAgendamentos.setVisible(false);
+			btnBuscarMeusAgendamentos.setVisible(true);
+			btnExcluir.setVisible(true);
+
+		} else if (usuarioAutenticado.getTipoUsuario() == TipoUsuario.CLIENTE) {
+			btnBuscarTodosAgendamentos.setVisible(false);
+			btnBuscarMeusAgendamentos.setVisible(true);
+			btnExcluir.setVisible(false);
+		}
 	}
-		public Agendamento getAgendamentoSelecionado() {
-			return agendamentoSelecionado;
+
+	private void atualizarQuantidadePaginas() {
+		// Cálculo do total de páginas
+		int totalRegistros = controller.contarTotalRegistros(agendamentoSelecionado);
+
+		// QUOCIENTE da divisão inteira
+		totalPaginas = totalRegistros / TAMANHO_PAGINA;
+
+		// RESTO da divisão inteira
+		if (totalRegistros % TAMANHO_PAGINA > 0) {
+			totalPaginas++;
 		}
-		
-		public JButton getBtnVoltar() {
-			return btnVoltar;
-		}
-		
-		
+		lblPaginacao.setText(paginaAtual + " / " + totalPaginas);
+
+	}
+
+	public Agendamento getAgendamentoSelecionado() {
+		return agendamentoSelecionado;
+	}
+
+	public JButton getBtnVoltar() {
+		return btnVoltar;
+	}
+
 }

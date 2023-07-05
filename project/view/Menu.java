@@ -251,7 +251,7 @@ public class Menu {
 		mntmListarAgendamento.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		mntmListarAgendamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				painelListagemAgendamento = new PainelListagemAgendamentos();
+				painelListagemAgendamento = new PainelListagemAgendamentos(usuarioAutenticado);
 				frame.setContentPane(painelListagemAgendamento);
 				frame.revalidate();
 				registrarCliqueBotaoVoltarDoPainelListarAgendamento();

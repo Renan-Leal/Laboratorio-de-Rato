@@ -9,6 +9,7 @@ import model.exception.ErroNoMetodoException;
 import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.gerador.GeradorPlanilha;
 import model.vo.Agendamento;
+import model.vo.Usuario;
 
 public class AgendamentoController {
 	
@@ -85,5 +86,11 @@ private AgendamentoBO bo = new AgendamentoBO();
 	public boolean verificarSeJaPossuiHorarioComPersonalEscolhido(Integer idProfissional, LocalDateTime horaInicio) throws PersonalJaPossuiHorarioCadastradoException, ErroNoMetodoException {
 		return bo.verificarSeJaPossuiHorarioComPersonalEscolhido(idProfissional, horaInicio);
 	}
+
+	public ArrayList<Agendamento> buscarAgendamentosUsuarioAutenticado(Usuario usuarioAutenticado) {
+		return bo.buscarAgendamentosUsuarioAutenticado(usuarioAutenticado);
+	}
+
+	
 
 }

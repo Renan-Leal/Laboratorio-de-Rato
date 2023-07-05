@@ -1,6 +1,7 @@
 package model.bo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.AgendamentoDAO;
@@ -9,6 +10,8 @@ import model.exception.ErroNoMetodoException;
 import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.seletor.EnderecoSeletor;
 import model.vo.Agendamento;
+import model.vo.TipoUsuario;
+import model.vo.Usuario;
 
 public class AgendamentoBO {
 	
@@ -48,6 +51,18 @@ private AgendamentoDAO dao = new AgendamentoDAO();
 
 	public boolean verificarSeJaPossuiHorarioComPersonalEscolhido(Integer idProfissional, LocalDateTime horaInicio) throws PersonalJaPossuiHorarioCadastradoException, ErroNoMetodoException {
 		return dao.verificarSeJaPossuiHorarioComPersonalEscolhido(idProfissional, horaInicio);
+	}
+
+	public ArrayList<Agendamento> buscarAgendamentosUsuarioAutenticado(Usuario usuarioAutenticado) {
+		ArrayList<Agendamento> agendamentosBuscados = new ArrayList<Agendamento>();
+		
+		if(usuarioAutenticado.getTipoUsuario() == TipoUsuario.PERSONAL_TRAINER) {
+			agendamentosBuscados =  dao.buscarAgendamentosUsuarioAutenticado(usuarioAutenticado, TipoUsuario.PERSONAL_TRAINER);
+		} else if(usuarioAutenticado.getTipoUsuario() == TipoUsuario.CLIENTE) {
+			agendamentosBuscados = dao.buscarAgendamentosUsuarioAutenticado(usuarioAutenticado, TipoUsuario.CLIENTE);
+			
+		}
+		return agendamentosBuscados;
 	}
 
 }
