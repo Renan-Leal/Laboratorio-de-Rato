@@ -300,12 +300,12 @@ public class PainelListagemTreinos extends JPanel {
 		btnExcluir.setEnabled(false);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do endereço selecionado?");
+				int opcaoSelecionada = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do treino selecionado?");
 				
 				if(opcaoSelecionada == JOptionPane.YES_OPTION) {
 					try {
 						controller.excluir(treinoSelecionado.getId());
-						JOptionPane.showMessageDialog(null, "Endereço excluído com sucesso");
+						JOptionPane.showMessageDialog(null, "Treino excluído com sucesso");
 						treinos = (ArrayList<Treino>) controller.consultarTodos();
 						atualizarTabelaTreinos();
 					} catch (CampoInvalidoException e1) {
