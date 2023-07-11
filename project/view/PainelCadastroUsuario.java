@@ -26,9 +26,9 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import model.controller.EnderecoController;
-import model.controller.PessoaController;
-import model.controller.UsuarioController;
+import controller.EnderecoController;
+import controller.PessoaController;
+import controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.exception.SenhaInvalidaException;
 import model.vo.TipoUsuario;

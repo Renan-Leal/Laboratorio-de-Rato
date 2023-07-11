@@ -19,7 +19,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
-import model.controller.EnderecoController;
+import controller.EnderecoController;
 import model.exception.CampoInvalidoException;
 import model.exception.EnderecoInvalidoException;
 import model.seletor.EnderecoSeletor;

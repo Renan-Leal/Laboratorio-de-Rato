@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import model.controller.EnderecoController;
+import controller.EnderecoController;
 import model.exception.EnderecoInvalidoException;
 import model.exception.CampoInvalidoException;
 import model.vo.Endereco;

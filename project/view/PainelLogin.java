@@ -5,7 +5,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
-import model.controller.UsuarioController;
+import controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.vo.Usuario;
 
