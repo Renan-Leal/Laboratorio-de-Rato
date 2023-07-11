@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.controller.TreinoController;
+import controller.TreinoController;
 import model.exception.ErroNoMetodoException;
 import model.exception.PersonalJaPossuiHorarioCadastradoException;
 import model.seletor.EnderecoSeletor;

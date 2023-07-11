@@ -5,15 +5,15 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import model.controller.AgendamentoController;
-import model.controller.UsuarioController;
+import controller.AgendamentoController;
+import controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.exception.EnderecoInvalidoException;
 import model.vo.Agendamento;
 import model.vo.Endereco;
 import model.vo.TipoUsuario;
 import model.vo.Usuario;
-import model.controller.AgendamentoController;
+import controller.AgendamentoController;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

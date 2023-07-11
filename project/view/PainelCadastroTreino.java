@@ -23,8 +23,8 @@ import javax.swing.JTextPane;
 
 import org.apache.poi.hpsf.Array;
 
-import model.controller.TreinoController;
-import model.controller.UsuarioController;
+import controller.TreinoController;
+import controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.vo.Endereco;
 import model.vo.NivelTreino;

@@ -8,8 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import model.controller.TreinoController;
-import model.controller.UsuarioController;
+import controller.TreinoController;
+import controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.seletor.TreinoSeletor;
 import model.vo.Email;

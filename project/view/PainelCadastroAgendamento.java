@@ -23,9 +23,9 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import model.controller.AgendamentoController;
-import model.controller.TreinoController;
-import model.controller.UsuarioController;
+import controller.AgendamentoController;
+import controller.TreinoController;
+import controller.UsuarioController;
 import model.exception.CampoInvalidoException;
 import model.exception.ErroNoMetodoException;
 import model.exception.PersonalJaPossuiHorarioCadastradoException;
